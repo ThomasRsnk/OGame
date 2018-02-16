@@ -1,0 +1,9 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.deps.json
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.csprojResolveAssemblyReference.cache

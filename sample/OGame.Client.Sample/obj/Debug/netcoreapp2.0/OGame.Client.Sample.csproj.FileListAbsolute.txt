@@ -1,0 +1,13 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.Sample.deps.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.Sample.runtimeconfig.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.Sample.runtimeconfig.dev.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.Sample.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.Sample.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.csprojResolveAssemblyReference.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\obj\Debug\netcoreapp2.0\OGame.Client.Sample.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\OGame.Client.Sample\bin\Debug\netcoreapp2.0\OGame.Client.pdb

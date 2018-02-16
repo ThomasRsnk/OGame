@@ -1,0 +1,9 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.deps.json
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.BindingModels\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.csprojResolveAssemblyReference.cache
