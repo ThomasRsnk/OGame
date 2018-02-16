@@ -2,3 +2,9 @@
 \.vs/
 
 src/OGame\.Client/bin/
+
+test/Djm\.OGame\.Web\.Api\.Client\.Tests/bin/
+
+test/Djm\.OGame\.Web\.Api\.Client\.Tests/obj/
+
+OGameTestFront/

@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.Client.Exceptions;
 using Djm.OGame.Web.Api.Client.Http;
 using Djm.OGame.Web.Api.Client.Http.Resources;
 using Moq;
@@ -14,20 +16,12 @@ namespace Djm.OGame.Web.Api.Client.Tests.Http.Resources
     {
         private const string alliancesJson = @"[
         {
-        ""id"": 500000,
-        ""name"": ""Dragons Supremes""
+            ""id"": 500000,
+            ""name"": ""Dragons Supremes""
         },
         {
             ""id"": 500001,
             ""name"": ""cereal serial killer""
-        },
-        {
-            ""id"": 500002,
-            ""name"": ""Le peuple des Yorens.""
-        },
-        {
-            ""id"": 500003,
-            ""name"": ""Aurora""
         }]";
 
         private const string allianceDetailsJson = @"{
@@ -64,6 +58,9 @@ namespace Djm.OGame.Web.Api.Client.Tests.Http.Resources
         public Mock<IHttpClient> HttpClientMock { get; set; }
         public AlliancesHttpResource Alliances { get; set; }
 
+        private const int BadId = -100;
+        private const int CorrectId = 500000;
+
         [SetUp]
         public void SetUp()
         {
@@ -77,7 +74,7 @@ namespace Djm.OGame.Web.Api.Client.Tests.Http.Resources
                 });
 
             HttpClientMock
-                .Setup(c => c.GetAsync(It.Is<string>(s => s == "alliances/500000"), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetAsync(It.Is<string>(s => s == "alliances/"+CorrectId), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(allianceDetailsJson)
@@ -92,19 +89,37 @@ namespace Djm.OGame.Web.Api.Client.Tests.Http.Resources
             var alliances = await Alliances.GetAllAsync(default(CancellationToken));
 
             Assert.That(alliances, Is.Not.Null);
-            Assert.That(alliances, Has.Count.EqualTo(4));
-            Assert.That(alliances,Has.All.Property("Id").Not.Null);
-            Assert.That(alliances, Has.All.Property("Name").Not.Null);
+            Assert.That(alliances, Has.Count.EqualTo(2));
+
+            Assert.That(alliances[0],Has.Property("Id").EqualTo(500000));
+            Assert.That(alliances[0], Has.Property("Name").EqualTo("Dragons Supremes"));
+            Assert.That(alliances[1], Has.Property("Id").EqualTo(500001));
+            Assert.That(alliances[1], Has.Property("Name").EqualTo("cereal serial killer"));
+
+
+
         }
 
         [Test]
         public async Task GetDetailsAsync_ShouldParseJson()
         {
-            var alliance = await Alliances.GetDetailsAsync(500000, default(CancellationToken));
+            var alliance = await Alliances.GetDetailsAsync(CorrectId, default(CancellationToken));
 
             Assert.That(alliance,Is.Not.Null);
         }
 
+
+        [Test]
+        public void GetDetailsAsync_ShouldThrowNotFoundException()
+        {
+            HttpClientMock
+                .Setup(c => c.GetAsync(It.Is<string>(s => s == "alliances/"+BadId), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.NotFound));
+
+            Assert.Throws<OgameNotFoundException>(() => Alliances.GetDetailsAsync(BadId, default(CancellationToken)));
+        }   
+
+        
 
 
 

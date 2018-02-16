@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Client;
+using Djm.OGame.Web.Api.Client.Exceptions;
 using Djm.OGame.Web.Api.Client.Http;
 
 
@@ -23,7 +26,7 @@ namespace OGameTestFront
 
             var task = Task.Run(() => RunAsync(cts.Token));
 
-            task.Wait();
+             task.Wait();
             
             Console.WriteLine("Press a key to quit");
             Console.ReadKey(true);
@@ -34,7 +37,7 @@ namespace OGameTestFront
             IOGameClient client = new HttpOGameClient();
             try
             {
-                var universes = await client.Universes.GetAllAsync(cancellationToken);
+                /*var universes = await client.Universes.GetAllAsync(cancellationToken);
                 foreach (var universe in universes.OrderBy(u => u.Id))
                 {
                     Console.Write(universe.Id.ToString().PadLeft(3) + ".");
@@ -53,20 +56,36 @@ namespace OGameTestFront
 
                     cancellationToken.ThrowIfCancellationRequested();
                 }
-                while (!int.TryParse(input, out universeId));
+                while (!int.TryParse(input, out universeId));*/
 
-                
 
-                var alliances = await client.Universes[universeId].Alliances.GetAllAsync(cancellationToken);
 
-                foreach (var alliance in alliances)
-                    Console.WriteLine(alliance);
+                var alliance = await client.Universes[10].Alliances.GetDetailsAsync(500_000, cancellationToken);
+
+
+                Console.WriteLine(alliance.Name);
 
                 Console.WriteLine("Success");
             }
             catch (OperationCanceledException e)
             {
                 Console.WriteLine("Request was canceled ... :(");
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine("Socket Exception: " + e.Message);
+            }
+            catch (WebException e)
+            {
+                Console.WriteLine("Web Exception: " + e.Message);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("HttpRequestException : "+ e.Message);
+            }
+            catch (OgameNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
             }
 
 
