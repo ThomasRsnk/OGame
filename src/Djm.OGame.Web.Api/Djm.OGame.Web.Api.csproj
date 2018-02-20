@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Djm.OGame.Web.Api.BindingModels\Djm.OGame.Web.Api.BindingModels.csproj" />
+    <ProjectReference Include="..\Djm.OGame.Web.Api.Dal\Djm.OGame.Web.Api.Dal.csproj" />
     <ProjectReference Include="..\OGame.Client\OGame.Client.csproj" />
   </ItemGroup>
 

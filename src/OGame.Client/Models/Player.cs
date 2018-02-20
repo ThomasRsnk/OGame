@@ -31,6 +31,8 @@ namespace OGame.Client.Models
         public PlayerStatus? Status { get; internal set; }
         public bool IsAdministrator => Status?.HasFlag(PlayerStatus.Administrator) == true;
 
+        //public List<Player> Favoris => 
+
         public override string ToString()
         {
             return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Status)}: {Status}, {nameof(AllianceId)}: {AllianceId}";

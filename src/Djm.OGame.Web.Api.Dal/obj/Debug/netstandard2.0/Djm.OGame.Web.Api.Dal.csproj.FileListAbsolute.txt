@@ -1,0 +1,11 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.deps.json
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.xml
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.csprojResolveAssemblyReference.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.pdb

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Alliances;
+using Djm.OGame.Web.Api.BindingModels.Pins;
 using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.BindingModels.Scores;
+using Djm.OGame.Web.Api.Dal;
+using Djm.OGame.Web.Api.Dal.Models;
 using Djm.OGame.Web.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,11 +34,15 @@ namespace Djm.OGame.Web.Api
                     .ForMember(dest => dest.Status, opt => opt.MapFrom(p => p.Status.ToString().Replace("_"," ")));
                 cfg.CreateMap<Position, PositionsBindingModel>()
                     .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.TypeC.ToString().Replace("_"," ")));
+
+                cfg.CreateMap<PinCreateBindingModel, Pin>()
+                    .ForMember(dest => dest.Id, opt => opt.Ignore());
             });
             services.AddMvc();
             services.AddLogging();
 
             services.AddSingleton<IOgClient, OgClient>();
+            services.AddSingleton<IOgameDb,OgameDb>();
             //services.AddScoped<IOgameService, OgameFromClient>();
         }
 
