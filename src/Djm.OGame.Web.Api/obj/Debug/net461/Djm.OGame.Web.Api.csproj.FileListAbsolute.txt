@@ -1,3 +1,8 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.csprojResolveAssemblyReference.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe.config
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.exe.config
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.deps.json
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.exe
@@ -330,15 +335,12 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Xml.XPath.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Xml.XPath.XDocument.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.BindingModels.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.Client.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.Dal.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\OGame.Client.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.BindingModels.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.Dal.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\OGame.Client.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.csprojResolveAssemblyReference.cache
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe.config
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.csproj.CoreCompileInputs.cache
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfoInputs.cache
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.Client.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.pdb

@@ -1,3 +1,6 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.csprojResolveAssemblyReference.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.exe.config
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.csproj.CoreCompileInputs.cache
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\Djm.OGame.Db.Sample.exe.config
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\Djm.OGame.Db.Sample.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\Djm.OGame.Db.Sample.pdb
@@ -103,8 +106,5 @@ C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\En
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\Djm.OGame.Web.Api.Dal.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\EntityFramework.xml
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.exe.config
-C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.csproj.CoreCompileInputs.cache
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Db.Sample\obj\Debug\Djm.OGame.Db.Sample.csprojResolveAssemblyReference.cache

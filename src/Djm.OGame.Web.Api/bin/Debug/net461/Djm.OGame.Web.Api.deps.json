@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.6.1/win7-x86",
-    "signature": "d09e3756f0005a9e30bbf64a5dccf8a59dbbbc30"
+    "signature": "9b88780527856cb6945e1f664b4888827472c238"
   },
   "compilationOptions": {
     "defines": [
@@ -1040,7 +1040,7 @@
       "Microsoft.AspNetCore.JsonPatch/2.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
@@ -1567,7 +1567,7 @@
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.0.0",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Json.dll": {}
@@ -1597,7 +1597,7 @@
       "Microsoft.Extensions.DependencyModel/2.0.3": {
         "dependencies": {
           "Microsoft.DotNet.PlatformAbstractions": "2.0.3",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/net451/Microsoft.Extensions.DependencyModel.dll": {}
@@ -1770,7 +1770,7 @@
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Contracts/2.0.2": {
         "dependencies": {
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll": {}
@@ -1780,7 +1780,7 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Templating": "2.0.2",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll": {}
@@ -1816,7 +1816,7 @@
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "2.3.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Contracts": "2.0.2",
-          "Newtonsoft.Json": "10.0.1",
+          "Newtonsoft.Json": "10.0.3",
           "NuGet.Frameworks": "4.0.0"
         },
         "compile": {
@@ -1845,14 +1845,14 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
-      "Newtonsoft.Json/10.0.1": {
+      "Newtonsoft.Json/10.0.3": {
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
       "Newtonsoft.Json.Bson/1.0.1": {
         "dependencies": {
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/net45/Newtonsoft.Json.Bson.dll": {}
@@ -2063,7 +2063,7 @@
       "WebApiContrib.Core.Formatter.Bson/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "2.0.2",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
           "lib/net451/WebApiContrib.Core.Formatter.Bson.dll": {}
@@ -2077,8 +2077,18 @@
           "Djm.OGame.Web.Api.BindingModels.dll": {}
         }
       },
+      "Djm.OGame.Web.Api.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "Djm.OGame.Web.Api.Client.dll": {}
+        }
+      },
       "Djm.OGame.Web.Api.Dal/1.0.0": {
         "dependencies": {
+          "Djm.OGame.Web.Api.Client": "1.0.0",
           "EntityFramework": "6.2.0"
         },
         "compile": {
@@ -2086,6 +2096,9 @@
         }
       },
       "OGame.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.Dal": "1.0.0"
+        },
         "compile": {
           "OGame.Client.dll": {}
         }
@@ -2504,7 +2517,7 @@
       "Microsoft.AspNetCore.JsonPatch/2.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
@@ -3031,7 +3044,7 @@
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.0.0",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Json.dll": {}
@@ -3061,7 +3074,7 @@
       "Microsoft.Extensions.DependencyModel/2.0.3": {
         "dependencies": {
           "Microsoft.DotNet.PlatformAbstractions": "2.0.3",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/net451/Microsoft.Extensions.DependencyModel.dll": {}
@@ -3234,7 +3247,7 @@
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Contracts/2.0.2": {
         "dependencies": {
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll": {}
@@ -3244,7 +3257,7 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Templating": "2.0.2",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll": {}
@@ -3280,7 +3293,7 @@
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "2.3.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Contracts": "2.0.2",
-          "Newtonsoft.Json": "10.0.1",
+          "Newtonsoft.Json": "10.0.3",
           "NuGet.Frameworks": "4.0.0"
         },
         "runtime": {
@@ -3309,14 +3322,14 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
-      "Newtonsoft.Json/10.0.1": {
+      "Newtonsoft.Json/10.0.3": {
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
       "Newtonsoft.Json.Bson/1.0.1": {
         "dependencies": {
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.Bson.dll": {}
@@ -3531,7 +3544,7 @@
       "WebApiContrib.Core.Formatter.Bson/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "2.0.2",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "10.0.3"
         },
         "runtime": {
           "lib/net451/WebApiContrib.Core.Formatter.Bson.dll": {}
@@ -3545,8 +3558,18 @@
           "Djm.OGame.Web.Api.BindingModels.dll": {}
         }
       },
+      "Djm.OGame.Web.Api.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "runtime": {
+          "Djm.OGame.Web.Api.Client.dll": {}
+        }
+      },
       "Djm.OGame.Web.Api.Dal/1.0.0": {
         "dependencies": {
+          "Djm.OGame.Web.Api.Client": "1.0.0",
           "EntityFramework": "6.2.0"
         },
         "runtime": {
@@ -3554,6 +3577,9 @@
         }
       },
       "OGame.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.Dal": "1.0.0"
+        },
         "runtime": {
           "OGame.Client.dll": {}
         }
@@ -4350,12 +4376,12 @@
       "path": "netstandard.library/2.0.0",
       "hashPath": "netstandard.library.2.0.0.nupkg.sha512"
     },
-    "Newtonsoft.Json/10.0.1": {
+    "Newtonsoft.Json/10.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ebWzW9j2nwxQeBo59As2TYn7nYr9BHicqqCwHOD1Vdo+50HBtLPuqdiCYJcLdTRknpYis/DSEOQz5KmZxwrIAg==",
-      "path": "newtonsoft.json/10.0.1",
-      "hashPath": "newtonsoft.json.10.0.1.nupkg.sha512"
+      "sha512": "sha512-hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
+      "path": "newtonsoft.json/10.0.3",
+      "hashPath": "newtonsoft.json.10.0.3.nupkg.sha512"
     },
     "Newtonsoft.Json.Bson/1.0.1": {
       "type": "package",
@@ -4813,6 +4839,11 @@
       "hashPath": "webapicontrib.core.formatter.bson.1.0.0.nupkg.sha512"
     },
     "Djm.OGame.Web.Api.BindingModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Djm.OGame.Web.Api.Client/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

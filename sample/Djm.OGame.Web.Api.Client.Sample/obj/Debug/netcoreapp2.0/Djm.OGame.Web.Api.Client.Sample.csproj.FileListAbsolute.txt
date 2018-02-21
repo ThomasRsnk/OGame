@@ -1,0 +1,15 @@
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.deps.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.runtimeconfig.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.runtimeconfig.dev.json
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.BindingModels.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\bin\Debug\netcoreapp2.0\Djm.OGame.Web.Api.BindingModels.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.csprojResolveAssemblyReference.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.csproj.CoreCompileInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.AssemblyInfoInputs.cache
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.AssemblyInfo.cs
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\sample\Djm.OGame.Web.Api.Client.Sample\obj\Debug\netcoreapp2.0\Djm.OGame.Web.Api.Client.Sample.pdb

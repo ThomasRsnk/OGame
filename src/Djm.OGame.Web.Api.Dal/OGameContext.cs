@@ -12,7 +12,7 @@ namespace Djm.OGame.Web.Api.Dal
     {
         public OGameContext() : base("OGameDB")
         {
-            Database.SetInitializer<OGameContext>(new DropCreateDatabaseIfModelChanges<OGameContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<OGameContext>());
         }
 
         public DbSet<Pin> Pins { get; set; }
@@ -32,7 +32,7 @@ namespace Djm.OGame.Web.Api.Dal
                              && p.TargetId == pin.TargetId
                              && p.UniverseId == pin.UniverseId))
 
-                result.ValidationErrors.Add(new DbValidationError("Uniqueness violated","This pin already exists"));
+                result.ValidationErrors.Add(new DbValidationError("Erreur","Ce pin existe déjà"));
         }
 
         

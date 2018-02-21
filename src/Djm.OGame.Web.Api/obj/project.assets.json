@@ -1612,7 +1612,7 @@
           "build/netstandard2.0/_._": {}
         }
       },
-      "Newtonsoft.Json/10.0.1": {
+      "Newtonsoft.Json/10.0.3": {
         "type": "package",
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
@@ -2498,10 +2498,25 @@
           "bin/placeholder/Djm.OGame.Web.Api.BindingModels.dll": {}
         }
       },
+      "Djm.OGame.Web.Api.Client/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Djm.OGame.Web.Api.Client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Djm.OGame.Web.Api.Client.dll": {}
+        }
+      },
       "Djm.OGame.Web.Api.Dal/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Djm.OGame.Web.Api.Client": "1.0.0",
           "EntityFramework": "6.2.0"
         },
         "compile": {
@@ -2514,6 +2529,9 @@
       "OGame.Client/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Djm.OGame.Web.Api.Dal": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/OGame.Client.dll": {}
         },
@@ -4078,7 +4096,7 @@
           "build/netstandard2.0/_._": {}
         }
       },
-      "Newtonsoft.Json/10.0.1": {
+      "Newtonsoft.Json/10.0.3": {
         "type": "package",
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
@@ -4878,10 +4896,25 @@
           "bin/placeholder/Djm.OGame.Web.Api.BindingModels.dll": {}
         }
       },
+      "Djm.OGame.Web.Api.Client/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Djm.OGame.Web.Api.Client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Djm.OGame.Web.Api.Client.dll": {}
+        }
+      },
       "Djm.OGame.Web.Api.Dal/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Djm.OGame.Web.Api.Client": "1.0.0",
           "EntityFramework": "6.2.0"
         },
         "compile": {
@@ -4894,6 +4927,9 @@
       "OGame.Client/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Djm.OGame.Web.Api.Dal": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/OGame.Client.dll": {}
         },
@@ -6446,11 +6482,12 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/10.0.1": {
-      "sha512": "ebWzW9j2nwxQeBo59As2TYn7nYr9BHicqqCwHOD1Vdo+50HBtLPuqdiCYJcLdTRknpYis/DSEOQz5KmZxwrIAg==",
+    "Newtonsoft.Json/10.0.3": {
+      "sha512": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
       "type": "package",
-      "path": "newtonsoft.json/10.0.1",
+      "path": "newtonsoft.json/10.0.3",
       "files": [
+        "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -6463,9 +6500,11 @@
         "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
         "lib/netstandard1.3/Newtonsoft.Json.xml",
-        "lib/portable-net45+win8+wpa81+wp8/Newtonsoft.Json.dll",
-        "lib/portable-net45+win8+wpa81+wp8/Newtonsoft.Json.xml",
-        "newtonsoft.json.10.0.1.nupkg.sha512",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.10.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "tools/install.ps1"
       ]
@@ -9359,6 +9398,11 @@
       "type": "project",
       "path": "../Djm.OGame.Web.Api.BindingModels/Djm.OGame.Web.Api.BindingModels.csproj",
       "msbuildProject": "../Djm.OGame.Web.Api.BindingModels/Djm.OGame.Web.Api.BindingModels.csproj"
+    },
+    "Djm.OGame.Web.Api.Client/1.0.0": {
+      "type": "project",
+      "path": "../Djm.OGame.Web.Api.Client/Djm.OGame.Web.Api.Client.csproj",
+      "msbuildProject": "../Djm.OGame.Web.Api.Client/Djm.OGame.Web.Api.Client.csproj"
     },
     "Djm.OGame.Web.Api.Dal/1.0.0": {
       "type": "project",

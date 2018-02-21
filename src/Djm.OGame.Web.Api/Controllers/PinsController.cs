@@ -16,12 +16,12 @@ namespace Djm.OGame.Web.Api.Controllers
     public class PinsController : Controller
     {
         public IMapper Mapper;
-        public IOgameDb OGameDb;
+        public IOgameDb OGameDbProvider;
         public IOgClient OgameClient;
 
-        public PinsController(IOgameDb oGameDb, IMapper mapper,IOgClient ogclient)
+        public PinsController(IOgameDb oGameDbProvider, IMapper mapper,IOgClient ogclient)
         {
-            OGameDb = oGameDb;
+            OGameDbProvider = oGameDbProvider;
             Mapper = mapper;
             OgameClient = ogclient;
         }
@@ -39,13 +39,21 @@ namespace Djm.OGame.Web.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            //vérifier que les joueurs référencés existent
+
+            var players = OgameClient.Universe(universeId).GetPlayers();
+            if (players.FirstOrDefault(p => p.Id == bindingModel.OwnerId) == null)
+                return BadRequest("owner : aucun joueur avec l'id " + bindingModel.OwnerId + " n'existe sur l'univers " + bindingModel.UniverseId);
+            if (players.FirstOrDefault(p => p.Id == bindingModel.TargetId) == null)
+                return BadRequest("target : aucun joueur avec l'id " + bindingModel.TargetId + " n'existe sur l'univers "+bindingModel.UniverseId);
+
             //viewmodel => model
             var pin = Mapper.Map<Pin>(bindingModel);
 
             //insertion
             try
             {
-                pin = OGameDb.Insert(pin);
+                pin = OGameDbProvider.Pins.Insert(pin);
             }
             catch (DbEntityValidationException ex)
             {
@@ -66,7 +74,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         public IActionResult GetPin(int id)
         {
-            var pin = OGameDb.FirstOrDefault(id);
+            var pin = OGameDbProvider.Pins.FirstOrDefault(id);
 
             if (pin == null) return NotFound();
 
@@ -77,11 +85,9 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("player/{playerId:int}")]
         public IActionResult GetPinsForPlayer(int playerId,int universeId)
         {
-            var pins = OGameDb.ToList(playerId);
+            var pins = OGameDbProvider.Pins.ToList(playerId);
 
             if (!pins.Any()) return NotFound();
-
-            // récupérer le nom des joueurs
 
             var players = OgameClient.Universe(universeId).GetPlayers()
                 .Join(pins, player => player.Id, pin => pin.TargetId, (player, pin)
@@ -94,7 +100,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         public IActionResult DeletePin(int id)
         {
-            OGameDb.Delete(id);
+            OGameDbProvider.Pins.Delete(id);
 
             return NoContent();
         }

@@ -55,7 +55,7 @@ namespace OGame.Client
 
             if (playersXml == null) return null;
 
-            var players = playersXml.ListPlayers.Select(p => new Player(AllianceProvider, PositionsProvider, PlanetProvider)
+            var players = playersXml.ListPlayers.Select(p => new Player(AllianceProvider, PositionsProvider, PlanetProvider,PlayerProvider)
             {
                 Id = p.Id,
                 AllianceId = p.AllianceId,
@@ -236,7 +236,7 @@ namespace OGame.Client
             => GetAlliance(id) ?? new Alliance(PlayerProvider,ScoreProvider);
 
         Player IEntityProvider<int, Player>.Get(int id)
-            => GetPlayer(id) ?? new Player(AllianceProvider, PositionsProvider, PlanetProvider);
+            => GetPlayer(id) ?? new Player(AllianceProvider, PositionsProvider, PlanetProvider,PlayerProvider);
 
         List<Position> IEntityProvider<int, List<Position>>.Get(int id)
             => GetPositions(id);   

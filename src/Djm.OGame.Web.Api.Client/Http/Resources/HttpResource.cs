@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Client.Exceptions;
@@ -36,6 +38,19 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             var json = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        protected async Task<HttpResponseMessage> PostObjectAsync(object obj,CancellationToken cancellationToken)
+        {
+            var jsonObject = JsonConvert.SerializeObject(obj);
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+            
+            return await HttpClient.PostAsync(BaseUrl, content, cancellationToken);
+        }
+
+        protected async Task<HttpResponseMessage> DeleteAsync(int id, CancellationToken cancellationToken)
+        {
+            return await HttpClient.DeleteAsync(BaseUrl + id, cancellationToken);
         }
     }
 }

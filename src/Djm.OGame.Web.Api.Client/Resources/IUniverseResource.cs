@@ -5,5 +5,6 @@
         IPlayersResource Players { get; }
         IAlliancesResource Alliances { get; }
         IScoresResource Scores { get; }
+        IPinsResource Pins { get; }
     }
 }
