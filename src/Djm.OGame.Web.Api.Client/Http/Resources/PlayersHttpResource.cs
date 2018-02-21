@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Players;
@@ -23,4 +22,6 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         public Task<PlayerDetailsBindingModel> GetDetailsAsync(int playerId, CancellationToken cancellationToken)
             => JsonToPocoAsync<PlayerDetailsBindingModel>(playerId.ToString(CultureInfo.InvariantCulture), cancellationToken);
     }
+
+    
 }

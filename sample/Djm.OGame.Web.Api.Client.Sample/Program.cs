@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -57,21 +58,26 @@ namespace Djm.OGame.Web.Api.Client.Sample
                 while (!int.TryParse(input, out universeId));*/
 
 
-                var pin = await client.Universes[10].Pins.Add(104329, 106471, cancellationToken);
-                Console.WriteLine(pin);
-                
+                //var pin = await client.Universes[10].Pins.Add(104329, 106471, cancellationToken);
+                //Console.WriteLine(pin);
+
                 //client.Universes[10].Pins.Delete(15, cancellationToken);
                 //var alliance = await client.Universes[10].Alliances.GetDetailsAsync(500_000, cancellationToken);
-//                var player = await client.Universes[10].Players.GetDetailsAsync(103973, cancellationToken);
-//                Console.WriteLine(player.Name);
-//                Console.WriteLine("Joueurs mis en favori : ");
-//                foreach (var p in player.Favoris)
-//                {
-//                    Console.WriteLine(p.Name);
-//                }
+                //                var player = await client.Universes[10].Players.GetDetailsAsync(103973, cancellationToken);
+                //                Console.WriteLine(player.Name);
+                //                Console.WriteLine("Joueurs mis en favori : ");
+                //                foreach (var p in player.Favoris)
+                //                {
+                //                    Console.WriteLine(p.Name);
+                //                }
                 // Console.WriteLine(alliance.Name);
+                //Console.WriteLine("uploading image...");
 
 
+                //await client.Universes[10].Pictures.Set(121597, "pic4.jpg", cancellationToken);
+
+
+                
 
                 Console.WriteLine("Success");
             }
@@ -96,6 +102,10 @@ namespace Djm.OGame.Web.Api.Client.Sample
                 Console.WriteLine(e.Message);
             }
             catch (OgameBadRequestException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (FileNotFoundException e)
             {
                 Console.WriteLine(e.Message);
             }

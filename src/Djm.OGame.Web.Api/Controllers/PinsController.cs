@@ -42,6 +42,8 @@ namespace Djm.OGame.Web.Api.Controllers
             //vérifier que les joueurs référencés existent
 
             var players = OgameClient.Universe(universeId).GetPlayers();
+            if (players == null)
+                return BadRequest("L'univers " + universeId + " n'existe pas");
             if (players.FirstOrDefault(p => p.Id == bindingModel.OwnerId) == null)
                 return BadRequest("owner : aucun joueur avec l'id " + bindingModel.OwnerId + " n'existe sur l'univers " + bindingModel.UniverseId);
             if (players.FirstOrDefault(p => p.Id == bindingModel.TargetId) == null)

@@ -14,7 +14,7 @@ namespace Djm.OGame.Web.Api.Client.Http
         /// <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
         Task<HttpResponseMessage> GetAsync(string requestUri, CancellationToken cancellationToken);
 
-        Task<HttpResponseMessage> PostAsync(string requestUri, StringContent obj, CancellationToken cancellationToken);
+        Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent obj, CancellationToken cancellationToken);
 
         Task<HttpResponseMessage> DeleteAsync(string requestUri, CancellationToken cancellationToken);
     }

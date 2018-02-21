@@ -6,5 +6,6 @@
         IAlliancesResource Alliances { get; }
         IScoresResource Scores { get; }
         IPinsResource Pins { get; }
+        IPictureResource Pictures { get; }
     }
 }

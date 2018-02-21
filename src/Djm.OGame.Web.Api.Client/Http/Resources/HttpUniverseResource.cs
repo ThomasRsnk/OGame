@@ -19,6 +19,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             Alliances = new AlliancesHttpResource(HttpClient);
             Scores = new ScoresHttpResource(HttpClient);
             Pins = new PinsHttpResource(HttpClient);
+            Pictures = new PicturesHttpResource(HttpClient);
         }
 
         protected IHttpClient HttpClient { get; }
@@ -27,5 +28,6 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         public IAlliancesResource Alliances { get; }
         public IScoresResource Scores { get; }
         public IPinsResource Pins { get; }
+        public IPictureResource Pictures { get; }
     }
 }

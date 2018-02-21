@@ -6,49 +6,51 @@ using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Djm.OGame.Web.Api.Dal;
+using Djm.OGame.Web.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OGame.Client;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
-    [Route("~/api/universes/{universeId:int}/players/[Controller]/{playerId:int}")]
+    [Route("~/api/universes/{universeId:int}/players/{playerId:int}/[Controller]")]
     public class ProfilePicController : Controller
     {
-        public ProfilePicController(IOgClient ogclient)
+        public ProfilePicController(IPictureResource pictureResource)
         {
-            OgameClient = ogclient;
+            PictureResource = pictureResource;
         }
 
-        internal IOgClient OgameClient { get; set; }
+        internal IPictureResource PictureResource { get; }
+
 
         [HttpPost]
-        public async Task<IActionResult> AddProfilePic(IFormFile pic,int universeId,int playerId)
+        public async Task<IActionResult> AddProfilePic(int universeId,int playerId, IFormFile pic)
         {
-            var playerIdStr = playerId.ToString("D", CultureInfo.InvariantCulture);
-            var universeIdStr = universeId.ToString("D", CultureInfo.InvariantCulture);
-            var fileExtension = "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal)+1);
-            var path = "wwwroot/profilePictures/" + universeIdStr+"/";
-            
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            
-            var files = Directory.GetFiles(path, playerIdStr+".*");
-            
-            if(files.Length>0)
-                System.IO.File.Delete(files[0]);
-
-            path += playerIdStr + fileExtension;
-
-            using (var fileStream = System.IO.File.Create(path))
+            try
             {
-                await pic.CopyToAsync(fileStream); 
+                await PictureResource.Set(universeId, playerId, pic);
+            }
+            catch (PictureException e)
+            {
+                return BadRequest(e.Message);
             }
 
-            
+            return Ok();
+        }
 
-            return Ok(pic.ContentType);
+        [HttpGet]
+        public IActionResult GetProfilePic(int universeId, int playerid)
+        {
+            var image = PictureResource.Get(universeId, playerid);
+
+            if (image == null)
+                return NotFound("Le joueur "+playerid+" n'existe pas");
+
+            var extension = image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            var contentType = "image/" + extension;
+
+            return File(image, contentType);
         }
 
 

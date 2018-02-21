@@ -43,6 +43,7 @@ namespace Djm.OGame.Web.Api
 
             services.AddSingleton<IOgClient, OgClient>();
             services.AddSingleton<IOgameDb,OgameDb>();
+            services.AddSingleton<IPictureResource, PictureHandler>();
             //services.AddScoped<IOgameService, OgameFromClient>();
         }
 
