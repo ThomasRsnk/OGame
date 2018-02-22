@@ -5,10 +5,13 @@ using Djm.OGame.Web.Api.BindingModels.Pins;
 using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Dal;
-using Djm.OGame.Web.Api.Dal.Models;
+using Djm.OGame.Web.Api.Dal.Entities;
+using Djm.OGame.Web.Api.Dal.Repositories;
+using Djm.OGame.Web.Api.Dal.Services;
 using Djm.OGame.Web.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OGame.Client;
@@ -28,6 +31,9 @@ namespace Djm.OGame.Web.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("OGame");
+            services.AddDbContext<OGameContext>(db => db.UseSqlServer(connectionString));
+
             services.AddAutoMapper(cfg =>
             {
                 cfg.CreateMap<Player, PlayerDetailsBindingModel>()
@@ -41,10 +47,11 @@ namespace Djm.OGame.Web.Api
             services.AddMvc();
             services.AddLogging();
 
-            services.AddSingleton<IOgClient, OgClient>();
-            services.AddSingleton<IOgameDb,OgameDb>();
-            services.AddSingleton<IPictureResource, PictureHandler>();
-            //services.AddScoped<IOgameService, OgameFromClient>();
+            services.AddScoped<IOgClient, OgClient>();
+            services.AddScoped<IOgameDatabaseService, OgameDatabaseService>();
+            services.AddScoped<IPinRepository, PinRepository>();
+            services.AddScoped<IPictureResource, PictureHandler>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

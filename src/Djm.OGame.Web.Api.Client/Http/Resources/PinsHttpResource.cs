@@ -23,9 +23,9 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
 
             var jsonObject = JsonConvert.SerializeObject(pin);
             var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-            var response = HttpClient.PostAsync(BaseUrl, content, ct).Result;
             
+            var response = HttpClient.PostAsync(BaseUrl, content, ct).Result;
+          
             var body = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.BadRequest)
                 return JsonConvert.DeserializeObject<PinCreateBindingModel>(body);

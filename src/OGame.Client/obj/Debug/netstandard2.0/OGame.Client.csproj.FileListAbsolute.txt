@@ -1,15 +1,9 @@
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.csprojResolveAssemblyReference.cache
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.csproj.CoreCompileInputs.cache
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.AssemblyInfoInputs.cache
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.deps.json
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\OGame.Client.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Client.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Client.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\OGame.Client\obj\Debug\netstandard2.0\OGame.Client.csprojResolveAssemblyReference.cache

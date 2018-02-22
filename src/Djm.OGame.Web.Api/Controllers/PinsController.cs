@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pins;
-using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.Dal;
-using Djm.OGame.Web.Api.Dal.Models;
+using Djm.OGame.Web.Api.Dal.Entities;
+using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.AspNetCore.Mvc;
 using OGame.Client;
 
@@ -16,19 +16,20 @@ namespace Djm.OGame.Web.Api.Controllers
     public class PinsController : Controller
     {
         public IMapper Mapper;
-        public IOgameDb OGameDbProvider;
+        public IOgameDatabaseService OGameDatabaseServiceProvider;
         public IOgClient OgameClient;
 
-        public PinsController(IOgameDb oGameDbProvider, IMapper mapper,IOgClient ogclient)
+        public PinsController(IOgameDatabaseService oGameDatabaseServiceProvider, IMapper mapper,IOgClient ogclient)
         {
-            OGameDbProvider = oGameDbProvider;
+            OGameDatabaseServiceProvider = oGameDatabaseServiceProvider;
             Mapper = mapper;
             OgameClient = ogclient;
         }
-
+        
         [HttpPost]
-        public IActionResult AddPin([FromBody] PinCreateBindingModel bindingModel,int universeId)
+        public async Task<IActionResult> AddPin([FromBody] PinCreateBindingModel bindingModel,int universeId)
         {
+
             //check body empty
             if (bindingModel == null)
                 return BadRequest();
@@ -55,18 +56,27 @@ namespace Djm.OGame.Web.Api.Controllers
             //insertion
             try
             {
-                pin = OGameDbProvider.Pins.Insert(pin);
+                await OGameDatabaseServiceProvider.Pins.InsertAsync(pin);
             }
-            catch (DbEntityValidationException ex)
+            catch (Exception e)
             {
-                //uniqueness violated
-                var error = ex.EntityValidationErrors.First().ValidationErrors.First();
-                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                return BadRequest(ModelState);
+                return BadRequest(e.Message);
             }
             
+            //            try
+            //            {
+            //                pin = OGameDatabaseServiceProvider.Pins.Insert(pin);
+            //            }
+            //            catch (EntityValid ex)
+            //            {
+            //                //uniqueness violated
+            //                var error = ex.EntityValidationErrors.First().ValidationErrors.First();
+            //                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            //                return BadRequest(ModelState);
+            //            }
+
             //model => viewmodel
-            
+
             var viewModel = Mapper.Map<PinCreateBindingModel>(pin);
 
             return Created(Url.Action("GetPin", new { id = pin.Id }), viewModel);
@@ -74,9 +84,9 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetPin(int id)
+        public async Task<IActionResult> GetPin(int id)
         {
-            var pin = OGameDbProvider.Pins.FirstOrDefault(id);
+            var pin = await OGameDatabaseServiceProvider.Pins.FirstOrDefaultAsync(id);
 
             if (pin == null) return NotFound();
 
@@ -85,9 +95,9 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("player/{playerId:int}")]
-        public IActionResult GetPinsForPlayer(int playerId,int universeId)
+        public async Task<IActionResult> GetPinsForPlayer(int playerId,int universeId)
         {
-            var pins = OGameDbProvider.Pins.ToList(playerId);
+            var pins = await OGameDatabaseServiceProvider.Pins.ToListForOwnerAsync(playerId);
 
             if (!pins.Any()) return NotFound();
 
@@ -95,14 +105,27 @@ namespace Djm.OGame.Web.Api.Controllers
                 .Join(pins, player => player.Id, pin => pin.TargetId, (player, pin)
                     => new PinListItemBindingModel() {Id = pin.Id, PlayerId = player.Id, Name = player.Name}); 
 
-            return Ok(players);
+            return Ok(players); 
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> EditPin(int id, int targetId)
+        {
+            var pin = await OGameDatabaseServiceProvider.Pins.FirstOrDefaultAsync(id);
+
+            if (pin == null) return NotFound();
+
+            OGameDatabaseServiceProvider.Pins.Update(pin);
+
+            return Ok(pin);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        public IActionResult DeletePin(int id)
+        public async Task<IActionResult> DeletePin(int id)
         {
-            OGameDbProvider.Pins.Delete(id);
+            await OGameDatabaseServiceProvider.Pins.DeleteAsync(id);
 
             return NoContent();
         }

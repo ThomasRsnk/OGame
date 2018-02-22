@@ -1,40 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using Djm.OGame.Web.Api.Dal.Models;
+﻿using Djm.OGame.Web.Api.Dal.Data.Configurations;
+using Djm.OGame.Web.Api.Dal.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Djm.OGame.Web.Api.Dal
 {
     public class OGameContext : DbContext
     {
-        public OGameContext() : base("OGameDB")
+        public OGameContext(DbContextOptions options) : base(options)
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<OGameContext>());
         }
 
         public DbSet<Pin> Pins { get; set; }
 
-        protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry,IDictionary<object, object> items)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var result = base.ValidateEntity(entityEntry, items);
-            CheckUniqueness(result);
-            return result;
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new PinEntityTypeConfiguration());
         }
-
-        private void CheckUniqueness(DbEntityValidationResult result)
-        {
-            if (!(result.Entry.Entity is Pin pin)) return;
-
-            if(Pins.Any(p => p.OwnerId == pin.OwnerId
-                             && p.TargetId == pin.TargetId
-                             && p.UniverseId == pin.UniverseId))
-
-                result.ValidationErrors.Add(new DbValidationError("Erreur","Ce pin existe déjà"));
-        }
-
-        
     }
 }

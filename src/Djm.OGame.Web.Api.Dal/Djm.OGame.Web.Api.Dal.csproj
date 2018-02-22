@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <Compile Remove="Data\Migrations\20180221144227_InitialMigration.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Djm.OGame.Web.Api.Client\Djm.OGame.Web.Api.Client.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
   </ItemGroup>
 
 </Project>

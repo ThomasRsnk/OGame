@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using OGame.Client;
 using OGame.Client.Models;
-using OGame.Client.XmlBinding;
 
 namespace Djm.OGame.Web.Api.Services
 {

@@ -5,9 +5,5 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\net
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.deps.json
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Client.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.Client.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\bin\Debug\netstandard2.0\Djm.OGame.Web.Api.BindingModels.pdb
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api.Dal\obj\Debug\netstandard2.0\Djm.OGame.Web.Api.Dal.pdb

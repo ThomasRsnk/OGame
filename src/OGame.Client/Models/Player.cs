@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Djm.OGame.Web.Api.Dal;
 using OGame.Client.Providers.Web;
 
 namespace OGame.Client.Models
@@ -19,11 +17,7 @@ namespace OGame.Client.Models
             PositionsProvider = positionsProvider;
             PlanetProvider = planetprovider;
             PlayerProvider = pP;
-
-            OgameDbProvider = new OgameDb();
         }
-
-        internal IOgameDb OgameDbProvider { get; }
 
         public int Id { get; internal set; }
         public string Name { get; internal set; }
@@ -38,28 +32,7 @@ namespace OGame.Client.Models
       
         public PlayerStatus? Status { get; internal set; }
         public bool IsAdministrator => Status?.HasFlag(PlayerStatus.Administrator) == true;
-
-        public List<Favori> Favoris
-        {
-            get
-            {
-                var pins = OgameDbProvider.Pins.ToList(Id);//pins
-                
-                if (!pins.Any()) return new List<Favori>();
-
-                var pinsIds = pins.Select(p => p.TargetId).ToList();//liste des id des joueurs ciblés
-
-                var players =  pinsIds //liste des joueurs
-                    .Select(id => PlayerProvider.Get(id))
-                    .ToList();
-
-                var favoris = players //liste des favoris
-                    .Join(pins, player => player.Id, pin => pin.TargetId, (player, pin)
-                        => new Favori() { Id = pin.Id, PlayerId = player.Id, Name = player.Name }).ToList();
-
-                return favoris;
-            }
-        }
+        
 
         public override string ToString()
         {

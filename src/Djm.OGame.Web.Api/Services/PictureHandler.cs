@@ -29,7 +29,7 @@ namespace Djm.OGame.Web.Api.Services
             //vérifier que le type de fichier est valide
 
             if(!AllowedFileType.Contains(pic.ContentType))
-                throw  new PictureException("Fichier invalide, utilisez .png/.jpeg/.bmp");
+                throw  new PictureException("Fichier invalide, utilisez .png/.jpeg/.bmp/.jpg");
 
             //vérifier que l'univers et le joueur existent
 
@@ -51,7 +51,7 @@ namespace Djm.OGame.Web.Api.Services
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            //vérifier si image déjà présente (peu importe jpg,png,etc) et suppression le cas échéant
+            //vérifier si l'image est  déjà présente (peu importe jpg,png,etc) et suppression le cas échéant
 
             var files = Directory.GetFiles(path, playerIdStr + ".*");
 
