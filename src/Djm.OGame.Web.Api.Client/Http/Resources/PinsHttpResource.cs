@@ -31,7 +31,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
                 return JsonConvert.DeserializeObject<PinCreateBindingModel>(body);
 
             body.Replace("{", "").Replace("}", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(":"," : ");
-            throw new OgameBadRequestException(body);
+            throw new OgameException(body);
 
         }
 

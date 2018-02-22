@@ -48,10 +48,9 @@ namespace Djm.OGame.Web.Api
             services.AddLogging();
 
             services.AddScoped<IOgClient, OgClient>();
-            services.AddScoped<IOgameDatabaseService, OgameDatabaseService>();
             services.AddScoped<IPinRepository, PinRepository>();
             services.AddScoped<IPictureResource, PictureHandler>();
-            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

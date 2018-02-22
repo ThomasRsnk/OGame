@@ -1,12 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.Client.Exceptions;
 using Djm.OGame.Web.Api.Client.Http;
 
 namespace Djm.OGame.Web.Api.Client.Sample
 {
-    class Program
+    internal class Program
     {
         private static void Main(string[] args)
         {
@@ -22,24 +24,27 @@ namespace Djm.OGame.Web.Api.Client.Sample
             {
                 e.Handle(x =>
                 {
-                    if (x is HttpRequestException)
+                    switch (x)
                     {
-                        Console.WriteLine(x.GetType() + " : " + x.Message);
-                        return true;
+                        case OgameException ex:
+                            Console.WriteLine(ex.GetType() + " : " + ex.Message);
+                            return true;
+                        case OperationCanceledException ex:
+                            Console.WriteLine("La requête a été annulée");
+                            return true;
+                        case FileNotFoundException ex:
+                            Console.WriteLine(ex.GetType() + " : " + ex.Message);
+                            return true;
+                        case AggregateException ex:
+                            Console.WriteLine(ex.InnerException.GetType() + " : " + ex.InnerException.Message);
+                            return true;
+                        default: 
+                            Console.WriteLine(x.GetType() + " : " + x.Message);
+                            return true;
                     }
-
-                    if (x is Exception)
-                    {
-                        Console.WriteLine(x.GetType() + " : " + x.Message);
-                        return true;
-                    }
-                    return true;
-
-                });
-
+                 });
             }
-            
-            
+
             Console.WriteLine("Press a key to quit");
             Console.ReadKey(true);
         }
@@ -47,13 +52,17 @@ namespace Djm.OGame.Web.Api.Client.Sample
         private static async Task RunAsync(CancellationToken cancellationToken)
         {
             IOGameClient client = new HttpOGameClient();
-            var pin = await client.Universes[10].Pins.Add(104329, 106471, cancellationToken);
+
+            //exemple d'utilisations : 
+
+            var pin = await client.Universes[110].Pins.Add(104329, 106471, cancellationToken);
+            //var universes = await client.Universes.GetAllAsync(cancellationToken);
+            //await client.Universes[10].Pictures.Set(121597, "pic4.jpg", cancellationToken);
+
+
+
             Console.WriteLine(pin);
-            return;
-            
 
-
-            Console.WriteLine("Ended successfully");
         }
     }
 }

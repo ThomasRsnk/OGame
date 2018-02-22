@@ -32,7 +32,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             if (!response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
-                    throw new OgameNotFoundException(BaseUrl+ relativeUrl);
+                    throw new OgameException("La ressource demandée n'existe pas : "+BaseUrl + relativeUrl);
             }
 
             var json = await response.Content.ReadAsStringAsync();

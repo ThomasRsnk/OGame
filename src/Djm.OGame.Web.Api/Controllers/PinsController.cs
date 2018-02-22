@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pins;
-using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OGame.Client;
 
 
@@ -15,13 +14,13 @@ namespace Djm.OGame.Web.Api.Controllers
     [Route("~/Api/universes/{universeId:int}/pins")]
     public class PinsController : Controller
     {
+        public IUnitOfWork UnitOfWork { get; }
         public IMapper Mapper;
-        public IOgameDatabaseService OGameDatabaseServiceProvider;
         public IOgClient OgameClient;
 
-        public PinsController(IOgameDatabaseService oGameDatabaseServiceProvider, IMapper mapper,IOgClient ogclient)
+        public PinsController(IUnitOfWork unitOfWork, IMapper mapper,IOgClient ogclient)
         {
-            OGameDatabaseServiceProvider = oGameDatabaseServiceProvider;
+            UnitOfWork = unitOfWork;
             Mapper = mapper;
             OgameClient = ogclient;
         }
@@ -54,27 +53,19 @@ namespace Djm.OGame.Web.Api.Controllers
             var pin = Mapper.Map<Pin>(bindingModel);
 
             //insertion
+
+            await UnitOfWork.Pins.InsertAsync(pin);
+
+            //SaveChanges
             try
             {
-                await OGameDatabaseServiceProvider.Pins.InsertAsync(pin);
+                await UnitOfWork.CommitAsync();
             }
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
-                return BadRequest(e.Message);
+                if (e.InnerException != null) return BadRequest(e.InnerException.Message);
             }
             
-            //            try
-            //            {
-            //                pin = OGameDatabaseServiceProvider.Pins.Insert(pin);
-            //            }
-            //            catch (EntityValid ex)
-            //            {
-            //                //uniqueness violated
-            //                var error = ex.EntityValidationErrors.First().ValidationErrors.First();
-            //                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            //                return BadRequest(ModelState);
-            //            }
-
             //model => viewmodel
 
             var viewModel = Mapper.Map<PinCreateBindingModel>(pin);
@@ -86,7 +77,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetPin(int id)
         {
-            var pin = await OGameDatabaseServiceProvider.Pins.FirstOrDefaultAsync(id);
+            var pin = await UnitOfWork.Pins.FindAsync(id);
 
             if (pin == null) return NotFound();
 
@@ -97,7 +88,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("player/{playerId:int}")]
         public async Task<IActionResult> GetPinsForPlayer(int playerId,int universeId)
         {
-            var pins = await OGameDatabaseServiceProvider.Pins.ToListForOwnerAsync(playerId);
+            var pins = await UnitOfWork.Pins.ToListForOwnerAsync(playerId);
 
             if (!pins.Any()) return NotFound();
 
@@ -112,12 +103,12 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> EditPin(int id, int targetId)
         {
-            var pin = await OGameDatabaseServiceProvider.Pins.FirstOrDefaultAsync(id);
+            var pin = await UnitOfWork.Pins.FindAsync(id);
 
             if (pin == null) return NotFound();
 
-            OGameDatabaseServiceProvider.Pins.Update(pin);
-
+            UnitOfWork.Pins.Update(pin);
+            await UnitOfWork.CommitAsync();
             return Ok(pin);
         }
 
@@ -125,8 +116,8 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> DeletePin(int id)
         {
-            await OGameDatabaseServiceProvider.Pins.DeleteAsync(id);
-
+            await UnitOfWork.Pins.DeleteAsync(id);
+            await UnitOfWork.CommitAsync();
             return NoContent();
         }
     }

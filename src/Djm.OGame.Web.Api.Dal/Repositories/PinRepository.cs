@@ -1,50 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
+using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Djm.OGame.Web.Api.Dal.Repositories
 {
-    public class PinRepository : IPinRepository
+    public class PinRepository : Repository<Pin, int>, IPinRepository
     {
-        public OGameContext Ctx { get; }
-
-        public PinRepository(OGameContext ctx)
+        public PinRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            Ctx = ctx;
         }
 
-        public async Task InsertAsync(Pin pin)
+
+        //méthodes spécifique au type de donnée
+
+        public async Task<List<Pin>> ToListForOwnerAsync(int ownedId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Ctx.Pins.AddAsync(pin);
+            return await DbSet.Where(p => p.OwnerId == ownedId).Select(p => p).ToListAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(int pinId)
-        {
-            var pin = await Ctx.Pins.FirstOrDefaultAsync(p => p.Id == pinId);
-            if (pin == null) return;
-            Ctx.Pins.Remove(pin);
-        }
-
-        public async Task<List<Pin>> ToListForOwnerAsync(int ownedId)
-        {
-            return await Ctx.Pins.Where(p => p.OwnerId == ownedId).Select(p => p).ToListAsync();
-        }
-
-        public async Task<Pin> FirstOrDefaultAsync(int pinId)
-        {
-            return await Ctx.Pins.FirstOrDefaultAsync(p => p.Id == pinId);
-        }
-
-        public void Update(Pin pin)
-        {
-            Ctx.Pins.Update(pin);
-        }
-
-        public async Task SaveChangesAsync()
-        {
-            await Ctx.SaveChangesAsync();
-        }
     }
 }

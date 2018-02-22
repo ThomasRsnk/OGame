@@ -21,7 +21,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             var image = File.OpenRead(path);
             
             if (image == null)
-                throw new OgameBadRequestException("Error reading image file");
+                throw new OgameException("Error reading image file");
 
             var ms = new MemoryStream();
             await image.CopyToAsync(ms);
@@ -44,7 +44,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             if (response.StatusCode != HttpStatusCode.BadRequest) return;
 
             var body = response.Content.ReadAsStringAsync().Result;
-            throw new OgameBadRequestException(body);
+            throw new OgameException(body);
             
         }
 
