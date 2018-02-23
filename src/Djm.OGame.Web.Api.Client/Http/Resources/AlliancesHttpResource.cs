@@ -20,11 +20,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             => JsonToPocoAsync<List<AllianceListItemBindingModel>>(cancellationToken);
 
         public Task<AllianceDetailsBindingModel> GetDetailsAsync(int allianceId, CancellationToken cancellationToken)
-        {
-            //throw  new OgameNotFoundException("alliance not found : "+ allianceId);
-            return JsonToPocoAsync<AllianceDetailsBindingModel>(allianceId.ToString(CultureInfo.InvariantCulture),
+            => JsonToPocoAsync<AllianceDetailsBindingModel>(allianceId.ToString(CultureInfo.InvariantCulture),
                 cancellationToken);
-
-        }
     }
 }

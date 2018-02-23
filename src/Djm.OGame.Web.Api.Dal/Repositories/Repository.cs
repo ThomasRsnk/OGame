@@ -19,9 +19,9 @@ namespace Djm.OGame.Web.Api.Dal.Repositories
             return await DbSet.FindAsync(new object[]{ id },cancellation);
         }
 
-        public virtual async Task InsertAsync(TEntity entity,CancellationToken cancellation = default(CancellationToken))
+        public virtual void InsertAsync(TEntity entity)
         {
-            await DbSet.AddAsync(entity, cancellation);
+            DbSet.Add(entity);
         }
 
         public virtual async Task DeleteAsync(TKey id, CancellationToken cancellation = default(CancellationToken))

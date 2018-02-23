@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using AutoMapper;
-using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Services;
+using Djm.OGame.Web.Api.Services.Pictures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OGame.Client;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
     [Route("~/api/universes/{universeId:int}/players/{playerId:int}/[Controller]")]
     public class ProfilePicController : Controller
     {
-        public ProfilePicController(IPictureResource pictureResource)
+        public ProfilePicController(IPicture picture)
         {
-            PictureResource = pictureResource;
+            Picture = picture;
         }
 
-        internal IPictureResource PictureResource { get; }
+        internal IPicture Picture { get; }
 
 
         [HttpPost]
@@ -29,7 +23,7 @@ namespace Djm.OGame.Web.Api.Controllers
         {
             try
             {
-                await PictureResource.Set(universeId, playerId, pic);
+                await Picture.Set(universeId, playerId, pic);
             }
             catch (PictureException e)
             {
@@ -42,7 +36,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [HttpGet]
         public IActionResult GetProfilePic(int universeId, int playerid)
         {
-            var image = PictureResource.Get(universeId, playerid);
+            var image = Picture.Get(universeId, playerid);
 
             if (image == null)
                 return NotFound("Le joueur "+playerid+" n'existe pas");

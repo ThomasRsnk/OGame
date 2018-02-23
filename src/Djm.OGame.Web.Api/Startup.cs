@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using Djm.OGame.Web.Api.BindingModels.Alliances;
+﻿using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pins;
 using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.BindingModels.Scores;
@@ -8,7 +6,7 @@ using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories;
 using Djm.OGame.Web.Api.Dal.Services;
-using Djm.OGame.Web.Api.Services;
+using Djm.OGame.Web.Api.Services.Pictures;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +47,7 @@ namespace Djm.OGame.Web.Api
 
             services.AddScoped<IOgClient, OgClient>();
             services.AddScoped<IPinRepository, PinRepository>();
-            services.AddScoped<IPictureResource, PictureHandler>();
+            services.AddScoped<IPicture, PictureHandler>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

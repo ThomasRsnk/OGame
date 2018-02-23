@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using Djm.OGame.Web.Api.Dal.Data.Configurations;
+﻿using Djm.OGame.Web.Api.Dal.Data.Configurations;
 using Djm.OGame.Web.Api.Dal.Entities;
-using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Djm.OGame.Web.Api.Dal

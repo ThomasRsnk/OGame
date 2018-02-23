@@ -13,12 +13,13 @@ namespace Djm.OGame.Web.Api.Controllers
     [Route("~/Api/Universes/{universeId:int}/Players")]
     public class PlayersController : Controller
     {
-        
+        public IUnitOfWork UnitOfWork { get; }
         public IOgClient OgameClient;
         public IMapper Mapper;
 
-        public PlayersController(IOgClient ogameClient, IMapper mapper)
+        public PlayersController(IOgClient ogameClient, IMapper mapper,IUnitOfWork unitOfWork)
         {
+            UnitOfWork = unitOfWork;
             OgameClient = ogameClient;
             Mapper = mapper;
         }
@@ -53,7 +54,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
             var viewModel = Mapper.Map<PlayerDetailsBindingModel>(player);
 
-            /*var pins = await OgameDatabase.Pins.ToListForOwnerAsync(playerId);
+            var pins = await UnitOfWork.Pins.ToListForOwnerAsync(playerId);
 
             if (!pins.Any()) return Ok(viewModel);
 
@@ -61,7 +62,7 @@ namespace Djm.OGame.Web.Api.Controllers
                 .Join(pins, joueur => joueur.Id, pin => pin.TargetId, (joueur, pin)
                     => new PinListItemBindingModel() { Id = pin.Id, PlayerId = joueur.Id, Name = joueur.Name });
 
-            viewModel.Favoris = pinsWithPlayersName.ToList();*/
+            viewModel.Favoris = pinsWithPlayersName.ToList();
 
             return Ok(viewModel);
         }

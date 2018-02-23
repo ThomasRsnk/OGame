@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using OGame.Client;
 
-namespace Djm.OGame.Web.Api.Services
+namespace Djm.OGame.Web.Api.Services.Pictures
 {
-    public class PictureHandler : IPictureResource
+    public class PictureHandler : IPicture
     {
         public IOgClient OGameClient { get; }
         private const string BasePath = "wwwroot/profilePictures/";

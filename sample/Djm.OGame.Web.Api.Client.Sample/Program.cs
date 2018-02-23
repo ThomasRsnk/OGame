@@ -18,7 +18,7 @@ namespace Djm.OGame.Web.Api.Client.Sample
             {
                 var task = Task.Run(() => RunAsync(cts.Token));
 
-                task.Wait();
+                task.Wait(cts.Token);
             }
             catch (AggregateException e)
             {
