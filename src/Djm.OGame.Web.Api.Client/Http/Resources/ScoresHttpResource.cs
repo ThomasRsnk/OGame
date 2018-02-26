@@ -19,7 +19,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
 
         public Task<List<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(int type,
             CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemPlayerBindingModel>>("players/" + type.ToString(CultureInfo.InvariantCulture), cancellationToken);
+            => JsonToPocoAsync<List<ScoreListItemPlayerBindingModel>>("players?type=" + type.ToString(CultureInfo.InvariantCulture), cancellationToken);
 
         public Task<List<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(CancellationToken cancellationToken)
             => JsonToPocoAsync<List<ScoreListItemAllianceBindingModel>>("alliances/", cancellationToken);

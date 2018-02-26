@@ -11,12 +11,16 @@ namespace Djm.OGame.Web.Api.Dal
         }
 
         public DbSet<Pin> Pins { get; set; }
+        public DbSet<Univers> Univers { get; set; }
+        public DbSet<Player> Players { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new PinEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UniversEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerEntityTypeConfiguration());
         }
 
        

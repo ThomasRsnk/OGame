@@ -9,5 +9,7 @@ namespace Djm.OGame.Web.Api.Client.Resources
     {
         Task<List<PlayerListItemBindingModel>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
         Task<PlayerDetailsBindingModel> GetDetailsAsync(int playerId, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<bool> Connect(string playerName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

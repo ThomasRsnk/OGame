@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Scores;
 using Microsoft.AspNetCore.Mvc;
@@ -21,13 +22,14 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Route("players/{type:int?}")]//classement des joueurs
-        public IActionResult GetAllForPlayers(int universeId,int type=0)
+        [Route("players")]//classement des joueurs
+        public IActionResult GetAllForPlayers(int universeId,int type=0,int skip=0,int take=3000)
         {
             var scores = OgameClient.Universe(universeId).GetPlayersScores(type);
 
-            if (scores == null)
-                return NotFound();
+            if (scores == null ) return NotFound();
+
+            scores = scores.Skip(skip).Take(take).ToList();
 
             var viewModel = Mapper.Map<List<ScoreListItemPlayerBindingModel>>(scores);
 
@@ -36,12 +38,13 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("alliances")]//classement des joueurs
-        public IActionResult GetAllForAlliances(int universeId)
+        public IActionResult GetAllForAlliances(int universeId,int skip=0,int take=2000)
         {
             var scores = OgameClient.Universe(universeId).GetAllianceScores();
 
-            if (scores == null)
-                return NotFound();
+            if (scores == null) return NotFound("L'univers n'existe pas");
+
+            scores = scores.Skip(skip).Take(take).ToList();
 
             var viewModel = Mapper.Map<List<ScoreListItemAllianceBindingModel>>(scores);
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
+using Djm.OGame.Web.Api.BindingModels.Universes;
 using OGame.Client.Models;
 using OGame.Client.Providers.Cache;
 using OGame.Client.Providers.Log;
@@ -28,8 +29,8 @@ namespace OGame.Client
             ScoreProvider = this;
             PlanetProvider = this;
             PositionsProvider = this;
-            Universes = new Dictionary<int, string>();
-            GetUniversesIds();
+
+            
         }
 
         public int Id { get; }
@@ -46,16 +47,16 @@ namespace OGame.Client
         internal IPositionsProvider PositionsProvider { get; }
 
         internal List<int> UniversesIds { get; set; }
-        internal Dictionary<int,string> Universes { get; set; }
 
         public List<Player> GetPlayers()
         {
             var url = BaseUrl + "players.xml";
+            
             var playersXml = Deserialize<PlayersXmlBinding>(url);
 
             if (playersXml == null) return null;
 
-            var players = playersXml.ListPlayers.Select(p => new Player(AllianceProvider, PositionsProvider, PlanetProvider,PlayerProvider)
+            var players = playersXml.ListPlayers.Select(p => new Player(AllianceProvider, PositionsProvider, PlanetProvider)
             {
                 Id = p.Id,
                 AllianceId = p.AllianceId,
@@ -180,20 +181,23 @@ namespace OGame.Client
             UniversesIds = universesXml.Univers.Select(u => u.Id).ToList();
         }
 
-        public Dictionary<int, string> GetUniverses()
+        public List<UniverseListItemViewModel> GetUniverses()
         {
-            if (Universes.Values.Any())
-                return Universes;
-
+            GetUniversesIds();
+            var universes = new List<UniverseListItemViewModel>();
             foreach (var n in UniversesIds)
             {
                 var url = "http://s" + n.ToString("D",CultureInfo.InvariantCulture) + "-fr.ogame.gameforge.com/api/serverData.xml";
                 var serverDataXml = Deserialize<ServerDataXmlBinding>(url);
                 
-                Universes.Add(serverDataXml.Id,serverDataXml.Name ?? "Ogame "+serverDataXml.Id);
+                universes.Add(new UniverseListItemViewModel()
+                {
+                    Id = serverDataXml.Id,
+                    Name = serverDataXml.Name ?? "OGame "+serverDataXml.Id
+                });
             }
 
-            return Universes;
+            return universes;
         }
 
         public List<Position> GetPositions(int playerId)
@@ -236,7 +240,7 @@ namespace OGame.Client
             => GetAlliance(id) ?? new Alliance(PlayerProvider,ScoreProvider);
 
         Player IEntityProvider<int, Player>.Get(int id)
-            => GetPlayer(id) ?? new Player(AllianceProvider, PositionsProvider, PlanetProvider,PlayerProvider);
+            => GetPlayer(id) ?? new Player(AllianceProvider, PositionsProvider, PlanetProvider);
 
         List<Position> IEntityProvider<int, List<Position>>.Get(int id)
             => GetPositions(id);   

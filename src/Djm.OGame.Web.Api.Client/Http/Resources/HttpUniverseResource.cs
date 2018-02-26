@@ -29,5 +29,8 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         public IScoresResource Scores { get; }
         public IPinsResource Pins { get; }
         public IPictureResource Pictures { get; }
+
+        
+
     }
 }

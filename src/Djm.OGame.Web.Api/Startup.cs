@@ -4,7 +4,6 @@ using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Dal.Entities;
-using Djm.OGame.Web.Api.Dal.Repositories;
 using Djm.OGame.Web.Api.Dal.Services;
 using Djm.OGame.Web.Api.Services.Pictures;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OGame.Client;
 using OGame.Client.Models;
+using Player = OGame.Client.Models.Player;
+
 
 namespace Djm.OGame.Web.Api
 {
@@ -41,13 +42,16 @@ namespace Djm.OGame.Web.Api
 
                 cfg.CreateMap<PinCreateBindingModel, Pin>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+                cfg.CreateMap<Player, PlayerListItemBindingModel>()
+                    .ForMember(dest => dest.ProfilePicUrl, opt => opt.Ignore());
+
             });
             services.AddMvc();
             services.AddLogging();
 
             services.AddScoped<IOgClient, OgClient>();
-            services.AddScoped<IPinRepository, PinRepository>();
-            services.AddScoped<IPicture, PictureHandler>();
+            services.AddScoped<IPicturehandler, PictureHandler>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Planets;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,13 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetAll(int universeId)
+        public IActionResult GetAll(int universeId,int skip=0,int take = 30_000)
         {
             var planets = OgameClient.Universe(universeId).GetPlanets();
 
-            if (planets == null)
-                return NotFound();
+            if (planets == null) return NotFound();
+
+            planets = planets.Skip(skip).Take(take).ToList();
 
             var viewModel = Mapper.Map<List<PlanetDetailsBindingModel>>(planets);
 

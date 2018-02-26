@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels.Universes;
 using Djm.OGame.Web.Api.Client.Resources;
 
 namespace Djm.OGame.Web.Api.Client.Http.Resources
@@ -12,7 +13,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<Dictionary<int, string>> GetAllAsync(CancellationToken cancellationToken)
-            => JsonToPocoAsync<Dictionary<int, string>>(cancellationToken);
+        public Task<List<UniverseListItemViewModel>> GetAllAsync(CancellationToken cancellationToken)
+            => JsonToPocoAsync<List<UniverseListItemViewModel>>(cancellationToken);
     }
 }

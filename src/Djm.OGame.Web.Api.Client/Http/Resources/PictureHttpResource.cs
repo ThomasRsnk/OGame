@@ -15,7 +15,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         public PicturesHttpResource(IHttpClient httpClient) : base(httpClient, "players/")
         { }
 
-        public async Task Set(int playerId, string path, CancellationToken ct)
+        public async Task<bool> Set(int playerId, string path, CancellationToken ct)
         {
             //lecture du fichier et transformation en byte[]
             var image = File.OpenRead(path);
@@ -35,20 +35,21 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             imageContent.Headers.ContentType =
                 MediaTypeHeaderValue.Parse(contentType);
 
-            requestContent.Add(imageContent, "pic", "image.jpg");
+            requestContent.Add(imageContent, "pic","image.jpg");
 
             //envoi
             var response = HttpClient.PostAsync(url, requestContent,ct).Result;
-            
-            //traitement erreurs
-            if (response.StatusCode != HttpStatusCode.BadRequest) return;
 
+            if (response.IsSuccessStatusCode) return true;
+
+            //traitement erreurs
+    
             var body = response.Content.ReadAsStringAsync().Result;
             throw new OgameException(body);
             
         }
 
-        public string Get(int playerId, CancellationToken ct)
+        public string Get(int playerId)
         {
             return BaseUrl + playerId + "/profilepic";
         }

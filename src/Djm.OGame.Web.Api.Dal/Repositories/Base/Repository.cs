@@ -1,9 +1,10 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Djm.OGame.Web.Api.Dal.Repositories
+namespace Djm.OGame.Web.Api.Dal.Repositories.Base
 {
     public class Repository<TEntity,TKey> where TEntity : class
     {
@@ -19,7 +20,7 @@ namespace Djm.OGame.Web.Api.Dal.Repositories
             return await DbSet.FindAsync(new object[]{ id },cancellation);
         }
 
-        public virtual void InsertAsync(TEntity entity)
+        public virtual void Insert(TEntity entity)
         {
             DbSet.Add(entity);
         }
@@ -33,6 +34,11 @@ namespace Djm.OGame.Web.Api.Dal.Repositories
         public virtual void Update(TEntity entity)
         {
             DbSet.Update(entity);
+        }
+
+        public virtual async Task<List<TEntity>> ToListAsync(CancellationToken cancellation = default(CancellationToken))
+        {
+            return await DbSet.ToListAsync(cancellation);
         }
     }
 }

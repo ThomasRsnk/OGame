@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Djm.OGame.Web.Api.BindingModels.Universes;
 using OGame.Client.Models;
 using OGame.Client.XmlBinding;
 
@@ -19,6 +20,6 @@ namespace OGame.Client
         List<PlayerScore> GetPlayersScores(int type);
         List<AllianceScore> GetAllianceScores();
         List<Position> GetPositions(int playerId);
-        Dictionary<int, string> GetUniverses();
+        List<UniverseListItemViewModel> GetUniverses();
     }
 }

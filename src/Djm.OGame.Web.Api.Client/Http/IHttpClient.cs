@@ -17,5 +17,7 @@ namespace Djm.OGame.Web.Api.Client.Http
         Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent obj, CancellationToken cancellationToken);
 
         Task<HttpResponseMessage> DeleteAsync(string requestUri, CancellationToken cancellationToken);
+
+        string Url { get; }
     }
 }

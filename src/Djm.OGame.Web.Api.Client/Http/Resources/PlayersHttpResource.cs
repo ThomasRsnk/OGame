@@ -14,6 +14,13 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
+        public async Task<bool> Connect(string playerName,CancellationToken cancellationToken)
+        {
+            var response =  await HttpClient.GetAsync(BaseUrl + "connection?pseudo="+playerName, cancellationToken);
+
+            return response.IsSuccessStatusCode;
+        }
+
         [DebuggerStepThrough]
         public Task<List<PlayerListItemBindingModel>> GetAllAsync(CancellationToken cancellationToken)
             => JsonToPocoAsync<List<PlayerListItemBindingModel>>(cancellationToken);

@@ -9,14 +9,12 @@ namespace OGame.Client.Models
         internal IAllianceProvider AllianceProvider { get; }
         internal IPositionsProvider PositionsProvider { get; }
         internal IPlanetProvider PlanetProvider { get; }
-        internal IPlayerProvider PlayerProvider { get; }
 
-        internal Player(IAllianceProvider allianceProvider, IPositionsProvider positionsProvider, IPlanetProvider planetprovider,IPlayerProvider pP)
+        internal Player(IAllianceProvider allianceProvider, IPositionsProvider positionsProvider, IPlanetProvider planetprovider)
         {
             AllianceProvider = allianceProvider;
             PositionsProvider = positionsProvider;
             PlanetProvider = planetprovider;
-            PlayerProvider = pP;
         }
 
         public int Id { get; internal set; }

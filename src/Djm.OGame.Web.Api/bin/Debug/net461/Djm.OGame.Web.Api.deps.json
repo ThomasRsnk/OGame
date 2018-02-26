@@ -2080,6 +2080,9 @@
         }
       },
       "OGame.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0"
+        },
         "compile": {
           "OGame.Client.dll": {}
         }
@@ -3542,6 +3545,9 @@
         }
       },
       "OGame.Client/1.0.0": {
+        "dependencies": {
+          "Djm.OGame.Web.Api.BindingModels": "1.0.0"
+        },
         "runtime": {
           "OGame.Client.dll": {}
         }

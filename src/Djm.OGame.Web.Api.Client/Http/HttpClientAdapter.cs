@@ -9,9 +9,11 @@ namespace Djm.OGame.Web.Api.Client.Http
     {
         public HttpClient HttpClient { get; }
 
+
         public HttpClientAdapter(HttpClient httpClient)
         {
             HttpClient = httpClient;
+            Url = httpClient.BaseAddress.ToString();
         }
 
         public Task<HttpResponseMessage> GetAsync(string requestUri, CancellationToken cancellationToken) 
@@ -22,5 +24,7 @@ namespace Djm.OGame.Web.Api.Client.Http
 
         public Task<HttpResponseMessage> DeleteAsync(string requestUri, CancellationToken cancellationToken)
             => HttpClient.DeleteAsync(requestUri, cancellationToken);
+
+        public string Url { get; }
     }
 }

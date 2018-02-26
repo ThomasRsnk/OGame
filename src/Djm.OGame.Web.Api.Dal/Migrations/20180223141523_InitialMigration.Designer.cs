@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Djm.OGame.Web.Api.Dal.Data.Migrations
+namespace Djm.OGame.Web.Api.Dal.Migrations
 {
     [DbContext(typeof(OGameContext))]
-    [Migration("20180221144431_InitialMigration")]
+    [Migration("20180223141523_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +21,7 @@ namespace Djm.OGame.Web.Api.Dal.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Models.Pin", b =>
+            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Pin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -33,7 +34,22 @@ namespace Djm.OGame.Web.Api.Dal.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UniverseId", "OwnerId", "TargetId")
+                        .IsUnique();
+
                     b.ToTable("Pins");
+                });
+
+            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Univers", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Univers");
                 });
 #pragma warning restore 612, 618
         }

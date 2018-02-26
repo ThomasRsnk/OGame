@@ -23,17 +23,26 @@ namespace Djm.OGame.Web.Api.Controllers
             OgameClient = ogameClient;
             Mapper = mapper;
         }
-
+        
         [HttpGet]
         [Route("")]
-        public IActionResult GetAll(int universeId)
+        public async Task<IActionResult> GetAll(int universeId,int skip=0,int take = 10_000)
         {
             var players = OgameClient.Universe(universeId).GetPlayers();
 
-            if (players == null)
-                return NotFound();
+            if (players == null) return NotFound("Cet univers n'existe pas");
+
+            players = players.Skip(skip).Take(take).ToList();
 
             var viewModel = Mapper.Map<List<PlayerListItemBindingModel>>(players);
+
+            foreach (var vm in viewModel)
+            {
+                var tuple = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, vm.Id);
+                if (tuple != null)
+                    vm.ProfilePicUrl = "http://localhost:53388/api/universes/" + universeId + "/players/" + vm.Id +
+                                       "/profilepic";
+            }
 
             return Ok(viewModel);
         }
@@ -45,7 +54,7 @@ namespace Djm.OGame.Web.Api.Controllers
             var players = OgameClient.Universe(universeId).GetPlayers();
 
             if (players == null)
-                return BadRequest("Cet univers n'existe pas");
+                return NotFound("Cet univers n'existe pas");
 
             var player = players.FirstOrDefault(p => p.Id == playerId);
 
@@ -65,6 +74,16 @@ namespace Djm.OGame.Web.Api.Controllers
             viewModel.Favoris = pinsWithPlayersName.ToList();
 
             return Ok(viewModel);
+        }
+
+        [HttpGet]
+        [Route("connection")]
+        public IActionResult Connect(int universeId, string pseudo)
+        {
+            if (OgameClient.Universe(universeId).GetPlayers().Exists(p => p.Name == pseudo))
+                return Ok(true);
+
+            return Unauthorized();
         }
     }
 }

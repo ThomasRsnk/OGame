@@ -1,6 +1,6 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.Services;
 using Djm.OGame.Web.Api.Services.Pictures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +10,12 @@ namespace Djm.OGame.Web.Api.Controllers
     [Route("~/api/universes/{universeId:int}/players/{playerId:int}/[Controller]")]
     public class ProfilePicController : Controller
     {
-        public ProfilePicController(IPicture picture)
+        public ProfilePicController(IPicturehandler pictureHandler)
         {
-            Picture = picture;
+            PictureHandler = pictureHandler;
         }
 
-        internal IPicture Picture { get; }
+        internal IPicturehandler PictureHandler { get; }
 
 
         [HttpPost]
@@ -23,7 +23,7 @@ namespace Djm.OGame.Web.Api.Controllers
         {
             try
             {
-                await Picture.Set(universeId, playerId, pic);
+                await PictureHandler.SavePictureAsync(universeId, playerId, pic);
             }
             catch (PictureException e)
             {
@@ -34,15 +34,15 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProfilePic(int universeId, int playerid)
+        public async Task<IActionResult> GetProfilePic(int universeId, int playerid)
         {
-            var image = Picture.Get(universeId, playerid);
+            var image = await PictureHandler.GetAsync(universeId, playerid);
 
             if (image == null)
-                return NotFound("Le joueur "+playerid+" n'existe pas");
+                return NotFound();
 
-            var extension = image.Name.Substring(image.Name.LastIndexOf(".", StringComparison.Ordinal) + 1);
-            var contentType = "image/" + extension;
+            var extension = Path.GetExtension(image.Name);
+            var contentType = "image/" + extension?.Substring(1);
 
             return File(image, contentType);
         }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Client.Exceptions;
@@ -28,16 +25,16 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         protected async Task<T> JsonToPocoAsync<T>(string relativeUrl, CancellationToken cancellationToken)
         {
             var response = await HttpClient.GetAsync(BaseUrl + relativeUrl, cancellationToken);
-            
-            if (!response.IsSuccessStatusCode)
-            {
-                if (response.StatusCode == HttpStatusCode.NotFound)
-                    throw new OgameException("La ressource demandée n'existe pas : "+BaseUrl + relativeUrl);
-            }
+            var body = await response.Content.ReadAsStringAsync();
 
-            var json = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<T>(body);
 
-            return JsonConvert.DeserializeObject<T>(json);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                throw new OgameException("\n404 Not Found : \n"
+                                         + HttpClient.Url + BaseUrl + relativeUrl+"\n"
+                                         +body);
+      
+            return JsonConvert.DeserializeObject<T>(body);
         }
 
        

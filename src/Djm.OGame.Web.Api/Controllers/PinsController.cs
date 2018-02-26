@@ -54,7 +54,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
             //insertion
 
-            UnitOfWork.Pins.InsertAsync(pin);
+            UnitOfWork.Pins.Insert(pin);
 
             //SaveChanges
             try
