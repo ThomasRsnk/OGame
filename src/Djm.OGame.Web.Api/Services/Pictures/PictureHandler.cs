@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Services;
@@ -29,7 +28,7 @@ namespace Djm.OGame.Web.Api.Services.Pictures
             };
         }
 
-        public async Task SavePictureAsync(int universeId, int playerId, IFormFile pic)
+        public async Task SavePictureAsync(int universeId, int playerId, IFormFile pic,CancellationToken cancellation)
         {
             //vérifier que le fichier a bien été reçu
 
@@ -60,7 +59,7 @@ namespace Djm.OGame.Web.Api.Services.Pictures
            
             //vérifier si l'image est déjà présente
 
-            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId);
+            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId, cancellation);
 
             if (player != null)//OUI
             {
@@ -98,15 +97,15 @@ namespace Djm.OGame.Web.Api.Services.Pictures
 
             using (var fileStream = File.Create(path))
             {
-                await pic.CopyToAsync(fileStream);
+                await pic.CopyToAsync(fileStream, cancellation);
             }
 
-            await UnitOfWork.CommitAsync();
+            await UnitOfWork.CommitAsync(cancellation);
         }
 
-        public async Task<FileStream> GetAsync(int universeId, int playerId)
+        public async Task<FileStream> GetAsync(int universeId, int playerId,CancellationToken cancellation)
         {
-            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId);
+            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId, cancellation);
 
             var universeIdStr = Utils.Utils.ToStringInvariant(universeId);
 

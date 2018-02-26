@@ -63,6 +63,17 @@ namespace Djm.OGame.Web.Api.Controllers
 
             var viewModel = Mapper.Map<PlayerDetailsBindingModel>(player);
 
+            //PICTURE
+
+            var tuple = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId);
+
+            if (tuple != null)
+                viewModel.ProfilePicUrl = "http://localhost:53388/api/universes/"
+                                          + universeId + "/players/" + tuple.Id
+                                          + "/profilepic";
+
+            //FAVORIS
+
             var pins = await UnitOfWork.Pins.ToListForOwnerAsync(playerId);
 
             if (!pins.Any()) return Ok(viewModel);
@@ -72,6 +83,8 @@ namespace Djm.OGame.Web.Api.Controllers
                     => new PinListItemBindingModel() { Id = pin.Id, PlayerId = joueur.Id, Name = joueur.Name });
 
             viewModel.Favoris = pinsWithPlayersName.ToList();
+
+            
 
             return Ok(viewModel);
         }
