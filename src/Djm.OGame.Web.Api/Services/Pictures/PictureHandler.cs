@@ -54,8 +54,11 @@ namespace Djm.OGame.Web.Api.Services.Pictures
             var universeIdStr = Utils.Utils.ToStringInvariant(universeId);
 
             var fileName = playerIdStr+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
+
+            var directory = Path.Combine(_basePath, universeIdStr);
+
+            var path = Path.GetFullPath(Path.Combine(directory,fileName));
             
-            var path = Path.Combine(_basePath, universeIdStr);
            
             //vérifier si l'image est déjà présente
 
@@ -65,12 +68,12 @@ namespace Djm.OGame.Web.Api.Services.Pictures
             {
                 // 1) Modification en db
 
-                player.ProfilePicturePath = fileName;
+                player.ProfilePicturePath = path;
                 UnitOfWork.Players.Update(player);
                 
                 // 2) Suppression dans le fs
                 
-                var files = Directory.GetFiles(path, playerIdStr + ".*");
+                var files = Directory.GetFiles(directory, playerIdStr + ".*");
 
                 foreach(var file in files)
                     File.Delete(file);
@@ -79,8 +82,8 @@ namespace Djm.OGame.Web.Api.Services.Pictures
             {
                 // 1) vérifier que le répertoire de l'univers spéficié existe
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
 
                 // 2) création d'un tuple en db
 
@@ -88,12 +91,11 @@ namespace Djm.OGame.Web.Api.Services.Pictures
                 {
                     Id = playerId,
                     UniverseId = universeId,
-                    ProfilePicturePath = fileName
+                    ProfilePicturePath = path
                 });
             }
 
             //enregistrer l'image dans le fs et commit
-            path = Path.Combine(path, fileName);
 
             using (var fileStream = File.Create(path))
             {
@@ -107,9 +109,7 @@ namespace Djm.OGame.Web.Api.Services.Pictures
         {
             var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId, cancellation);
 
-            var universeIdStr = Utils.Utils.ToStringInvariant(universeId);
-
-            return player != null ? File.OpenRead(Path.Combine(_basePath,universeIdStr,player.ProfilePicturePath)) : null;
+            return player != null ? File.OpenRead(Path.Combine(player.ProfilePicturePath)) : null;
         }
     }
 }
