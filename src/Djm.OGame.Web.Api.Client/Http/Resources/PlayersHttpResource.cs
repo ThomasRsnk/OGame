@@ -22,8 +22,8 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         }
 
         [DebuggerStepThrough]
-        public Task<List<PlayerListItemBindingModel>> GetAllAsync(CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<PlayerListItemBindingModel>>(cancellationToken);
+        public Task<List<PlayerListItemBindingModel>> GetAllAsync(int skip,int take,CancellationToken cancellationToken)
+            => JsonToPocoAsync<List<PlayerListItemBindingModel>>("?skip="+skip+"&take="+take,cancellationToken);
 
         [DebuggerStepThrough]
         public Task<PlayerDetailsBindingModel> GetDetailsAsync(int playerId, CancellationToken cancellationToken)

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Net.Http;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Scores;
@@ -14,14 +13,24 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<List<ScoreListItemAllianceBindingModel>> GetAllAsync(CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemAllianceBindingModel>>(cancellationToken);
-
-        public Task<List<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(int type,
+        public Task<List<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Classement type,int skip,int take,
             CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemPlayerBindingModel>>("players?type=" + type.ToString(CultureInfo.InvariantCulture), cancellationToken);
+            => JsonToPocoAsync<List<ScoreListItemPlayerBindingModel>>("players?type=" + (int)type+ "&skip=" + skip + "&take=" + take, cancellationToken);
 
-        public Task<List<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemAllianceBindingModel>>("alliances/", cancellationToken);
+        public Task<List<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(int skip,int take,CancellationToken cancellationToken)
+            => JsonToPocoAsync<List<ScoreListItemAllianceBindingModel>>("alliances"+ "?skip=" + skip + "&take=" + take, cancellationToken);
+    }
+
+    
+    public enum Classement 
+    {
+        General,
+        Economie,
+        Recherche,
+        Militaire,
+        MilitairesPerdus,
+        MilitairesConstruits,
+        MilitairesDetruits,
+        Honorifique
     }
 }

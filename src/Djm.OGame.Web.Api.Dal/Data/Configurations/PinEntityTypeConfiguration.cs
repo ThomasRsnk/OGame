@@ -6,11 +6,6 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
 {
     public class PinEntityTypeConfiguration : IEntityTypeConfiguration<Pin>
     {
-        private static class Indexes
-        {
-            public const string UniqueUniverseOwnerTarget = "UX_UniverseOwnerTarget";
-        }
-
         public void Configure(EntityTypeBuilder<Pin> b)
         {
             b.HasKey(p => p.Id);

@@ -24,7 +24,7 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
             var jsonObject = JsonConvert.SerializeObject(pin);
             var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             
-            var response = HttpClient.PostAsync(BaseUrl, content, ct).Result;
+            var response = await HttpClient.PostAsync(BaseUrl, content, ct);
           
             var body = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.BadRequest)

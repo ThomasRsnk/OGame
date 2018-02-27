@@ -7,7 +7,7 @@ namespace Djm.OGame.Web.Api.Client.Resources
 {
     public interface IAlliancesResource
     {
-        Task<List<AllianceListItemBindingModel>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<AllianceListItemBindingModel>> GetAllAsync(int skip=0,int take=int.MaxValue,CancellationToken cancellationToken = default(CancellationToken));
         Task<AllianceDetailsBindingModel> GetDetailsAsync(int allianceId, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

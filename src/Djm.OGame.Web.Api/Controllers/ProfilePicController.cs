@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Services.Pictures;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,11 @@ namespace Djm.OGame.Web.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddProfilePic(int universeId,int playerId, IFormFile pic)
+        public async Task<IActionResult> AddProfilePic(int universeId,int playerId, IFormFile pic,CancellationToken cancellation = default(CancellationToken))
         {
             try
             {
-                await PictureHandler.SavePictureAsync(universeId, playerId, pic);
+                await PictureHandler.SavePictureAsync(universeId, playerId, pic, cancellation);
             }
             catch (PictureException e)
             {
@@ -33,15 +34,14 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProfilePic(int universeId, int playerid)
+        public async Task<IActionResult> GetProfilePic(int universeId, int playerid, CancellationToken cancellation = default(CancellationToken))
         {
-            var image = await PictureHandler.GetAsync(universeId, playerid);
+            var image = await PictureHandler.GetAsync(universeId, playerid, cancellation);
 
             if (image == null)
                 return NotFound();
 
-            var extension = Path.GetExtension(image.Name);
-            var contentType = "image/" + extension?.Substring(1);
+            var contentType = "image/" + Path.GetExtension(image.Name)?.Substring(1);
 
             return File(image, contentType);
         }

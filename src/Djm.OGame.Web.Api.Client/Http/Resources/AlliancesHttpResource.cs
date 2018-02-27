@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Alliances;
-using Djm.OGame.Web.Api.Client.Exceptions;
 using Djm.OGame.Web.Api.Client.Resources;
 
 namespace Djm.OGame.Web.Api.Client.Http.Resources
@@ -16,8 +13,8 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<List<AllianceListItemBindingModel>> GetAllAsync(CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<AllianceListItemBindingModel>>(cancellationToken);
+        public Task<List<AllianceListItemBindingModel>> GetAllAsync(int skip,int take,CancellationToken cancellationToken)
+            => JsonToPocoAsync<List<AllianceListItemBindingModel>>("?skip=" + skip + "&take=" + take,cancellationToken);
 
         public Task<AllianceDetailsBindingModel> GetDetailsAsync(int allianceId, CancellationToken cancellationToken)
             => JsonToPocoAsync<AllianceDetailsBindingModel>(allianceId.ToString(CultureInfo.InvariantCulture),

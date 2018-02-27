@@ -94,7 +94,7 @@ namespace Djm.OGame.Web.Api.Controllers
         public IActionResult Connect(int universeId, string pseudo)
         {
             if (OgameClient.Universe(universeId).GetPlayers().Exists(p => p.Name == pseudo))
-                return Ok(true);
+                return Ok();
 
             return Unauthorized();
         }
