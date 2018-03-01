@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Alliances;
+using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Client.Resources;
 
 namespace Djm.OGame.Web.Api.Client.Http.Resources
@@ -13,8 +14,8 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<List<AllianceListItemBindingModel>> GetAllAsync(int skip,int take,CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<AllianceListItemBindingModel>>("?skip=" + skip + "&take=" + take,cancellationToken);
+        public Task<PagedListViewModel<AllianceListItemBindingModel>> GetAllAsync(int page , int pageLength, CancellationToken cancellationToken)
+            => JsonToPocoAsync<PagedListViewModel<AllianceListItemBindingModel>>("?page=" + page + "&pageLength=" + pageLength, cancellationToken);
 
         public Task<AllianceDetailsBindingModel> GetDetailsAsync(int allianceId, CancellationToken cancellationToken)
             => JsonToPocoAsync<AllianceDetailsBindingModel>(allianceId.ToString(CultureInfo.InvariantCulture),

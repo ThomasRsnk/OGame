@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.Client.Resources;
 
@@ -22,8 +22,8 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         }
 
         [DebuggerStepThrough]
-        public Task<List<PlayerListItemBindingModel>> GetAllAsync(int skip,int take,CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<PlayerListItemBindingModel>>("?skip="+skip+"&take="+take,cancellationToken);
+        public Task<PagedListViewModel<PlayerListItemBindingModel>> GetAllAsync(int page,int pageLength,CancellationToken cancellationToken)
+            => JsonToPocoAsync<PagedListViewModel<PlayerListItemBindingModel>>("?page="+page+ "&pageLength=" + pageLength, cancellationToken);
 
         [DebuggerStepThrough]
         public Task<PlayerDetailsBindingModel> GetDetailsAsync(int playerId, CancellationToken cancellationToken)

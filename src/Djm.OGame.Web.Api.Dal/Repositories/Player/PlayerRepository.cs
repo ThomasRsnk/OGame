@@ -14,10 +14,14 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
         {
         }
 
-        public async Task<Entities.Player> FirstOrDefaultAsync(int universeId, int playerId,
-            CancellationToken cancellation = default(CancellationToken))
+        public async Task<Entities.Player> FirstOrDefaultAsync(int universeId, int playerId, CancellationToken cancellation )
         {
             return await DbSet.FirstOrDefaultAsync(p => p.UniverseId == universeId && p.Id == playerId,cancellation);
+        }
+
+        public async Task<List<Entities.Player>> ToListAsync(int universeId, CancellationToken cancellation)
+        {
+            return await DbSet.Where(p => p.UniverseId == universeId).ToListAsync(cancellation);
         }
     }
 }

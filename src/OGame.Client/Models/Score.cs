@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using OGame.Client.Providers;
-using OGame.Client.Providers.Web;
+﻿using OGame.Client.Providers.Web;
 
 namespace OGame.Client.Models
 {

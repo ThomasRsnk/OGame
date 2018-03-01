@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Client.Http;
-using Djm.OGame.Web.Api.Client.Http.Resources;
 
 namespace Djm.OGame.Web.Api.Client.Sample
 {
@@ -56,10 +55,10 @@ namespace Djm.OGame.Web.Api.Client.Sample
             //            Console.WriteLine("upload :"+ uploadIsSuccessful);
 
             //SCORES
-                        var scores = await client.Universes[10].Scores.GetAllForPlayersAsync(Classement.General,5,15,cancellationToken);
-            
-                        foreach(var score in scores)
-                            Console.WriteLine(score.Player.Name +" : "+score.Points);
+//            var scores = await client.Universes[10].Scores.GetAllForPlayersAsync(Classement.General,5,15,cancellationToken);
+//            
+//            foreach(var score in scores)
+//                Console.WriteLine(score.Player.Name +" : "+score.Points);
 
             //var scores = await client.Universes[100].Scores.GetAllForAlliancesAsync(cancellationToken);
 
@@ -85,10 +84,10 @@ namespace Djm.OGame.Web.Api.Client.Sample
             //            Console.WriteLine("Connection : "+x);
 
             //PLAYERS
-            //            var players = await client.Universes[10].Players.GetAllAsync(0, 5, cancellationToken);
-            //
-            //            foreach (var p in players)
-            //                Console.WriteLine(p.Name);
+//                        var players = await client.Universes[10].Players.GetAllAsync(1, 50, cancellationToken);
+//            
+//                        foreach (var p in players.Data)
+//                            Console.WriteLine(p.Name);
         }
     }
 }

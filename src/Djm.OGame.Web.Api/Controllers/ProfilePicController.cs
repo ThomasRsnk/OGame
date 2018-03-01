@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.Services.Pictures;
+using Djm.OGame.Web.Api.Services.OGame.Pictures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +10,12 @@ namespace Djm.OGame.Web.Api.Controllers
     [Route("~/api/universes/{universeId:int}/players/{playerId:int}/[Controller]")]
     public class ProfilePicController : Controller
     {
-        public ProfilePicController(IPicturehandler pictureHandler)
+        public ProfilePicController(IPictureService pictureService)
         {
-            PictureHandler = pictureHandler;
+            PictureService = pictureService;
         }
 
-        internal IPicturehandler PictureHandler { get; }
+        internal IPictureService PictureService { get; }
 
 
         [HttpPost]
@@ -23,7 +23,7 @@ namespace Djm.OGame.Web.Api.Controllers
         {
             try
             {
-                await PictureHandler.SavePictureAsync(universeId, playerId, pic, cancellation);
+                await PictureService.SavePictureAsync(universeId, playerId, pic, cancellation);
             }
             catch (PictureException e)
             {
@@ -36,7 +36,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfilePic(int universeId, int playerid, CancellationToken cancellation = default(CancellationToken))
         {
-            var image = await PictureHandler.GetAsync(universeId, playerid, cancellation);
+            var image = await PictureService.GetAsync(universeId, playerid, cancellation);
 
             if (image == null)
                 return NotFound();

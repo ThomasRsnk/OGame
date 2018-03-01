@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Djm.OGame.Web.Api.Services.Pictures
+namespace Djm.OGame.Web.Api.Services.OGame.Pictures
 {
     public class PictureException : Exception
     {

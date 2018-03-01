@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using OGame.Client.Models;
+﻿using OGame.Client.Models;
 using OGame.Client.Providers.Web;
 
 namespace OGame.Client.Providers.Cache

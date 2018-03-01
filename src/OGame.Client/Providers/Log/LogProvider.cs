@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using OGame.Client.Providers.Cache;
 using OGame.Client.Providers.Web;
 
 namespace OGame.Client.Providers.Log

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Djm.OGame.Web.Api.BindingModels.Players;
+﻿using Djm.OGame.Web.Api.BindingModels.Players;
 
 namespace Djm.OGame.Web.Api.BindingModels.Planets
 {

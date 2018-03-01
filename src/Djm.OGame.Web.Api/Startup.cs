@@ -4,8 +4,15 @@ using Djm.OGame.Web.Api.BindingModels.Players;
 using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Dal.Entities;
+using Djm.OGame.Web.Api.Dal.Repositories.Pin;
+using Djm.OGame.Web.Api.Dal.Repositories.Player;
+using Djm.OGame.Web.Api.Dal.Repositories.Univers;
 using Djm.OGame.Web.Api.Dal.Services;
-using Djm.OGame.Web.Api.Services.Pictures;
+using Djm.OGame.Web.Api.Services.OGame.Alliances;
+using Djm.OGame.Web.Api.Services.OGame.Pictures;
+using Djm.OGame.Web.Api.Services.OGame.Pins;
+using Djm.OGame.Web.Api.Services.OGame.Players;
+using Djm.OGame.Web.Api.Services.OGame.Scores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -50,9 +57,19 @@ namespace Djm.OGame.Web.Api
             services.AddMvc();
             services.AddLogging();
 
-            services.AddScoped<IOgClient, OgClient>();
-            services.AddScoped<IPicturehandler, PictureHandler>();
+            services.AddSingleton<IOgClient, OgClient>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IPinsService, PinsService>();
+            services.AddScoped<IPlayersService, PlayerService>();
+            services.AddScoped<IAlliancesService, AllianceService>();
+            services.AddScoped<IScoresService, ScoreService>();
+            services.AddScoped<IPictureService, PictureService>();
+            services.AddScoped<IPinRepository, PinRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IUniversRepository, UniversRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

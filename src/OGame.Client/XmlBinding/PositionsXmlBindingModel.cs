@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using OGame.Client.XmlBinding;
 
 namespace OGame.Client.XmlBinding
 {

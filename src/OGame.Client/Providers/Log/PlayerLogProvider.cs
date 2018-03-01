@@ -1,5 +1,4 @@
 ﻿using OGame.Client.Models;
-using OGame.Client.Providers.Cache;
 using OGame.Client.Providers.Web;
 
 namespace OGame.Client.Providers.Log

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Djm.OGame.Web.Api.BindingModels.Planets
+﻿namespace Djm.OGame.Web.Api.BindingModels.Planets
 {
     public class MoonBindingModel
     {

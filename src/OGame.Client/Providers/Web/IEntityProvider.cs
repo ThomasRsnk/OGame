@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OGame.Client.Providers.Web
+﻿namespace OGame.Client.Providers.Web
 {
     internal interface IEntityProvider<in TKey, out TEntity>
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Djm.OGame.Web.Api.BindingModels.Universes;
 using OGame.Client.Models;
-using OGame.Client.XmlBinding;
 
 namespace OGame.Client
 {

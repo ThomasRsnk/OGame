@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Djm.OGame.Web.Api.BindingModels.Scores
+﻿namespace Djm.OGame.Web.Api.BindingModels.Scores
 {
     public class ScoreBaseBindingModel
     {

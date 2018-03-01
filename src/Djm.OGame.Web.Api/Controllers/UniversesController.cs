@@ -1,47 +1,29 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Djm.OGame.Web.Api.Dal.Entities;
-using Djm.OGame.Web.Api.Dal.Services;
+﻿using System.Threading.Tasks;
+using Djm.OGame.Web.Api.Services.OGame.Universes;
 using Microsoft.AspNetCore.Mvc;
-using OGame.Client;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
     [Route("~/Api/Universes")]
     public class UniversesController : Controller
     {
-        public IUnitOfWork UnitOfWork { get; }
-        public IOgClient OgameClient;
-        public IMapper Mapper;
+        public IUniversService UniversService { get; }
 
-        public UniversesController(IOgClient ogameClient, IMapper mapper,IUnitOfWork unitOfWork)
+
+        public UniversesController(IUniversService universService)
         {
-            UnitOfWork = unitOfWork;
-            OgameClient = ogameClient;
-            Mapper = mapper;
+            UniversService = universService;
         }
 
         [HttpGet]
         [Route("{universeId:int?}")]
         public async Task<IActionResult> GetUniverses(int universeId=1)
         {
-            var uni = await UnitOfWork.Univers.ToListAsync();
-            
-            if (uni.Any()) return Ok(uni);
+            var universes = await UniversService.GetUniverses();
 
-            var universes = OgameClient.Universe(universeId).GetUniverses();
+            if (universes == null) return NotFound();
 
-            if (universes == null)
-                return NotFound();
-
-            foreach(var entry in universes)
-                UnitOfWork.Univers.Insert(new Univers(){Id = entry.Id,Name = entry.Name});
-
-            await UnitOfWork.CommitAsync();
-            uni = await UnitOfWork.Univers.ToListAsync();
-
-            return Ok(uni);
+            return Ok(universes);
         }
 
        

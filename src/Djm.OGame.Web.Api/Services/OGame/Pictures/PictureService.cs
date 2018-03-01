@@ -4,24 +4,27 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
+using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.AspNetCore.Http;
 using OGame.Client;
 
-namespace Djm.OGame.Web.Api.Services.Pictures
+namespace Djm.OGame.Web.Api.Services.OGame.Pictures
 {
-    public class PictureHandler : IPicturehandler
+    public class PictureService : IPictureService
     {
         public IOgClient OGameClient { get; }
         public IUnitOfWork UnitOfWork { get; }
+        public IPlayerRepository PlayerRepository { get; }
         private readonly string _basePath = Path.Combine("wwwroot", "profilePictures");
         private List<string> AllowedFileType {get;}
         
 
-        public PictureHandler(IOgClient oGameClient,IUnitOfWork unitOfWork)
+        public PictureService(IOgClient oGameClient,IUnitOfWork unitOfWork,IPlayerRepository playerRepository)
         {
             OGameClient = oGameClient;
             UnitOfWork = unitOfWork;
+            PlayerRepository = playerRepository;
             AllowedFileType = new List<string>()
             {
                 "image/jpeg","image/png","image/bmp","image/jpg"
@@ -62,14 +65,14 @@ namespace Djm.OGame.Web.Api.Services.Pictures
            
             //vérifier si l'image est déjà présente
 
-            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId, cancellation);
+            var player = await PlayerRepository.FirstOrDefaultAsync(universeId, playerId, cancellation);
 
             if (player != null)//OUI
             {
                 // 1) Modification en db
 
                 player.ProfilePicturePath = path;
-                UnitOfWork.Players.Update(player);
+                PlayerRepository.Update(player);
                 
                 // 2) Suppression dans le fs
                 
@@ -87,7 +90,7 @@ namespace Djm.OGame.Web.Api.Services.Pictures
 
                 // 2) création d'un tuple en db
 
-                UnitOfWork.Players.Insert(new Player()
+                PlayerRepository.Insert(new Player()
                 {
                     Id = playerId,
                     UniverseId = universeId,
@@ -107,7 +110,7 @@ namespace Djm.OGame.Web.Api.Services.Pictures
 
         public async Task<FileStream> GetAsync(int universeId, int playerId,CancellationToken cancellation)
         {
-            var player = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, playerId, cancellation);
+            var player = await PlayerRepository.FirstOrDefaultAsync(universeId, playerId, cancellation);
 
             return player != null ? File.OpenRead(Path.Combine(player.ProfilePicturePath)) : null;
         }

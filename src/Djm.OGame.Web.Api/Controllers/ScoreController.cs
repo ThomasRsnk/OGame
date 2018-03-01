@@ -1,83 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Djm.OGame.Web.Api.BindingModels.Scores;
-using Djm.OGame.Web.Api.Dal.Services;
+﻿using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels.Pagination;
+using Djm.OGame.Web.Api.Services;
+using Djm.OGame.Web.Api.Services.OGame;
+using Djm.OGame.Web.Api.Services.OGame.Scores;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Internal.System.Collections.Sequences;
-using OGame.Client;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
     [Route("~/Api/Universes/{universeId:int}/Scores")]
     public class ScoreController : Controller
     {
-        public IUnitOfWork UnitOfWork { get; }
-        public IOgClient OgameClient;
-        public IMapper Mapper;
+        public IScoresService ScoresService { get; }
 
-        public ScoreController(IOgClient ogameClient, IMapper mapper,IUnitOfWork unitOfWork)
+
+        public ScoreController(IScoresService scoresService)
         {
-            UnitOfWork = unitOfWork;
-            OgameClient = ogameClient;
-            Mapper = mapper;
+            ScoresService = scoresService;
         }
 
         [HttpGet]
         [Route("players")]
-        public async Task<IActionResult> GetAllForPlayers(int universeId,int type=0,int skip=0,int take=3000)
+        public async Task<IActionResult> GetAllForPlayers(int universeId, [ModelBinder(BinderType = typeof(PageModelBinder))]Page page,int type=0)
         {
-            var scores = OgameClient.Universe(universeId).GetPlayersScores(type);
-
-            if (scores == null ) return NotFound();
-
-            scores = scores.Skip(skip).Take(take).ToList();
-
-            var viewModel = Mapper.Map<List<ScoreListItemPlayerBindingModel>>(scores);
-
-            foreach (var vm in viewModel)
+            try
             {
-                var tuple = await UnitOfWork.Players.FirstOrDefaultAsync(universeId, vm.Player.Id);
-                if (tuple != null)
-                    vm.Player.ProfilePicUrl = "http://localhost:53388/api/universes/" + universeId + "/players/" + vm.Player.Id +
-                                       "/profilepic";
+                var scores = await ScoresService.GetAllForPlayersAsync(type, universeId, page);
+                return Ok(scores);
             }
-
-            return Ok(viewModel);
+            catch (OGameException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
         [Route("alliances")]
-        public IActionResult GetAllForAlliances(int universeId,int skip=0,int take=2000)
+        public IActionResult GetAllForAlliances(int universeId, [ModelBinder(BinderType = typeof(PageModelBinder))]Page page)
         {
-            var scores = OgameClient.Universe(universeId).GetAllianceScores();
-
-            if (scores == null) return NotFound("L'univers n'existe pas");
-
-            scores = scores.Skip(skip).Take(take).ToList();
-
-            var viewModel = Mapper.Map<List<ScoreListItemAllianceBindingModel>>(scores);
-
-            return Ok(viewModel);
+            try
+            {
+                var scores = ScoresService.GetAllForAlliances(universeId, page);
+                return Ok(scores);
+            }
+            catch (OGameException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        [HttpGet]
-        [Route("players/id/{playerId:int}")]//positions d'un joueur au sein des différents classements
-        public IActionResult GetPlayerScores(int universeId, int playerId)
-        {
-            var positions = OgameClient.Universe(universeId).GetPositions(playerId);
-
-            if (positions == null) return NotFound();
-
-            var viewModel = Mapper.Map<List<PositionsBindingModel>>(positions);
-
-            return Ok(viewModel);
-        }
-
-        
-
 
     }
 }

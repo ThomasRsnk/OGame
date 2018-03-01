@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Client.Resources;
 
@@ -13,12 +12,12 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<List<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Classement type,int skip,int take,
+        public Task<PagedListViewModel<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Classement type,int page,int pageLength,
             CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemPlayerBindingModel>>("players?type=" + (int)type+ "&skip=" + skip + "&take=" + take, cancellationToken);
+            => JsonToPocoAsync<PagedListViewModel<ScoreListItemPlayerBindingModel>>("players?type=" + (int)type+ "&page=" + page + "&pageLength=" + pageLength, cancellationToken);
 
-        public Task<List<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(int skip,int take,CancellationToken cancellationToken)
-            => JsonToPocoAsync<List<ScoreListItemAllianceBindingModel>>("alliances"+ "?skip=" + skip + "&take=" + take, cancellationToken);
+        public Task<PagedListViewModel<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(int page, int pageLength, CancellationToken cancellationToken)
+            => JsonToPocoAsync<PagedListViewModel<ScoreListItemAllianceBindingModel>>("alliances"+ "?page=" + page + "&pageLength=" + pageLength, cancellationToken);
     }
 
     
