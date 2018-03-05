@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Pins;
-using Djm.OGame.Web.Api.Services;
 using Djm.OGame.Web.Api.Services.OGame.Pins;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +18,7 @@ namespace Djm.OGame.Web.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> AddPin(PinCreateBindingModel bindingModel,int universeId)
+        public async Task<IActionResult> AddPin([FromBody]PinCreateBindingModel bindingModel,int universeId)
         {
             //check body empty
             if (bindingModel == null)

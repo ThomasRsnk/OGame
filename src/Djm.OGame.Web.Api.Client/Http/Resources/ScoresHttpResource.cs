@@ -12,12 +12,21 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         {
         }
 
-        public Task<PagedListViewModel<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Classement type,int page,int pageLength,
+        public Task<PagedListViewModel<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Page page,Classement type,
             CancellationToken cancellationToken)
-            => JsonToPocoAsync<PagedListViewModel<ScoreListItemPlayerBindingModel>>("players?type=" + (int)type+ "&page=" + page + "&pageLength=" + pageLength, cancellationToken);
+        {
 
-        public Task<PagedListViewModel<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(int page, int pageLength, CancellationToken cancellationToken)
-            => JsonToPocoAsync<PagedListViewModel<ScoreListItemAllianceBindingModel>>("alliances"+ "?page=" + page + "&pageLength=" + pageLength, cancellationToken);
+            page = page ?? Page.Default;
+            return JsonToPocoAsync<PagedListViewModel<ScoreListItemPlayerBindingModel>>(
+                "players?type=" + (int) type + "&page=" + page.Current + "&pageLength=" + page.Size, cancellationToken);
+        }
+
+        public Task<PagedListViewModel<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(Page page, CancellationToken cancellationToken)
+        {
+            page = page ?? Page.Default;
+            return JsonToPocoAsync<PagedListViewModel<ScoreListItemAllianceBindingModel>>(
+                "alliances" + "?page=" + page.Current + "&pageLength=" + page.Size, cancellationToken);
+        }
     }
 
     

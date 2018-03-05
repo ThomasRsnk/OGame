@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
-using Djm.OGame.Web.Api.Services;
 using Djm.OGame.Web.Api.Services.OGame;
 using Djm.OGame.Web.Api.Services.OGame.Players;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,7 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<IActionResult> GetAll(int universeId, [ModelBinder(BinderType = typeof(PageModelBinder))]Page page, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IActionResult> GetAll(int universeId,Page page, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {

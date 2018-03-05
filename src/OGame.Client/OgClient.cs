@@ -6,6 +6,7 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using Djm.OGame.Web.Api.BindingModels.Universes;
+using Microsoft.Extensions.Options;
 using OGame.Client.Models;
 using OGame.Client.Providers.Cache;
 using OGame.Client.Providers.Log;
@@ -20,7 +21,7 @@ namespace OGame.Client
         {
             Id = id;
             BaseUrl = "http://s" + id.ToString("D", CultureInfo.InvariantCulture) + "-fr.ogame.gameforge.com/api/";
-
+            
             AllianceCache = new CacheAllianceProvider(new AllianceLogProvider("alliance cache", this));
             PlayerCache = new CachePlayerProvider(new PlayerLogProvider("players cache", this));
 
@@ -29,8 +30,6 @@ namespace OGame.Client
             ScoreProvider = this;
             PlanetProvider = this;
             PositionsProvider = this;
-
-            
         }
 
         public int Id { get; }
@@ -200,6 +199,11 @@ namespace OGame.Client
             return universes;
         }
 
+        public bool Exists(int playerId)
+        {
+            return GetPlayers().Exists(p => p.Id == playerId);
+        }
+
         public List<Position> GetPositions(int playerId)
         {
             var url = BaseUrl + "playerData.xml?id=" + playerId;
@@ -259,7 +263,7 @@ namespace OGame.Client
     public class OgClient : IOgClient
     {
         private readonly Dictionary<int, IOgUniverseClient> _universes = new Dictionary<int, IOgUniverseClient>();
-
+        
         public IOgUniverseClient Universe(int universeId)
         {
             if (!_universes.ContainsKey(universeId))

@@ -100,6 +100,8 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\refs\System.Xml.XPath.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\refs\System.Xml.XPath.XDocument.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\libuv.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Autofac.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Autofac.Extensions.DependencyInjection.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\AutoMapper.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Esent.Interop.dll
@@ -347,3 +349,9 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.xml

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
-using Djm.OGame.Web.Api.Services;
 using Djm.OGame.Web.Api.Services.OGame;
 using Djm.OGame.Web.Api.Services.OGame.Scores;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("players")]
-        public async Task<IActionResult> GetAllForPlayers(int universeId, [ModelBinder(BinderType = typeof(PageModelBinder))]Page page,int type=0)
+        public async Task<IActionResult> GetAllForPlayers(int universeId, Page page,int type=0)
         {
             try
             {
@@ -35,7 +34,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("alliances")]
-        public IActionResult GetAllForAlliances(int universeId, [ModelBinder(BinderType = typeof(PageModelBinder))]Page page)
+        public IActionResult GetAllForAlliances(int universeId, Page page)
         {
             try
             {

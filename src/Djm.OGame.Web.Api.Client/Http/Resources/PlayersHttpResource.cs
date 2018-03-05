@@ -22,8 +22,12 @@ namespace Djm.OGame.Web.Api.Client.Http.Resources
         }
 
         [DebuggerStepThrough]
-        public Task<PagedListViewModel<PlayerListItemBindingModel>> GetAllAsync(int page,int pageLength,CancellationToken cancellationToken)
-            => JsonToPocoAsync<PagedListViewModel<PlayerListItemBindingModel>>("?page="+page+ "&pageLength=" + pageLength, cancellationToken);
+        public Task<PagedListViewModel<PlayerListItemBindingModel>> GetAllAsync(Page page,CancellationToken cancellationToken)
+        {
+            page = page ?? Page.Default;
+            return JsonToPocoAsync<PagedListViewModel<PlayerListItemBindingModel>>(
+                "?page=" + page.Current + "&pageLength=" + page.Size, cancellationToken);
+        }
 
         [DebuggerStepThrough]
         public Task<PlayerDetailsBindingModel> GetDetailsAsync(int playerId, CancellationToken cancellationToken)

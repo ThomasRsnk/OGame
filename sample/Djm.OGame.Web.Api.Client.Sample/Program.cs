@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Client.Http;
 
 namespace Djm.OGame.Web.Api.Client.Sample
@@ -70,6 +71,7 @@ namespace Djm.OGame.Web.Api.Client.Sample
             //            }
 
             //PLAYER DETAILS   
+            //
             //            var player = await client.Universes[10].Players.GetDetailsAsync(100172, cancellationToken);
             //
             //            Console.WriteLine(player.Name);
@@ -84,10 +86,10 @@ namespace Djm.OGame.Web.Api.Client.Sample
             //            Console.WriteLine("Connection : "+x);
 
             //PLAYERS
-//                        var players = await client.Universes[10].Players.GetAllAsync(1, 50, cancellationToken);
-//            
-//                        foreach (var p in players.Data)
-//                            Console.WriteLine(p.Name);
+                        var players = await client.Universes[10].Players.GetAllAsync(new Page(){Current = 2,Size = 25}, cancellationToken);
+            
+                        foreach (var p in players.Items)
+                            Console.WriteLine(p.Name);
         }
     }
 }

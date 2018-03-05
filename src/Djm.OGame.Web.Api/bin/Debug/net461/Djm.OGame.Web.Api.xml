@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Djm.OGame.Web.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Djm.OGame.Web.Api.Controllers.AllianceController.GetAll(System.Int32,Djm.OGame.Web.Api.BindingModels.Pagination.Page)">
+            <summary>
+            Retourne la liste des alliances d'un univers
+            </summary> 
+            <response code="200">La liste des alliances</response>
+            <response code="400">Si l'univers n'existe pas</response>
+        </member>
+    </members>
+</doc>

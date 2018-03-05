@@ -5,6 +5,12 @@ namespace Djm.OGame.Web.Api.BindingModels.Pagination
 {
     public class Page
     {
+        public static Page Default = new Page
+        {
+            Current = 1,
+            Size = 20
+        };
+
         public int Current { get; set; }
         public int Size { get; set; }
 

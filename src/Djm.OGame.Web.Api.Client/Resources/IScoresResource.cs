@@ -8,7 +8,7 @@ namespace Djm.OGame.Web.Api.Client.Resources
 {
     public interface IScoresResource
     {
-        Task<PagedListViewModel<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Classement type = 0,int page=0,int pageLength=50, CancellationToken cancellationToken = default(CancellationToken));
-        Task<PagedListViewModel<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(int page = 0, int pageLength = 50, CancellationToken cancellationToken = default(CancellationToken));
+        Task<PagedListViewModel<ScoreListItemPlayerBindingModel>> GetAllForPlayersAsync(Page page,Classement type = 0,CancellationToken cancellationToken = default(CancellationToken));
+        Task<PagedListViewModel<ScoreListItemAllianceBindingModel>> GetAllForAlliancesAsync(Page page, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

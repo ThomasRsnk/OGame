@@ -19,5 +19,7 @@ namespace OGame.Client
         List<AllianceScore> GetAllianceScores();
         List<Position> GetPositions(int playerId);
         List<UniverseListItemViewModel> GetUniverses();
+
+        bool Exists(int playerId);
     }
 }
