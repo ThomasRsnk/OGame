@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.6.1/win7-x86",
-    "signature": "64267ab23f58999c586f32de3ca054c866793e82"
+    "signature": "7f70bc2e32440711e281a42e468e8c8911d3f30b"
   },
   "compilationOptions": {
     "defines": [
@@ -16,7 +16,7 @@
     "optimize": false,
     "keyFile": "",
     "emitEntryPoint": true,
-    "xmlDoc": false,
+    "xmlDoc": true,
     "debugType": "portable"
   },
   "targets": {
@@ -29,6 +29,9 @@
           "Autofac.Extensions.DependencyInjection": "4.0.0",
           "Djm.OGame.Web.Api.BindingModels": "1.0.0",
           "Djm.OGame.Web.Api.Dal": "1.0.0",
+          "Hangfire.Autofac": "2.3.1",
+          "Hangfire.SqlServer": "1.6.17",
+          "Hangfire.AspNetCore": "1.6.17",
           "Microsoft.AspNet.Mvc": "5.2.3",
           "Microsoft.AspNetCore": "2.0.1",
           "Microsoft.AspNetCore.Mvc": "2.0.2",
@@ -40,6 +43,7 @@
           "Microsoft.VisualStudio.Web.BrowserLink": "2.0.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
           "OGame.Client": "1.0.0",
+          "RazorEngine": "3.9.3",
           "Swashbuckle.AspNetCore": "2.2.0",
           "WebApiContrib.Core.Formatter.Bson": "1.0.0",
           "Microsoft.CSharp.Reference": "4.0.0.0",
@@ -807,6 +811,44 @@
         },
         "compile": {
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "Hangfire.AspNetCore/1.6.17": {
+        "dependencies": {
+          "Hangfire.Core": "1.6.17",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.0.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/net451/Hangfire.AspNetCore.dll": {}
+        }
+      },
+      "Hangfire.Autofac/2.3.1": {
+        "dependencies": {
+          "Autofac": "4.6.2",
+          "Hangfire.Core": "1.6.17"
+        },
+        "compile": {
+          "lib/net45/Hangfire.Autofac.dll": {}
+        }
+      },
+      "Hangfire.Core/1.6.17": {
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1",
+          "Owin": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/Hangfire.Core.dll": {}
+        }
+      },
+      "Hangfire.SqlServer/1.6.17": {
+        "dependencies": {
+          "Hangfire.Core": "1.6.17"
+        },
+        "compile": {
+          "lib/net45/Hangfire.SqlServer.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -1916,6 +1958,19 @@
           "lib/net45/NuGet.Frameworks.dll": {}
         }
       },
+      "Owin/1.0.0": {
+        "compile": {
+          "lib/net40/Owin.dll": {}
+        }
+      },
+      "RazorEngine/3.9.3": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.3"
+        },
+        "compile": {
+          "lib/net45/RazorEngine.dll": {}
+        }
+      },
       "Remotion.Linq/2.1.1": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -2197,6 +2252,9 @@
           "Autofac.Extensions.DependencyInjection": "4.0.0",
           "Djm.OGame.Web.Api.BindingModels": "1.0.0",
           "Djm.OGame.Web.Api.Dal": "1.0.0",
+          "Hangfire.Autofac": "2.3.1",
+          "Hangfire.SqlServer": "1.6.17",
+          "Hangfire.AspNetCore": "1.6.17",
           "Microsoft.AspNet.Mvc": "5.2.3",
           "Microsoft.AspNetCore": "2.0.1",
           "Microsoft.AspNetCore.Mvc": "2.0.2",
@@ -2208,6 +2266,7 @@
           "Microsoft.VisualStudio.Web.BrowserLink": "2.0.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
           "OGame.Client": "1.0.0",
+          "RazorEngine": "3.9.3",
           "Swashbuckle.AspNetCore": "2.2.0",
           "WebApiContrib.Core.Formatter.Bson": "1.0.0",
           "Microsoft.CSharp.Reference": "4.0.0.0",
@@ -2365,6 +2424,52 @@
         },
         "runtime": {
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "Hangfire.AspNetCore/1.6.17": {
+        "dependencies": {
+          "Hangfire.Core": "1.6.17",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.0.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
+        },
+        "runtime": {
+          "lib/net451/Hangfire.AspNetCore.dll": {}
+        }
+      },
+      "Hangfire.Autofac/2.3.1": {
+        "dependencies": {
+          "Autofac": "4.6.2",
+          "Hangfire.Core": "1.6.17"
+        },
+        "runtime": {
+          "lib/net45/Hangfire.Autofac.dll": {}
+        }
+      },
+      "Hangfire.Core/1.6.17": {
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1",
+          "Owin": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/Hangfire.Core.dll": {}
+        },
+        "resources": {
+          "lib/net45/es/Hangfire.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net45/zh/Hangfire.Core.resources.dll": {
+            "locale": "zh"
+          }
+        }
+      },
+      "Hangfire.SqlServer/1.6.17": {
+        "dependencies": {
+          "Hangfire.Core": "1.6.17"
+        },
+        "runtime": {
+          "lib/net45/Hangfire.SqlServer.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -3477,6 +3582,19 @@
           "lib/net45/NuGet.Frameworks.dll": {}
         }
       },
+      "Owin/1.0.0": {
+        "runtime": {
+          "lib/net40/Owin.dll": {}
+        }
+      },
+      "RazorEngine/3.9.3": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.3"
+        },
+        "runtime": {
+          "lib/net45/RazorEngine.dll": {}
+        }
+      },
       "Remotion.Linq/2.1.1": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -3787,6 +3905,34 @@
       "sha512": "sha512-528nEpAwniNn8Z6Ae9qTiM/kN4f0BxmWE9mDMEkqKKGxbuElmv6Kj9DVvTXECJkIt6ARerb9+vYbOifNpcwvXQ==",
       "path": "automapper.extensions.microsoft.dependencyinjection/3.2.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.3.2.0.nupkg.sha512"
+    },
+    "Hangfire.AspNetCore/1.6.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vyplbohNRCftM+TvAD2L0jyqWqfoWoZ57A5mgPfrSfRDCmrZfitQcLO2aQPdqHYaA2F9AAoMUGNRncHqE/1J4w==",
+      "path": "hangfire.aspnetcore/1.6.17",
+      "hashPath": "hangfire.aspnetcore.1.6.17.nupkg.sha512"
+    },
+    "Hangfire.Autofac/2.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-56F96rIk8vkTw/oYFAZvCfVfptPw/Jjttr+Akn4lxIu8woxK1/BN6bMGB4Iq6uCAh6wilEv8tjvjbeRqk5NDgw==",
+      "path": "hangfire.autofac/2.3.1",
+      "hashPath": "hangfire.autofac.2.3.1.nupkg.sha512"
+    },
+    "Hangfire.Core/1.6.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zthN3NcyxObUpqv3UJRpL8bjANOloIHcFL2SrD+AjvIJoFDCiy/PDh0sVPIO4r6aXZ+KjlNpyB1PMfD5PKCpfw==",
+      "path": "hangfire.core/1.6.17",
+      "hashPath": "hangfire.core.1.6.17.nupkg.sha512"
+    },
+    "Hangfire.SqlServer/1.6.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zfQsPbBQ3Z9qGKG9NJdyXln0O/9uv0nYoTeMI58E9kJt1olPkEqMkNn8UUKoQERU4Z3NR29J+49IxToydQ/0nA==",
+      "path": "hangfire.sqlserver/1.6.17",
+      "hashPath": "hangfire.sqlserver.1.6.17.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -4606,6 +4752,20 @@
       "sha512": "sha512-WCkN68c8q+USG+Ot1MmBDH+9DUo5dk7UB0QDMiwCYhrH7ZoFLKFGGNzJ8C3LTR1DvB1LW9BOxKeznnZznKiCTA==",
       "path": "nuget.frameworks/4.0.0",
       "hashPath": "nuget.frameworks.4.0.0.nupkg.sha512"
+    },
+    "Owin/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OseTFniKmyp76mEzOBwIKGBRS5eMoYNkMKaMXOpxx9jv88+b6mh1rSaw43vjBOItNhaLFG3d0a20PfHyibH5sw==",
+      "path": "owin/1.0.0",
+      "hashPath": "owin.1.0.0.nupkg.sha512"
+    },
+    "RazorEngine/3.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/jqOzEpAMDVfnlkxBNiIFs0VWi6jkFHofImVhnqFyBlapw7J1wIC8FPamQIVZE2LlLiZacHUXszgoYTvjHqtQQ==",
+      "path": "razorengine/3.9.3",
+      "hashPath": "razorengine.3.9.3.nupkg.sha512"
     },
     "Remotion.Linq/2.1.1": {
       "type": "package",

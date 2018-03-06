@@ -16,9 +16,14 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Pin
 
         //méthodes spécifique au type de donnée
 
-        public async Task<List<Entities.Pin>> ToListForOwnerAsync(int ownedId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<List<Entities.Pin>> ToListForOwnerAsync(int ownedId,int universeId, CancellationToken cancellationToken)
         {
-            return await DbSet.Where(p => p.OwnerId == ownedId).Select(p => p).ToListAsync(cancellationToken);
+            return await DbSet.Where(p => p.OwnerId == ownedId && p.UniverseId == universeId).Select(p => p).ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<Entities.Pin>> ToListFortargetAsync(int targetId, int universeId, CancellationToken cancellationToken )
+        {
+            return await DbSet.Where(p => p.TargetId == targetId && p.UniverseId == universeId).Select(p => p).ToListAsync(cancellationToken);
         }
     }
 }

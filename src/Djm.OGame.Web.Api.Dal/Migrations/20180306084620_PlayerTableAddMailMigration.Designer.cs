@@ -11,9 +11,10 @@ using System;
 namespace Djm.OGame.Web.Api.Dal.Migrations
 {
     [DbContext(typeof(OGameContext))]
-    partial class OGameContextModelSnapshot : ModelSnapshot
+    [Migration("20180306084620_PlayerTableAddMailMigration")]
+    partial class PlayerTableAddMailMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

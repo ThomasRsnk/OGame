@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OGame.Client.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using Hangfire;
 using Player = OGame.Client.Models.Player;
 
 
@@ -37,6 +38,8 @@ namespace Djm.OGame.Web.Api
         {
             var connectionString = Configuration.GetConnectionString("OGame");
             services.AddDbContext<OGameContext>(db => db.UseSqlServer(connectionString));
+
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("OGame")));
 
             services.AddAutoMapper(cfg =>
             {
@@ -61,6 +64,7 @@ namespace Djm.OGame.Web.Api
             services.AddLogging();
 
             services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
+            services.Configure<MailOptions>(Configuration.GetSection("Mailing"));
 
             services.AddOptions();
 
@@ -92,6 +96,9 @@ namespace Djm.OGame.Web.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             app.UseSwagger();
 

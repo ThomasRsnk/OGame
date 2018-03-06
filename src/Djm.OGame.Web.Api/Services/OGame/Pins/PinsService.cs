@@ -1,13 +1,19 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pins;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Pin;
+using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
+using Djm.OGame.Web.Api.Services.Emails;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using OGame.Client;
+using RazorEngine.Templating;
 
 namespace Djm.OGame.Web.Api.Services.OGame.Pins
 {
@@ -17,26 +23,32 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pins
         public IOgClient OgameClient { get; }
         public IMapper Mapper { get; }
         public IPinRepository PinRepository { get; }
+        public IEmailService EmailService { get; }
+        public IPlayerRepository PlayerRepository { get; }
 
-
-        public PinsService(IUnitOfWork unitOfWork, IOgClient ogClient, IMapper mapper,IPinRepository pinRepository)
+        public PinsService(IUnitOfWork unitOfWork, IOgClient ogClient, IMapper mapper,IPinRepository pinRepository,IEmailService emailService,IPlayerRepository playerRepository)
         {
             UnitOfWork = unitOfWork;
             OgameClient = ogClient;
             Mapper = mapper;
             PinRepository = pinRepository;
+            EmailService = emailService;
+            PlayerRepository = playerRepository;
         }
 
-        public async Task<PinCreateBindingModel> AddPinAsync(PinCreateBindingModel bindingModel, CancellationToken ct = default(CancellationToken))
+        public async Task<PinCreateBindingModel> AddPinAsync(PinCreateBindingModel bindingModel, CancellationToken cancellation = default(CancellationToken))
         {
             //vérifier que les joueurs référencés existent
 
             var players = OgameClient.Universe(bindingModel.UniverseId).GetPlayers();
             if (players == null)
                 throw new OGameException("L'univers " + bindingModel.UniverseId + " n'existe pas");
-            if (players.FirstOrDefault(p => p.Id == bindingModel.OwnerId) == null)
+
+            var owner = players.FirstOrDefault(p => p.Id == bindingModel.OwnerId);
+            if (owner == null)
                 throw new OGameException("owner : aucun joueur avec l'id " + bindingModel.OwnerId + " n'existe sur l'univers " + bindingModel.UniverseId);
-            if (players.FirstOrDefault(p => p.Id == bindingModel.TargetId) == null)
+            var target = players.FirstOrDefault(p => p.Id == bindingModel.TargetId);
+            if (target == null)
                 throw new OGameException("target : aucun joueur avec l'id " + bindingModel.TargetId + " n'existe sur l'univers " + bindingModel.UniverseId);
 
             //viewmodel => model
@@ -44,21 +56,43 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pins
 
             //insertion
 
-            PinRepository.Insert(pin);
+            //PinRepository.Insert(pin);
 
             //SaveChanges
-            try
-            {
-                await UnitOfWork.CommitAsync(ct);
-            }
-            catch (DbUpdateException e)
-            {
-                if (e.InnerException != null) throw new OGameException(e.InnerException.Message);
-            }
+            //            try
+            //            {
+            //                await UnitOfWork.CommitAsync(cancellation);
+            //            }
+            //            catch (DbUpdateException e)
+            //            {
+            //                if (e.InnerException != null) throw new OGameException(e.InnerException.Message);
+            //            }
 
             //model => viewmodel
 
             var viewModel = Mapper.Map<PinCreateBindingModel>(pin);
+
+            //Notification mail éventuelle
+
+            var player = await PlayerRepository.FirstOrDefaultAsync(bindingModel.UniverseId, bindingModel.TargetId, cancellation);
+
+            if (player == null )
+                return viewModel;
+            if (player.EmailAddress.Equals(""))
+                return viewModel;
+
+            var pins = await PinRepository.ToListFortargetAsync(bindingModel.TargetId, bindingModel.UniverseId, cancellation);
+           
+            IMailModel model = new NotificationModel()
+            {
+                Count = pins.Count,
+                Logo = EmailService.Opt.Logo,
+                FromName = owner.Name,
+                ToName = target.Name
+            };
+            await EmailService.SendHtmlMailAsync(EmailTemplate.SendNotification, player.EmailAddress, model, cancellation);
+
+            
 
             return viewModel;
         }

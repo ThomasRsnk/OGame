@@ -1,0 +1,16 @@
+@model Djm.OGame.Web.Api.Services.Emails.NotificationModel
+
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        Bonjour @Model.ToName, <br><br>
+        Le joueur <strong>@Model.FromName</strong> vous a ajouté à ses favoris <br><br>
+        Vous êtes actuellement suivis par <span style="color: forestgreen">@Model.Count</span> personne(s) <br><br>
+        À bientôt sur OGame !<br><br><br>
+    </div>  
+    <img src="@Model.Logo"/>
+</body>
+</html>

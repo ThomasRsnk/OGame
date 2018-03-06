@@ -5,6 +5,4 @@
         public string DefaultPageIndex { get; set; }
         public string DefaultPageSize { get; set; }
     }
-
-
 }

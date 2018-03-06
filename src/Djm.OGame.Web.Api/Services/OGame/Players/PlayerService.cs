@@ -76,7 +76,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Players
 
             //FAVORIS
 
-            var pins = await PinRepository.ToListForOwnerAsync(playerId, cancellation);
+            var pins = await PinRepository.ToListForOwnerAsync(playerId,universeId, cancellation);
 
             if (!pins.Any()) return viewModel;
 

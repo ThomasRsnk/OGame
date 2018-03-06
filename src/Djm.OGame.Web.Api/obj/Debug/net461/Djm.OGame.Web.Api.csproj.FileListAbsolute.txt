@@ -1,4 +1,5 @@
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.exe.config
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.xml
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.deps.json
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.pdb
@@ -104,6 +105,12 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Autofac.Extensions.DependencyInjection.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\AutoMapper.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Hangfire.AspNetCore.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Hangfire.Autofac.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Hangfire.Core.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\es\Hangfire.Core.resources.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\zh\Hangfire.Core.resources.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Hangfire.SqlServer.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Esent.Interop.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Web.Mvc.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Web.Razor.dll
@@ -188,6 +195,7 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.DependencyModel.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Composite.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.Hosting.Abstractions.dll
@@ -218,7 +226,13 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Newtonsoft.Json.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Newtonsoft.Json.Bson.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\NuGet.Frameworks.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Owin.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\RazorEngine.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Remotion.Linq.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Buffers.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.Collections.Immutable.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\System.ComponentModel.Annotations.dll
@@ -349,9 +363,3 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.Extensions.FileProviders.Embedded.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.Swagger.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerGen.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Djm.OGame.Web.Api.xml

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Mvc.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -23,8 +24,14 @@ namespace Djm.OGame.Web.Api.Mvc.ModelBinders
                 modelName = bindingContext.FieldName;
             }
 
-            var currentValue = bindingContext.ValueProvider.GetValue(modelName);
-            var sizeValue = bindingContext.ValueProvider.GetValue(modelName + "Length");
+            var currentValue = bindingContext.ValueProvider.GetValue("Current");
+            if(!currentValue.Any())
+                currentValue = bindingContext.ValueProvider.GetValue("page");
+
+            var sizeValue = bindingContext.ValueProvider.GetValue("Size");
+            if(!sizeValue.Any())
+                sizeValue = bindingContext.ValueProvider.GetValue("pageLength");
+
 
             if (!int.TryParse(currentValue.FirstValue, out var current))
                 if (!int.TryParse(Opt.DefaultPageIndex, out current))
