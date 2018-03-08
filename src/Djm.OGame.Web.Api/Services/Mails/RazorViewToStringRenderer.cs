@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
-namespace Total.AutoCare.Web.Helpers.Razor
+namespace Djm.OGame.Web.Api.Services.Mails
 {
     public class RazorViewToStringRenderer
     {

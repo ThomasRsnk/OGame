@@ -2,6 +2,7 @@
 using Autofac;
 using Djm.OGame.Web.Api.Dal;
 using Djm.OGame.Web.Api.Dal.Services;
+using Djm.OGame.Web.Api.Jobs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Djm.OGame.Web.Api.Autofac

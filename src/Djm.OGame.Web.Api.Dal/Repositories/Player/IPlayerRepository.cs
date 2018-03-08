@@ -12,5 +12,8 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
 
         Task<List<Entities.Player>> ToListAsync(int universeId,
             CancellationToken cancellation = default(CancellationToken));
+
+        Task<Entities.Player> FirstOrDefaultAsync(string login,
+            CancellationToken cancellation = default(CancellationToken));
     }
 }

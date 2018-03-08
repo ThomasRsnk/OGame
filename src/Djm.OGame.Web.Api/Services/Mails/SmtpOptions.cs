@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Total.AutoCare.Web.Helpers.Mail
+namespace Djm.OGame.Web.Api.Services.Mails
 {
     public class SmtpOptions
     {
@@ -14,6 +11,8 @@ namespace Total.AutoCare.Web.Helpers.Mail
         public string Password { get; set; }
         public string DeliveryMethod { get; set; }
         public string PickupDirectoryLocation { get; set; }
+        public List<string> Templates { get; set; }
+
 
         public Dictionary<string, string> AdditionalHeaders { get; set; } = new Dictionary<string, string>();
     }

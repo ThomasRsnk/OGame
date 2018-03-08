@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,11 +7,11 @@ using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Pin;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
-using Djm.OGame.Web.Api.Services.Emails;
+using Djm.OGame.Web.Api.Jobs;
+using Djm.OGame.Web.Api.Services.Mails;
+using Djm.OGame.Web.Api.Services.Mails.Models;
 using Hangfire;
-using Microsoft.EntityFrameworkCore;
 using OGame.Client;
-using RazorEngine.Templating;
 
 namespace Djm.OGame.Web.Api.Services.OGame.Pins
 {
@@ -23,17 +21,19 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pins
         public IOgClient OgameClient { get; }
         public IMapper Mapper { get; }
         public IPinRepository PinRepository { get; }
-        public IEmailService EmailService { get; }
         public IPlayerRepository PlayerRepository { get; }
+        public IMailJob MailJob { get; }
 
-        public PinsService(IUnitOfWork unitOfWork, IOgClient ogClient, IMapper mapper,IPinRepository pinRepository,IEmailService emailService,IPlayerRepository playerRepository)
+        public PinsService(IUnitOfWork unitOfWork, IOgClient ogClient, 
+            IMapper mapper,IPinRepository pinRepository,
+            IPlayerRepository playerRepository,IMailJob mailJob)
         {
             UnitOfWork = unitOfWork;
             OgameClient = ogClient;
             Mapper = mapper;
             PinRepository = pinRepository;
-            EmailService = emailService;
             PlayerRepository = playerRepository;
+            MailJob = mailJob;
         }
 
         public async Task<PinCreateBindingModel> AddPinAsync(PinCreateBindingModel bindingModel, CancellationToken cancellation = default(CancellationToken))
@@ -83,16 +83,14 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pins
 
             var pins = await PinRepository.ToListFortargetAsync(bindingModel.TargetId, bindingModel.UniverseId, cancellation);
            
-            IMailModel model = new NotificationModel()
+            var model = new NotificationModel()
             {
                 Count = pins.Count,
-                Logo = EmailService.Opt.Logo,
                 FromName = owner.Name,
                 ToName = target.Name
             };
-            await EmailService.SendHtmlMailAsync(EmailTemplate.SendNotification, player.EmailAddress, model, cancellation);
-
             
+            BackgroundJob.Enqueue(() => MailJob.SendNotificationAsync(player.EmailAddress,model));
 
             return viewModel;
         }

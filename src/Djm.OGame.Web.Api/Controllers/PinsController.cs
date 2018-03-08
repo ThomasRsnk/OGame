@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.BindingModels.Pins;
-using Djm.OGame.Web.Api.Services.Emails;
 using Djm.OGame.Web.Api.Services.OGame.Pins;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +11,10 @@ namespace Djm.OGame.Web.Api.Controllers
     public class PinsController : Controller
     {
         public IPinsService PinsService { get; }
-        public IEmailService EmailService { get; }
-
-        public PinsController(IPinsService pinsService,IEmailService emailService)
+     
+        public PinsController(IPinsService pinsService)
         {
             PinsService = pinsService;
-            EmailService = emailService;
         }
         
         [HttpPost]

@@ -49,7 +49,15 @@ namespace Djm.OGame.Web.Api.Dal.Migrations
 
                     b.Property<string>("EmailAddress");
 
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
                     b.Property<string>("ProfilePicturePath");
+
+                    b.Property<string>("Role");
 
                     b.HasKey("Id", "UniverseId");
 

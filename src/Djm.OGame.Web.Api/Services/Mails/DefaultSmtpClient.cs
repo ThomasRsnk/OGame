@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace Total.AutoCare.Web.Helpers.Mail
+namespace Djm.OGame.Web.Api.Services.Mails
 {
     public class DefaultSmtpClient : ISmtpClient
     {

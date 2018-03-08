@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 
-namespace Total.AutoCare.Web.Helpers.Mail
+namespace Djm.OGame.Web.Api.Services.Mails
 {
     public static class MailMessageExtensions
     {

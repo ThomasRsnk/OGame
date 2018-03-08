@@ -1,6 +1,7 @@
 ﻿using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Services.OGame;
 using Djm.OGame.Web.Api.Services.OGame.Alliances;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Djm.OGame.Web.Api.Controllers
@@ -20,6 +21,7 @@ namespace Djm.OGame.Web.Api.Controllers
         /// </summary> 
         /// <response code="200">La liste des alliances</response>
         /// <response code="400">Si l'univers n'existe pas</response>
+        [Authorize(Policy = "Utilisateurs")]
         [HttpGet]
         [Route("")]
         public IActionResult GetAll(int universeId, Page page)

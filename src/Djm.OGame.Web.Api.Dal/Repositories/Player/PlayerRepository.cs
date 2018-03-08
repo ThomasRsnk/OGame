@@ -19,6 +19,11 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
             return await DbSet.FirstOrDefaultAsync(p => p.UniverseId == universeId && p.Id == playerId,cancellation);
         }
 
+        public async Task<Entities.Player> FirstOrDefaultAsync(string login, CancellationToken cancellation)
+        {
+            return await DbSet.FirstOrDefaultAsync(p => p.Login == login, cancellation);
+        }
+
         public async Task<List<Entities.Player>> ToListAsync(int universeId, CancellationToken cancellation)
         {
             return await DbSet.Where(p => p.UniverseId == universeId).ToListAsync(cancellation);

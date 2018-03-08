@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Total.AutoCare.Web.Helpers.Mail;
 
-namespace Total.AutoCare.Web.Options
+namespace Djm.OGame.Web.Api.Services.Mails
 {
     public class MailOptions
     {
