@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Djm.OGame.Web.Api.Services.Utils
+namespace Djm.OGame.Web.Api.Helpers
 {
     public class Utils
     {

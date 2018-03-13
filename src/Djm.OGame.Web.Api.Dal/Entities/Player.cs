@@ -11,5 +11,6 @@
         public string EmailAddress { get; set; }
         public bool AllowNotifications { get; set; }
         public string Role { get; set; }
+        public byte[] Salt { get; set; }
     }
 }

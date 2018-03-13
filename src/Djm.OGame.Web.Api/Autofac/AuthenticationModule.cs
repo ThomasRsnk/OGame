@@ -1,6 +1,7 @@
 ﻿using Autofac;
-using Djm.OGame.Web.Api.Controllers;
+using Djm.OGame.Web.Api.Mvc.Authorizations;
 using Djm.OGame.Web.Api.Services.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Djm.OGame.Web.Api.Autofac
 {
@@ -9,6 +10,9 @@ namespace Djm.OGame.Web.Api.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<JwtFactory>().As<IJwtFactory>();
+
+            builder.RegisterType<ArticleAuthorizationHandler>().As<IAuthorizationHandler>();
+           
         }
     }
 }

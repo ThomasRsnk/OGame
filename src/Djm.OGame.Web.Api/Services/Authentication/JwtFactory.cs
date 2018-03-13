@@ -29,11 +29,11 @@ namespace Djm.OGame.Web.Api.Services.Authentication
 
         }
 
-        public Claim[] GenerateClaims(string userName,string role)
+        public Claim[] GenerateClaims(int id,string role)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat,ToUnixEpochDate(DateTime.Now).ToString()),
                 new Claim(JwtClaimIdentifiers.Role,role)

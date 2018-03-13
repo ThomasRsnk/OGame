@@ -31,6 +31,11 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Base
             DbSet.Remove(entity);
         }
 
+        public virtual void DeleteAsync(TEntity entity, CancellationToken cancellation = default(CancellationToken))
+        {
+           DbSet.Remove(entity);
+        }
+
         public virtual void Update(TEntity entity)
         {
             DbSet.Update(entity);

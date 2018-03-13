@@ -24,13 +24,13 @@ namespace Djm.OGame.Web.Api.Mvc.ModelBinders
                 modelName = bindingContext.FieldName;
             }
 
-            var currentValue = bindingContext.ValueProvider.GetValue("Current");
+            var currentValue = bindingContext.ValueProvider.GetValue("page");
             if(!currentValue.Any())
-                currentValue = bindingContext.ValueProvider.GetValue("page");
+                currentValue = bindingContext.ValueProvider.GetValue("Current");
 
-            var sizeValue = bindingContext.ValueProvider.GetValue("Size");
+            var sizeValue = bindingContext.ValueProvider.GetValue("pageLength");
             if(!sizeValue.Any())
-                sizeValue = bindingContext.ValueProvider.GetValue("pageLength");
+                sizeValue = bindingContext.ValueProvider.GetValue("Size");
 
 
             if (!int.TryParse(currentValue.FirstValue, out var current))

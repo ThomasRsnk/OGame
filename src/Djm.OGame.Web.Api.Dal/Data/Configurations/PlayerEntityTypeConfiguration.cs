@@ -18,11 +18,12 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
             b.Property(p => p.UniverseId)
                 .IsRequired()
                 .ValueGeneratedNever();
-
+            
             b.HasIndex(p => new
             {
+                p.UniverseId,
                 p.Id,
-                p.UniverseId
+                p.Login
             }).IsUnique();
         }
     }

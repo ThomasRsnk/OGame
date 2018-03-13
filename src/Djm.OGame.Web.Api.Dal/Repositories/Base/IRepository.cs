@@ -8,7 +8,7 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Base
     {
         void Insert(TEntity entity);
         Task DeleteAsync(TKey entityId, CancellationToken cancellationToken = default(CancellationToken));
-        
+        void DeleteAsync(TEntity entity, CancellationToken cancellation = default(CancellationToken));
         Task<TEntity> FindAsync(TKey entityId, CancellationToken cancellationToken = default(CancellationToken));
         void Update(TEntity entity);
 

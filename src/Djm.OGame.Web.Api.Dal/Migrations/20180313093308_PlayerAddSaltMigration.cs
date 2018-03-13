@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Djm.OGame.Web.Api.Dal.Migrations
 {
-    public partial class PlayerRolesMigration : Migration
+    public partial class PlayerAddSaltMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Role",
+            migrationBuilder.AddColumn<byte[]>(
+                name: "Salt",
                 table: "Players",
                 nullable: true);
         }
@@ -17,7 +17,7 @@ namespace Djm.OGame.Web.Api.Dal.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Role",
+                name: "Salt",
                 table: "Players");
         }
     }

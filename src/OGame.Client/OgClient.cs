@@ -6,7 +6,6 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using Djm.OGame.Web.Api.BindingModels.Universes;
-using Microsoft.Extensions.Options;
 using OGame.Client.Models;
 using OGame.Client.Providers.Cache;
 using OGame.Client.Providers.Log;

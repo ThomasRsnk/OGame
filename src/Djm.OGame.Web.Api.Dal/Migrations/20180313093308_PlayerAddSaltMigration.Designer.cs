@@ -11,8 +11,8 @@ using System;
 namespace Djm.OGame.Web.Api.Dal.Migrations
 {
     [DbContext(typeof(OGameContext))]
-    [Migration("20180308141237_PlayerRolesMigration")]
-    partial class PlayerRolesMigration
+    [Migration("20180313093308_PlayerAddSaltMigration")]
+    partial class PlayerAddSaltMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,46 @@ namespace Djm.OGame.Web.Api.Dal.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AuthorId");
+
+                    b.Property<int>("HtmlContentId");
+
+                    b.Property<string>("Image");
+
+                    b.Property<DateTime>("LastEdit");
+
+                    b.Property<string>("Preview");
+
+                    b.Property<DateTime>("PublishDate");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.ArticleContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AuthorId");
+
+                    b.Property<string>("HtmlContent")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticlesContents");
+                });
 
             modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Pin", b =>
                 {
@@ -60,10 +100,13 @@ namespace Djm.OGame.Web.Api.Dal.Migrations
 
                     b.Property<string>("Role");
 
+                    b.Property<byte[]>("Salt");
+
                     b.HasKey("Id", "UniverseId");
 
-                    b.HasIndex("Id", "UniverseId")
-                        .IsUnique();
+                    b.HasIndex("UniverseId", "Id", "Login")
+                        .IsUnique()
+                        .HasFilter("[Login] IS NOT NULL");
 
                     b.ToTable("Players");
                 });

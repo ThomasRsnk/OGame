@@ -8,7 +8,6 @@ using Djm.OGame.Web.Api.Dal.Repositories.Pin;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
 using Djm.OGame.Web.Api.Jobs;
-using Djm.OGame.Web.Api.Services.Mails;
 using Djm.OGame.Web.Api.Services.Mails.Models;
 using Hangfire;
 using OGame.Client;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
+using Djm.OGame.Web.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using OGame.Client;
 
@@ -53,8 +54,8 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
 
             //conversion des id en str, créer le nom du fichier & récupération du répertoire de l'univers
 
-            var playerIdStr = Utils.Utils.ToStringInvariant(playerId);
-            var universeIdStr = Utils.Utils.ToStringInvariant(universeId);
+            var playerIdStr = Utils.ToStringInvariant(playerId);
+            var universeIdStr = Utils.ToStringInvariant(universeId);
 
             var fileName = playerIdStr+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
 
