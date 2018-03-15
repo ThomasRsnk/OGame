@@ -28,5 +28,10 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
         {
             return await DbSet.Where(p => p.UniverseId == universeId).ToListAsync(cancellation);
         }
+
+        public async Task<List<Entities.Player>> ToListAsync(string adminOnly, CancellationToken cancellation)
+        {
+            return await DbSet.Where(p => p.Role .Equals("1")).ToListAsync(cancellation);
+        }
     }
 }

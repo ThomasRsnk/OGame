@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\Css\StyleSheet.css" />
   </ItemGroup>
 
   <ItemGroup>

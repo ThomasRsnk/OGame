@@ -1,0 +1,44 @@
+﻿@model Djm.OGame.Web.Api.BindingModels.Articles.ArticleDetailsBindingModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Pages/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+</head>
+<body>
+    <br /><br /><br /><br />
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-6">
+            <h1>@Html.DisplayFor(m => m.Title)</h1><br/>
+            <p>@Html.Raw(@Model.HtmlContent)</p>
+            
+            <br/><br/>
+            <div class="jumbotron" >
+                <div class="media">
+                    <img class="mr-3" 
+                         style="width: 128px; height: 128px;" 
+                         src=@Html.DisplayFor(m =>m.AuthorProfilePic)
+                         onerror="this.src = 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'" />
+                    <div class="media-body">
+                        <h5 class="mt-0">Article écrit par : <a href="#">@Html.DisplayFor(m => m.AuthorName)</a></h5>
+                        <p class="text-muted">posté le @Html.DisplayFor(m => m.FormatedPublishDate)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="col-3"></div>
+    </div>
+</body>
+
+
+</html>

@@ -81,7 +81,15 @@ namespace Djm.OGame.Web.Api
                     .ForMember(dest => dest.ProfilePicUrl, opt => opt.Ignore());
 
                 cfg.CreateMap<Article, ArticleDetailsBindingModel>()
-                    .ForMember(dest => dest.HtmlContent, opt => opt.Ignore());
+                    .ForMember(dest => dest.HtmlContent, opt => opt.Ignore())
+                    .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
+                    .ForMember(dest => dest.AuthorName, opt => opt.Ignore())
+                    .ForMember(dest => dest.FormatedPublishDate,opt => opt.MapFrom(src => src.PublishDate.ToLongDateString()));
+
+                cfg.CreateMap<Article, ArticleListItemBindingModel>()
+                    .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
+                    .ForMember(dest => dest.AuthorName, opt => opt.Ignore());
+
 
             });
 
@@ -212,6 +220,8 @@ namespace Djm.OGame.Web.Api
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Djm.Ogame.Api"); });
 
             app.UseAuthentication();
+
+            app.UseStaticFiles();
 
             app.UseMvc();
 

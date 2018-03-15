@@ -20,5 +20,6 @@ namespace Djm.OGame.Web.Api.BindingModels.Pagination
         {
             return query.Skip(FirstIndex).Take(Size);
         }
+        
     }
 }

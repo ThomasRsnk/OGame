@@ -7,7 +7,9 @@ namespace Djm.OGame.Web.Api.BindingModels.Articles
     {
         public int Id { get; set; }
         public int AuthorId { get; set; }
+        public string AuthorName { get; set; }
         public DateTime PublishDate { get; set; }
+        public string FormatedPublishDate { get; set; }
         public DateTime LastEdit { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
@@ -31,5 +33,6 @@ namespace Djm.OGame.Web.Api.BindingModels.Articles
     public class ArticleDetailsBindingModel : ArticleListItemBindingModel
     {
         public string HtmlContent { get; set; }
+        public string AuthorProfilePic { get; set; }
     }
 }

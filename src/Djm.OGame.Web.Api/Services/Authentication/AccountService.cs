@@ -43,9 +43,9 @@ namespace Djm.OGame.Web.Api.Services.Authentication
             if (players == null)
                 throw new OGameException("L'univers " + bindingModel.UniverseId + " n'existe pas");
 
-            var owner = players.FirstOrDefault(p => p.Id == bindingModel.PlayerId);
-            if (owner == null)
-                throw new OGameException("owner : aucun joueur avec l'id " + bindingModel.PlayerId + " n'existe sur l'univers " + bindingModel.UniverseId);
+            var player = players.FirstOrDefault(p => p.Id == bindingModel.PlayerId);
+            if (player == null)
+                throw new OGameException("Aucun joueur avec l'id " + bindingModel.PlayerId + " n'existe sur l'univers " + bindingModel.UniverseId);
             
             var newPlayer = new Player
             {
@@ -53,7 +53,8 @@ namespace Djm.OGame.Web.Api.Services.Authentication
                 Password  = bindingModel.Password.ToHash(null,out var salt),
                 Salt = salt,
                 UniverseId = bindingModel.UniverseId,
-                Id = bindingModel.PlayerId
+                Id = bindingModel.PlayerId,
+                Name = player.Name
             };
 
             PlayerRepository.Insert(newPlayer);

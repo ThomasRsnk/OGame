@@ -47,25 +47,28 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        [ETagFilter(200)]
-        [ResponseCache(CacheProfileName = "Default")]
+        //[ETagFilter(200)]
+        [Throttle(Name = "Throttling", Seconds = 1)]
+        //[ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> GetArticle(int id, CancellationToken cancellation)
         {
             var article = await ArticlesService.GetAsync(id, cancellation);
 
             if (article == null) return NotFound();
 
+            return View("~/Views/Pages/Articles/Article.cshtml", article);
             return Ok(article);
         }
 
         [HttpGet]
-        [Throttle(Name = "Throttling", Seconds = 5)]
         public async Task<IActionResult> GetArticleList(Page page, CancellationToken cancellation)
         {
             var articles = await ArticlesService.GetListAsync(page,cancellation);
 
             if (articles == null) return NotFound();
 
+            return View("~/Views/Pages/Articles/Home.cshtml", articles);
+            
             return Ok(articles);
         }
 

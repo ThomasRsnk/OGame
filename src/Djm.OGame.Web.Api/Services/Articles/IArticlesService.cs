@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,13 +48,25 @@ namespace Djm.OGame.Web.Api.Services.Articles
             PlayerRepository = playerRepository;
             AuthorizationService = authorizationService;
         }
-
+        
         public async Task<PagedListViewModel<ArticleListItemBindingModel>> GetListAsync(Page page,CancellationToken cancellation)
         {
             var articles = await ArticleRepository.ToListAsync(cancellation);
+
+            articles = articles.OrderBy(a => a.PublishDate).ToList();
+
+            var players = await PlayerRepository.ToListAsync("admins", cancellation);
             
-            var viewModel = Mapper.Map<List<ArticleListItemBindingModel>>(articles);
-            
+            var viewModel = articles.Join(players, a => a.AuthorId, p => p.Id, (a, p) => new ArticleListItemBindingModel()
+            {
+                AuthorName = p.Name,
+                Image = a.Image,
+                Preview = a.Preview,
+                FormatedPublishDate = a.PublishDate.ToLongDateString() + " à " + a.PublishDate.ToLongTimeString(),
+                Title = a.Title,
+                Id = a.Id,
+            }).ToList();
+
             return viewModel.ToPagedListViewModel(page);
         }
         
@@ -65,8 +78,13 @@ namespace Djm.OGame.Web.Api.Services.Articles
 
             var viewModel = Mapper.Map<ArticleDetailsBindingModel>(article);
 
-            viewModel.HtmlContent = content.HtmlContent;
+            var player = await PlayerRepository.FirstOrDefaultAsync(10, article.AuthorId, cancellation);
 
+            viewModel.HtmlContent = content.HtmlContent;
+            viewModel.AuthorProfilePic = $"http://localhost:53388/api/universes/10/players/{player.Id}/profilepic";
+            viewModel.AuthorName = player.Name;
+            viewModel.FormatedPublishDate =
+                article.PublishDate.ToLongDateString() + " à " + article.PublishDate.ToLongTimeString();
             return viewModel;
         }
 
