@@ -42,31 +42,31 @@ namespace Djm.OGame.Web.Api.BindingModels.Pagination
         public bool HasNextPage
             => CurrentPage < TotalPages;
 
-        public int Start
+
+        public int Start { get; set; }
+        public int End { get; set; }
+
+        public void Paginate()
         {
-            get
+            Start = CurrentPage - 5;
+            End = CurrentPage + 4;
+
+            if (Start <= 0)
             {
-                if (CurrentPage == TotalPages)
-                    return CurrentPage - 4;
-                if (CurrentPage == TotalPages - 1)
-                    return CurrentPage - 3;
-
-                return CurrentPage - 2 > 1 ? CurrentPage - 2 : 2;
+                Start = 1;
             }
-        }
-       
 
-        public int End
-        {
-            get
+            if (End > TotalPages)
             {
-                if (CurrentPage < 3)
-                    return 6;
+                End = TotalPages;
 
-                return CurrentPage + 2 < TotalPages ? CurrentPage + 3 : TotalPages;
-                
+                if (End > 10)
+                    Start = End - 9;
             }
+
+           
         }
+        
         
     }
 }

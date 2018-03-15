@@ -7,7 +7,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
 {
     public interface IPictureService
     {
-        Task SavePictureAsync(int universeId, int playerId, IFormFile pic,CancellationToken cancellation = default(CancellationToken));
-        Task<FileStream> GetAsync(int universeId, int playerId, CancellationToken cancellation = default(CancellationToken));
+        Task SavePictureAsync(string email, IFormFile pic,CancellationToken cancellation = default(CancellationToken));
+        Task<FileStream> GetAsync(string email, CancellationToken cancellation = default(CancellationToken));
     }
 }

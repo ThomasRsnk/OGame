@@ -1,22 +1,17 @@
-﻿@model Djm.OGame.Web.Api.BindingModels.Pagination.PagedListViewModel<Djm.OGame.Web.Api.BindingModels.Articles.ArticleListItemBindingModel>
+﻿@model Djm.OGame.Web.Api.BindingModels.CompoundBindingModel
 
 @{
     ViewBag.Title = "title";
     Layout = "~/Views/Pages/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-
-</head>
 <body>
     <div>
         
         <br/><br/><br/><br />
         <div class="row">
-            @foreach (var item in Model.Items)
+            @foreach (var item in Model.Pagination.Items)
             {
 
                 <div class="col-1"></div>
@@ -46,28 +41,34 @@
             <ul class="pagination">
                 
                 @{
-                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    Model.Pagination.Paginate();
+
+                    var prevDisabled = !Model.Pagination.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Pagination.HasNextPage ? "disabled" : "";
+
+                    var endVisible = Model.Pagination.End == Model.Pagination.TotalPages ? "d-none" : "";
 
                     string Active(int i)
                     {
-                        return Model.CurrentPage==i ? "active" : "";
+                        return Model.Pagination.CurrentPage==i ? "active" : "";
                     }
 
                 }
                 
-                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Previous">Précédent</a></li>
+                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Previous">Précédent</a></li>
             
                 <li class="page-item @Active(1)"><a class="page-link" href="http://localhost:53388/api/articles?page=1">1</a></li>
+                
+             
 
-                @for (var i =@Model.Start; i < @Model.End; i++)
+                @for (var i =@Model.Pagination.Start + 1; i < @Model.Pagination.End + 1; i++)
                 {
                     <li class="page-item @Active(i)"><a class="page-link" href="http://localhost:53388/api/articles?page=@i">@i</a></li>
                 }
 
-                <li class="page-item @Active(@Model.TotalPages)"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.TotalPages">@Model.TotalPages</a></li>
+                <li class="page-item @Active(@Model.Pagination.TotalPages) @endVisible"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.TotalPages">@Model.Pagination.TotalPages</a></li>
                
-                <li class="page-item @nextDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Next">Suivant</a></li>
+                <li class="page-item @nextDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Next">Suivant</a></li>
                
             </ul>
             

@@ -13,7 +13,7 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
         Task<List<Entities.Player>> ToListAsync(int universeId,
             CancellationToken cancellation = default(CancellationToken));
 
-        Task<Entities.Player> FirstOrDefaultAsync(string login,
+        Task<Entities.Player> FirstOrDefaultAsync(string email,
             CancellationToken cancellation = default(CancellationToken));
 
         Task<List<Entities.Player>> ToListAsync(string adminOnly,

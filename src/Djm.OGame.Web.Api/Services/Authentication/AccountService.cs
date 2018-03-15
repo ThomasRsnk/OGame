@@ -30,7 +30,7 @@ namespace Djm.OGame.Web.Api.Services.Authentication
 
         public async Task<Player> CheckPasswordAsync(LoginBindingModel credentials,CancellationToken cancellation)
         {
-            var player = await PlayerRepository.FirstOrDefaultAsync(credentials.UserName, cancellation);
+            var player = await PlayerRepository.FirstOrDefaultAsync(credentials.Email, cancellation);
 
             if (player == null) return null;
 
@@ -46,15 +46,21 @@ namespace Djm.OGame.Web.Api.Services.Authentication
             var player = players.FirstOrDefault(p => p.Id == bindingModel.PlayerId);
             if (player == null)
                 throw new OGameException("Aucun joueur avec l'id " + bindingModel.PlayerId + " n'existe sur l'univers " + bindingModel.UniverseId);
-            
+
+            var playerInDb = await PlayerRepository.FirstOrDefaultAsync(bindingModel.Email, cancellation);
+
+            if(playerInDb != null)
+                throw new OGameException("Cette adresse email est déjà utilisée");
+
             var newPlayer = new Player
             {
-                Login = bindingModel.UserName,
+                EmailAddress = bindingModel.Email,
                 Password  = bindingModel.Password.ToHash(null,out var salt),
                 Salt = salt,
                 UniverseId = bindingModel.UniverseId,
-                Id = bindingModel.PlayerId,
-                Name = player.Name
+                OGameId = bindingModel.PlayerId,
+                Name = player.Name,
+                Role = Roles.Utilisateur
             };
 
             PlayerRepository.Insert(newPlayer);

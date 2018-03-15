@@ -10,9 +10,6 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
         {
             b.HasKey(p => p.Id);
 
-            b.Property(p => p.AuthorId)
-                .IsRequired();
-
             b.Property(p => p.Title)
                 .IsRequired();
 

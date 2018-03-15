@@ -9,9 +9,9 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
 
         public void Configure(EntityTypeBuilder<Player> b)
         {
-            b.HasKey(p => new {p.Id, p.UniverseId});
+            b.HasKey(p => p.EmailAddress);
 
-            b.Property(p => p.Id)
+            b.Property(p => p.OGameId)
                 .IsRequired()
                 .ValueGeneratedNever();
 
@@ -22,8 +22,7 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
             b.HasIndex(p => new
             {
                 p.UniverseId,
-                p.Id,
-                p.Login
+                p.OGameId,
             }).IsUnique();
         }
     }

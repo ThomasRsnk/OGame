@@ -171,6 +171,15 @@ namespace Djm.OGame.Web.Api
                     });
             });
 
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.HttpOnly = true;
+            });
+
+            services.AddCors();
+
             services.AddLogging();
 
             //Authorization
@@ -222,6 +231,8 @@ namespace Djm.OGame.Web.Api
             app.UseAuthentication();
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc();
 

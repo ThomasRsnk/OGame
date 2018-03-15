@@ -32,7 +32,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
             };
         }
 
-        public async Task SavePictureAsync(int universeId, int playerId, IFormFile pic,CancellationToken cancellation)
+        public async Task SavePictureAsync(string email, IFormFile pic,CancellationToken cancellation)
         {
             //vérifier que le fichier a bien été reçu
 
@@ -44,60 +44,41 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
             if(!AllowedFileType.Contains(pic.ContentType))
                 throw  new PictureException("Fichier invalide, utilisez .png/.jpeg/.bmp/.jpg");
 
-            //vérifier que l'univers et le joueur existent
+            //vérifier que le joueur existe
 
-            var players = OGameClient.Universe(universeId).GetPlayers();
-            if(players==null)
-                throw new PictureException("L'univers "+universeId+" n'existe pas");
-            if (!players.Exists(p=>p.Id == playerId))
-                throw new PictureException("Le joueur "+playerId+" n'existe pas");
+            var player = await PlayerRepository.FirstOrDefaultAsync(email, cancellation);
 
-            //conversion des id en str, créer le nom du fichier & récupération du répertoire de l'univers
+            if(player == null)
+                throw new PictureException("Le joueur n'existe pas");
 
-            var playerIdStr = Utils.ToStringInvariant(playerId);
-            var universeIdStr = Utils.ToStringInvariant(universeId);
+            // créer le nom du fichier & récupération du répertoire de l'univers
+            
+            var fileName = player.OGameId+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
 
-            var fileName = playerIdStr+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
-
-            var directory = Path.Combine(_basePath, universeIdStr);
+            var directory = Path.Combine(_basePath, player.UniverseId.ToString());
 
             var path = Path.GetFullPath(Path.Combine(directory,fileName));
             
-           
             //vérifier si l'image est déjà présente
-
-            var player = await PlayerRepository.FirstOrDefaultAsync(universeId, playerId, cancellation);
-
-            if (player != null)//OUI
+            
+            if (player.ProfilePicturePath != "")//OUI
             {
-                // 1) Modification en db
-
-                player.ProfilePicturePath = path;
-                PlayerRepository.Update(player);
-                
-                // 2) Suppression dans le fs
-                
-                var files = Directory.GetFiles(directory, playerIdStr + ".*");
+                var files = Directory.GetFiles(directory, player.OGameId + ".*");
 
                 foreach(var file in files)
                     File.Delete(file);
             }
             else//NON
             {
-                // 1) vérifier que le répertoire de l'univers spéficié existe
-
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
-
-                // 2) création d'un tuple en db
-
-                PlayerRepository.Insert(new Player()
-                {
-                    Id = playerId,
-                    UniverseId = universeId,
-                    ProfilePicturePath = path
-                });
             }
+
+            //maj en db
+
+            player.ProfilePicturePath = path;
+            PlayerRepository.Update(player);
+
 
             //enregistrer l'image dans le fs et commit
 
@@ -109,9 +90,9 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
             await UnitOfWork.CommitAsync(cancellation);
         }
 
-        public async Task<FileStream> GetAsync(int universeId, int playerId,CancellationToken cancellation)
+        public async Task<FileStream> GetAsync(string email,CancellationToken cancellation)
         {
-            var player = await PlayerRepository.FirstOrDefaultAsync(universeId, playerId, cancellation);
+            var player = await PlayerRepository.FirstOrDefaultAsync(email, cancellation);
 
             return player != null ? File.OpenRead(Path.Combine(player.ProfilePicturePath)) : null;
         }

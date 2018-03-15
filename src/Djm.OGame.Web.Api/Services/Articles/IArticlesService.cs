@@ -57,7 +57,7 @@ namespace Djm.OGame.Web.Api.Services.Articles
 
             var players = await PlayerRepository.ToListAsync("admins", cancellation);
             
-            var viewModel = articles.Join(players, a => a.AuthorId, p => p.Id, (a, p) => new ArticleListItemBindingModel()
+            var viewModel = articles.Join(players, a => a.AuthorEmail, p => p.EmailAddress, (a, p) => new ArticleListItemBindingModel()
             {
                 AuthorName = p.Name,
                 Image = a.Image,
@@ -78,10 +78,10 @@ namespace Djm.OGame.Web.Api.Services.Articles
 
             var viewModel = Mapper.Map<ArticleDetailsBindingModel>(article);
 
-            var player = await PlayerRepository.FirstOrDefaultAsync(10, article.AuthorId, cancellation);
+            var player = await PlayerRepository.FirstOrDefaultAsync(article.AuthorEmail, cancellation);
 
             viewModel.HtmlContent = content.HtmlContent;
-            viewModel.AuthorProfilePic = $"http://localhost:53388/api/universes/10/players/{player.Id}/profilepic";
+            viewModel.AuthorProfilePic = $"http://localhost:53388/api/users/{player.EmailAddress}/profilepic";
             viewModel.AuthorName = player.Name;
             viewModel.FormatedPublishDate =
                 article.PublishDate.ToLongDateString() + " à " + article.PublishDate.ToLongTimeString();
@@ -109,7 +109,6 @@ namespace Djm.OGame.Web.Api.Services.Articles
         {
             var content = new ArticleContent
             {
-                AuthorId = bindingModel.AuthorId,
                 HtmlContent = bindingModel.HtmlContent
             };
 
@@ -118,7 +117,7 @@ namespace Djm.OGame.Web.Api.Services.Articles
             
             var article = new Article
             {
-                AuthorId = bindingModel.AuthorId,
+                AuthorEmail = bindingModel.AuthorEmail,
                 Image = bindingModel.Image,
                 Preview = bindingModel.Preview,
                 Title = bindingModel.Title,

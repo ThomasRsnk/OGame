@@ -40,7 +40,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Players
             var playersFromDb = await PlayerRepository.ToListAsync(universeId, cancellation);
 
             var viewModels = players.GroupJoin(
-                playersFromDb, p1 => p1.Id, p2 => p2.Id, (p1, p2) => new PlayerListItemBindingModel()
+                playersFromDb, p1 => p1.Id, p2 => p2.OGameId, (p1, p2) => new PlayerListItemBindingModel()
                 {
                     Id = p1.Id,
                     Name = p1.Name,
@@ -71,7 +71,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Players
 
             if (tuple != null)
                 viewModel.ProfilePicUrl = "~/api/universes/"
-                                          + universeId + "/players/" + tuple.Id
+                                          + universeId + "/players/" + tuple.OGameId
                                           + "/profilepic";
 
             //FAVORIS

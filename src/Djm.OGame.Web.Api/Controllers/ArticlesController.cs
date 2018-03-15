@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.BindingModels;
+using Djm.OGame.Web.Api.BindingModels.Account;
 using Djm.OGame.Web.Api.BindingModels.Articles;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Services.Articles;
@@ -28,7 +30,7 @@ namespace Djm.OGame.Web.Api.Controllers
             if (bindingModel == null)
                 return BadRequest("Body empty");
 
-            bindingModel.AuthorId = int.Parse(User.Claims.First().Value);
+            bindingModel.AuthorEmail = User.Claims.First().Value;
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -67,7 +69,13 @@ namespace Djm.OGame.Web.Api.Controllers
 
             if (articles == null) return NotFound();
 
-            return View("~/Views/Pages/Articles/Home.cshtml", articles);
+            var model = new CompoundBindingModel
+            {
+                Pagination = articles,
+                Registration = new RegisterBindingModel()
+            };
+
+            return View("~/Views/Pages/Articles/Home.cshtml", model);
             
             return Ok(articles);
         }
@@ -80,7 +88,7 @@ namespace Djm.OGame.Web.Api.Controllers
             if (bindingModel == null)
                 return BadRequest("Body empty");
 
-            bindingModel.AuthorId = int.Parse(User.Claims.First().Value);
+            bindingModel.AuthorEmail = User.Claims.First().Value;
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
-    [Route("~/api/universes/{universeId:int}/players/{playerId:int}/[Controller]")]
+    [Route("~/api/users/{email}/[Controller]")]
     public class ProfilePicController : Controller
     {
         public ProfilePicController(IPictureService pictureService)
@@ -19,11 +19,11 @@ namespace Djm.OGame.Web.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddProfilePic(int universeId,int playerId, IFormFile pic,CancellationToken cancellation = default(CancellationToken))
+        public async Task<IActionResult> AddProfilePic(string email, IFormFile pic,CancellationToken cancellation = default(CancellationToken))
         {
             try
             {
-                await PictureService.SavePictureAsync(universeId, playerId, pic, cancellation);
+                await PictureService.SavePictureAsync(email, pic, cancellation);
             }
             catch (PictureException e)
             {
@@ -34,9 +34,9 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProfilePic(int universeId, int playerid, CancellationToken cancellation = default(CancellationToken))
+        public async Task<IActionResult> GetProfilePic(string email, CancellationToken cancellation = default(CancellationToken))
         {
-            var image = await PictureService.GetAsync(universeId, playerid, cancellation);
+            var image = await PictureService.GetAsync(email, cancellation);
 
             if (image == null)
                 return NotFound();

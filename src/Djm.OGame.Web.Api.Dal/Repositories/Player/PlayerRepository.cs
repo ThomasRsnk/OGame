@@ -16,12 +16,12 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Player
 
         public async Task<Entities.Player> FirstOrDefaultAsync(int universeId, int playerId, CancellationToken cancellation )
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.UniverseId == universeId && p.Id == playerId,cancellation);
+            return await DbSet.FirstOrDefaultAsync(p => p.UniverseId == universeId && p.OGameId == playerId,cancellation);
         }
 
-        public async Task<Entities.Player> FirstOrDefaultAsync(string login, CancellationToken cancellation)
+        public async Task<Entities.Player> FirstOrDefaultAsync(string email, CancellationToken cancellation)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.Login == login, cancellation);
+            return await DbSet.FirstOrDefaultAsync(p => p.EmailAddress == email, cancellation);
         }
 
         public async Task<List<Entities.Player>> ToListAsync(int universeId, CancellationToken cancellation)

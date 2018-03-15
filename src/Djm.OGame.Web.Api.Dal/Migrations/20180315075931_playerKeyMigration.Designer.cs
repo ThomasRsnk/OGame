@@ -11,9 +11,10 @@ using System;
 namespace Djm.OGame.Web.Api.Dal.Migrations
 {
     [DbContext(typeof(OGameContext))]
-    partial class OGameContextModelSnapshot : ModelSnapshot
+    [Migration("20180315075931_playerKeyMigration")]
+    partial class playerKeyMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,35 +76,6 @@ namespace Djm.OGame.Web.Api.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("Pins");
-                });
-
-            modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Player", b =>
-                {
-                    b.Property<string>("EmailAddress")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("AllowNotifications");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("OGameId");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("ProfilePicturePath");
-
-                    b.Property<string>("Role");
-
-                    b.Property<byte[]>("Salt");
-
-                    b.Property<int>("UniverseId");
-
-                    b.HasKey("EmailAddress");
-
-                    b.HasIndex("UniverseId", "OGameId")
-                        .IsUnique();
-
-                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("Djm.OGame.Web.Api.Dal.Entities.Univers", b =>

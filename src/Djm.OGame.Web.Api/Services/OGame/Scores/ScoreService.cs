@@ -38,7 +38,7 @@ namespace Djm.OGame.Web.Api.Services.OGame.Scores
             var playersFromDb = await PlayerRepository.ToListAsync(universeId, cancellation);
 
             var viewModels = scores.GroupJoin(
-                playersFromDb, p1 => p1.Id, p2 => p2.Id, (p1, p2) => new ScoreListItemPlayerBindingModel()
+                playersFromDb, p1 => p1.Id, p2 => p2.OGameId, (p1, p2) => new ScoreListItemPlayerBindingModel()
                 {
                     Player = new PlayerListItemBindingModel()
                     {
