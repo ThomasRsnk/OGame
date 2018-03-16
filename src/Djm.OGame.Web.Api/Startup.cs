@@ -33,6 +33,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
@@ -174,7 +175,7 @@ namespace Djm.OGame.Web.Api
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.IdleTimeout = TimeSpan.FromSeconds(1800);
                 options.Cookie.HttpOnly = true;
             });
 
@@ -190,9 +191,11 @@ namespace Djm.OGame.Web.Api
                     .RequireAuthenticatedUser()
                     .RequireRole(Roles.Utilisateur, Roles.Admin));
 
-                options.AddPolicy("Administrateurs", policy => policy.RequireRole(Roles.Admin));
+                options.AddPolicy("Admin", policy => policy.RequireRole(Roles.Admin));
 
                 options.AddPolicy("EditDeleteArticle",policy => policy.Requirements.Add(new SameAuthorRequirement()));
+
+                
             });
 
            //autofac

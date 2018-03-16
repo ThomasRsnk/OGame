@@ -171,6 +171,7 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Server.Kestrel.Https.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Session.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.StaticFiles.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.WebUtilities.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.CodeAnalysis.dll
@@ -372,4 +373,3 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.pdb
-C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Session.dll

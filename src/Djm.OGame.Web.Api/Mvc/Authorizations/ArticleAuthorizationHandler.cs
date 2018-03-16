@@ -19,4 +19,5 @@ namespace Djm.OGame.Web.Api.Mvc.Authorizations
     }
 
     public class SameAuthorRequirement : IAuthorizationRequirement { }
+    
 }

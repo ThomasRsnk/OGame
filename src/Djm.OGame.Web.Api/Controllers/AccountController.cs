@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.BindingModels;
 using Djm.OGame.Web.Api.BindingModels.Account;
 using Djm.OGame.Web.Api.Services.Authentication;
 using Djm.OGame.Web.Api.Services.OGame;
@@ -24,7 +23,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost,Route("login")]
-        public async Task<IActionResult> SignIn([FromForm] LoginBindingModel credentials,CancellationToken cancellation)
+        public async Task<IActionResult> SignIn([FromBody] LoginBindingModel credentials,CancellationToken cancellation)
         {
             if (credentials == null)
                 return BadRequest();
@@ -33,22 +32,34 @@ namespace Djm.OGame.Web.Api.Controllers
 
             if (player == null)
             {
-                TempData["Error"] = "Échec de l'authentification";
-                //return RedirectToAction("GetArticleList", "Articles");
-                return Content("Échec de l'authentification");
+                return BadRequest("Échec de l'authentification");
             }
 
             HttpContext.Session.SetString("login",credentials.Email);
-   
-            return RedirectToAction("GetArticleList", "Articles");
+
+            var token = JwtFactory.GenerateToken(JwtFactory.GenerateClaims(player.EmailAddress, player.Role));
+
+            HttpContext.Session.SetString("token",token);
+
+            return Ok();
             return Ok(new {
                 AccessToken = JwtFactory.GenerateToken(JwtFactory.GenerateClaims(player.EmailAddress,player.Role))
             });
         }
 
         [AllowAnonymous]
+        [Authorize]
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
         [HttpPost, Route("register")]
-        public async Task<IActionResult> SignUp([FromForm] RegisterBindingModel bindingModel,CancellationToken cancellation)
+        public async Task<IActionResult> SignUp([FromBody] RegisterBindingModel bindingModel,CancellationToken cancellation)
         {
             if (bindingModel == null)
                 return BadRequest("Body empty");
@@ -62,10 +73,7 @@ namespace Djm.OGame.Web.Api.Controllers
             }
             catch (OGameException e)
             {
-               //return BadRequest(e.Message);
-               
-              
-               
+               return BadRequest(e.Message);
             }
             
 

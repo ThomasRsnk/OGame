@@ -24,7 +24,7 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Administrateurs")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Publish([FromBody] CreateArticleBindingModel bindingModel,CancellationToken cancellation)
         {
             if (bindingModel == null)
@@ -50,7 +50,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [HttpGet]
         [Route("{id:int}")]
         //[ETagFilter(200)]
-        [Throttle(Name = "Throttling", Seconds = 1)]
+        //[Throttle(Name = "Throttling", Seconds = 1)]
         //[ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> GetArticle(int id, CancellationToken cancellation)
         {
@@ -58,7 +58,15 @@ namespace Djm.OGame.Web.Api.Controllers
 
             if (article == null) return NotFound();
 
-            return View("~/Views/Pages/Articles/Article.cshtml", article);
+            var model = new CompoundBindingModel
+            {
+                Article = article,
+                Registration = new RegisterBindingModel(),
+                Connection = new LoginBindingModel(),
+                CreateArticle = new CreateArticleBindingModel()
+            };
+
+            return View("~/Views/Pages/Articles/Article.cshtml", model);
             return Ok(article);
         }
 
@@ -72,7 +80,8 @@ namespace Djm.OGame.Web.Api.Controllers
             var model = new CompoundBindingModel
             {
                 Pagination = articles,
-                Registration = new RegisterBindingModel()
+                Registration = new RegisterBindingModel(),
+                Connection = new LoginBindingModel()
             };
 
             return View("~/Views/Pages/Articles/Home.cshtml", model);
@@ -81,9 +90,9 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Policy = "Administrateurs")]
+        //[Authorize(Policy = "Administrateurs")]
         [Route("{id:int}")]
-        public async Task<IActionResult> Edit([FromBody] CreateArticleBindingModel bindingModel,int id, CancellationToken cancellation)
+        public async Task<IActionResult> Edit([FromForm] CreateArticleBindingModel bindingModel,int id, CancellationToken cancellation)
         {
             if (bindingModel == null)
                 return BadRequest("Body empty");
@@ -106,8 +115,34 @@ namespace Djm.OGame.Web.Api.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Authorize(Policy = "Admin")]
+        [Route("edit/{id:int}")]
+        public async Task<IActionResult> EditWeb([FromBody] CreateArticleBindingModel bindingModel, int id, CancellationToken cancellation)
+        {
+            if (bindingModel == null)
+                return BadRequest("Body empty");
+
+            bindingModel.AuthorEmail = User.Claims.First().Value;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await ArticlesService.Edit(User, id, bindingModel, cancellation);
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+
+            return RedirectToAction("GetArticle", new {id});
+        }
+
         [HttpDelete]
-        [Authorize(Policy = "Administrateurs")]
+        [Authorize(Policy = "Admin")]
         [Route("{id:int}")]
         public async Task<IActionResult> DeleteArticle(int id, CancellationToken cancellation)
         {
@@ -116,5 +151,14 @@ namespace Djm.OGame.Web.Api.Controllers
             return NoContent();
         }
 
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        [Route("delete/{id:int}")]
+        public async Task<IActionResult> DeleteArticleWeb(int id, CancellationToken cancellation)
+        {
+            await ArticlesService.Delete(User, id, cancellation);
+
+            return NoContent();
+        }
     }
 }

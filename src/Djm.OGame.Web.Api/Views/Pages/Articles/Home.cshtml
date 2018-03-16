@@ -8,8 +8,8 @@
 
 <body>
     <div>
-        
-        <br/><br/><br/><br />
+
+        <br /><br /><br /><br />
         <div class="row">
             @foreach (var item in Model.Pagination.Items)
             {
@@ -35,11 +35,11 @@
             }
         </div>
         <div class="row">
-        <div class="col-1"></div>
-       
+            <div class="col-1"></div>
+
 
             <ul class="pagination">
-                
+
                 @{
                     Model.Pagination.Paginate();
 
@@ -50,29 +50,29 @@
 
                     string Active(int i)
                     {
-                        return Model.Pagination.CurrentPage==i ? "active" : "";
+                        return Model.Pagination.CurrentPage == i ? "active" : "";
                     }
 
                 }
-                
-                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Previous">Précédent</a></li>
-            
-                <li class="page-item @Active(1)"><a class="page-link" href="http://localhost:53388/api/articles?page=1">1</a></li>
-                
-             
 
-                @for (var i =@Model.Pagination.Start + 1; i < @Model.Pagination.End + 1; i++)
+                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Previous">Précédent</a></li>
+
+                <li class="page-item @Active(1)"><a class="page-link" href="http://localhost:53388/api/articles?page=1">1</a></li>
+
+
+
+                @for (var i = @Model.Pagination.Start + 1; i < @Model.Pagination.End + 1; i++)
                 {
                     <li class="page-item @Active(i)"><a class="page-link" href="http://localhost:53388/api/articles?page=@i">@i</a></li>
                 }
 
                 <li class="page-item @Active(@Model.Pagination.TotalPages) @endVisible"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.TotalPages">@Model.Pagination.TotalPages</a></li>
-               
+
                 <li class="page-item @nextDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Next">Suivant</a></li>
-               
+
             </ul>
-            
+
         </div>
-        </div>
+    </div>
 </body>
 </html>
