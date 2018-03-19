@@ -34,6 +34,8 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
+        [ETagFilter(200)]
+        [ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> GetProfilePic(string email, CancellationToken cancellation = default(CancellationToken))
         {
             var image = await PictureService.GetAsync(email, cancellation);

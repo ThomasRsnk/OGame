@@ -41,7 +41,6 @@ namespace Djm.OGame.Web.Api.Controllers
 
             HttpContext.Session.SetString("token",token);
 
-            return Ok();
             return Ok(new {
                 AccessToken = JwtFactory.GenerateToken(JwtFactory.GenerateClaims(player.EmailAddress,player.Role))
             });

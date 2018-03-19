@@ -16,6 +16,8 @@
 <head>
     <title>Djm Ogame</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
@@ -35,7 +37,7 @@
 <body>
     <div>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="http://localhost:53388/api/articles">Djm OGame</a>
+            <a class="navbar-brand" href="http://localhost:53388/articles">Djm OGame</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:53388/swagger/">Api</a>
@@ -46,10 +48,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+                
                 @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Créer un article</a>
+                        <a id="createBtna"class="nav-link" href="#">Créer un article</a>
                     </li>
                 }
                 
@@ -87,7 +90,7 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane active" id="login">
-                                    <form asp-controller="Account" method="post" asp-action="SignIn" id="loginForm">
+                                    <form asp-controller="Account" method="post" asp-action="SignIn" id="loginForm" asp-antiforgery="false">
                                         <div class="form-group">
                                             <label asp-for="Connection.Email">Identifiant</label>
                                             <input asp-for="Connection.Email" class="form-control" name="Email">
@@ -107,7 +110,7 @@
                                 </div>
 
                                 <div class="tab-pane" id="register">
-                                    <form asp-controller="Account" method="post" asp-action="SignUp" id="registerForm">
+                                    <form asp-controller="Account" method="post" asp-action="SignUp" id="registerForm" asp-antiforgery="false">
 
                                         <div class="form-group">
                                             <label asp-for="Registration.Email"></label>
@@ -154,7 +157,7 @@
 
 
 
-            <div>
+            <div class="container">
                 @RenderBody()
             </div>
         </div>
@@ -237,8 +240,7 @@
 
             });
 
-
-
+         
             function getFormData($form) {
                 var unindexed_array = $form.serializeArray();
                 var indexed_array = {};

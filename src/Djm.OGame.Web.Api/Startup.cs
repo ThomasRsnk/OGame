@@ -164,12 +164,12 @@ namespace Djm.OGame.Web.Api
                         Duration = 10,
                         Location = ResponseCacheLocation.Any
                     });
-                mvc.CacheProfiles.Add("Never",
-                    new CacheProfile()
-                    {
-                        Location = ResponseCacheLocation.None,
-                        NoStore = true
-                    });
+                //mvc.CacheProfiles.Add("Never",
+                //    new CacheProfile()
+                //    {
+                //        Location = ResponseCacheLocation.None,
+                //        NoStore = true
+                //    });
             });
 
             services.AddSession(options =>
@@ -317,10 +317,9 @@ namespace Djm.OGame.Web.Api
             {
                 if (_statusCodes.Contains(context.HttpContext.Response.StatusCode))
                 {
-                    //I just serialize the result to JSON, could do something less costly
-                    var content = JsonConvert.SerializeObject(context.Result);
+                    //var content = JsonConvert.SerializeObject(context.Result);
 
-                    var etag = ETagGenerator.GetETag(context.HttpContext.Request.Path.ToString(), Encoding.UTF8.GetBytes(content));
+                    var etag = ETagGenerator.GetETag(context.HttpContext.Request.Path.ToString(), Encoding.UTF8.GetBytes(context.Result.ToString()));
 
                     if (context.HttpContext.Request.Headers.Keys.Contains("If-None-Match") && context.HttpContext.Request.Headers["If-None-Match"].ToString() == etag)
                     {

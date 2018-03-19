@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Djm.OGame.Web.Api.BindingModels.CompoundBindingModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Pages/_Layout.cshtml";
+}
+
+<br /><br /><br /><br />
+<div class="row">
+    <div class="col-3"></div>
+
+    <div class="col-6">
+       
+        <div class="jumbotron" id="createPanel" style="display:none">
+            <form asp-controller="Articles" method="Post" asp-action="CreateArticle" id="createPanel">
+                <div class="form-group">
+                    <label asp-for="CreateArticle.Title">Titre</label>
+                    <input asp-for="CreateArticle.Title" class="form-control" name="Title">
+                    <span asp-validation-for="CreateArticle.Title" class="text-danger" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CreateArticle.Image">Image</label>
+                    <input asp-for="CreateArticle.Image" class="form-control" name="Image">
+                    <span asp-validation-for="CreateArticle.Image" class="text-danger" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CreateArticle.Preview">Preview</label>
+                    <textarea asp-for="CreateArticle.Preview" class="form-control" rows="4" name="Preview"></textarea>
+                    <span asp-validation-for="CreateArticle.Preview" class="text-danger" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CreateArticle.HtmlContent">Contenu</label>
+                    <textarea asp-for="CreateArticle.HtmlContent" class="form-control" rows="12" name="HtmlContent"></textarea>
+                    <span asp-validation-for="CreateArticle.HtmlContent" class="text-danger" />
+                </div>
+
+
+                <p class="text-danger"> </p>
+
+
+                <button type="button" id="confirmChange" class="btn btn-success btn-block">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-3"></div>
+
+</div>

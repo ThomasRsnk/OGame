@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,5 +20,7 @@ namespace Djm.OGame.Web.Api.Services.Articles
         Task<ArticleDetailsBindingModel> GetAsync(int articleId, CancellationToken cancellation = default(CancellationToken));
 
         Task Delete(ClaimsPrincipal user, int articleId, CancellationToken cancellation = default(CancellationToken));
+
+        Task<DateTime> GetLastEditionDateAsync(CancellationToken cancellation = default(CancellationToken));
     }
 }

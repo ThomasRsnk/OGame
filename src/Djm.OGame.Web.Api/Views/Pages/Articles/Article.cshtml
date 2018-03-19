@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using System.Web.Helpers
 @model Djm.OGame.Web.Api.BindingModels.CompoundBindingModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -7,79 +8,69 @@
     Layout = "~/Views/Pages/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<br /><br /><br /><br />
+    
+<h1>@Html.DisplayFor(m => m.Article.Title)</h1><br />
+<p>@Html.Raw(@Model.Article.HtmlContent)</p>
 
-<html>
-<head>
+<br /><br />
+<div class="jumbotron">
+    <div class="media">
+        <img class="mr-3"
+            style="width: 128px; height: 128px;"
+            src=@Html.DisplayFor(m =>m.Article.AuthorProfilePic)
+            onerror="this.src = 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'" />
+        <div class="media-body">
+            <h5 class="mt-0">Article écrit par : <a href="#">@Html.DisplayFor(m => m.Article.AuthorName)</a></h5>
+            <p class="text-muted">posté le @Html.DisplayFor(m => m.Article.FormatedPublishDate)</p>
 
-</head>
-<body>
-    <br /><br /><br /><br />
-<div class="row">
-    <div class="col-3"></div>
-
-    <div class="col-6">
-        <h1>@Html.DisplayFor(m => m.Article.Title)</h1><br />
-        <p>@Html.Raw(@Model.Article.HtmlContent)</p>
-
-        <br /><br />
-        <div class="jumbotron">
-            <div class="media">
-                <img class="mr-3"
-                     style="width: 128px; height: 128px;"
-                     src=@Html.DisplayFor(m =>m.Article.AuthorProfilePic)
-                     onerror="this.src = 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'" />
-                <div class="media-body">
-                    <h5 class="mt-0">Article écrit par : <a href="#">@Html.DisplayFor(m => m.Article.AuthorName)</a></h5>
-                    <p class="text-muted">posté le @Html.DisplayFor(m => m.Article.FormatedPublishDate)</p>
-
-                    @{
-
-                        if (@Model.Article.AuthorEmail == @Context.Session.GetString("login"))
-                        {
-                            <button id="btnEdit" href="#confirmChange" class="btn btn-info anchorLink" style="display: inline-block" onclick="ToggleEdit()">Modifier</button>
-                            <button data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger" style="display: inline-block">Supprimer</button>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-        
-        <div class="jumbotron"  id="editPanel" style="display:none">
-            <form asp-controller="Articles" method="Post" asp-action="EditWeb" id="editForm">
-                <div class="form-group">
-                    <label asp-for="Article.Title">Titre</label>
-                    <input asp-for="Article.Title" class="form-control" name="Title">
-                    <span asp-validation-for="Article.Title" class="text-danger" />
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Article.Image">Image</label>
-                    <input asp-for="Article.Image" class="form-control" name="Image">
-                    <span asp-validation-for="Article.Image" class="text-danger" />
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Article.Preview">Preview</label>
-                    <textarea asp-for="Article.Preview" class="form-control" rows="4" name="Preview"></textarea>
-                    <span asp-validation-for="Article.Preview" class="text-danger" />
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Article.HtmlContent">Contenu</label>
-                    <textarea asp-for="Article.HtmlContent" class="form-control" rows="12" name="HtmlContent"></textarea>
-                    <span asp-validation-for="Article.HtmlContent" class="text-danger" />
-                </div>
-
-
-                <p class="text-danger"> @TempData["Error"]</p>
-
-
-                <button type="button" id="confirmChange" class="btn btn-success btn-block">Enregistrer les modifications</button>
-            </form>
+            @{
+                if (@Model.Article.AuthorEmail == @Context.Session.GetString("login"))
+                {
+                    <button id="btnEdit" href="#confirmChange" class="btn btn-info anchorLink" style="display: inline-block" onclick="ToggleEdit()">Modifier</button>
+                    <button data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger" style="display: inline-block">Supprimer</button>
+                }
+            }
         </div>
     </div>
-    
+</div>
+
+<div class="jumbotron" id="editPanel" style="display:none">
+    <form asp-controller="Articles" method="Post" asp-action="EditWeb" id="editForm">
+        <div class="form-group">
+            <label asp-for="Article.Title">Titre</label>
+            <input asp-for="Article.Title" class="form-control" name="Title">
+            <span asp-validation-for="Article.Title" class="text-danger" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Article.Image">Image</label>
+            <input asp-for="Article.Image" class="form-control" name="Image">
+            <span asp-validation-for="Article.Image" class="text-danger" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Article.Preview">Preview</label>
+            <textarea asp-for="Article.Preview" class="form-control" rows="4" name="Preview"></textarea>
+            <span asp-validation-for="Article.Preview" class="text-danger" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Article.HtmlContent">Contenu</label>
+            <textarea asp-for="Article.HtmlContent" class="form-control" rows="12" name="HtmlContent"></textarea>
+            <span asp-validation-for="Article.HtmlContent" class="text-danger" />
+        </div>
+
+
+        <p class="text-danger"> @TempData["Error"]</p>
+
+
+        <button type="button" id="confirmChange" class="btn btn-success btn-block">Enregistrer les modifications</button>
+    </form>
+</div>
+
+
+
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 100px;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -94,17 +85,16 @@
             </div>
         </div>
     </div>
+   
+}
 
-
-    <div class="col-3"></div>
-</div>
-<input type="hidden" id="ArticleId" name="ArticleId" value= @Model.Article.Id>
-<script>
+    <input type="hidden" id="ArticleId" name="ArticleId" value= @Model.Article.Id>
+    <script>
 
     $('#deleteBtn').on('click', function () {
-     
+
         $.ajax({
-            url: "/api/articles/delete/" + $('#ArticleId').val(),
+            url: "/api/articles/" + $('#ArticleId').val()+"/delete",
             type: 'GET',
             headers: {
                 "Authorization": "Bearer " + $('#token').val()
@@ -118,27 +108,25 @@
     $('#confirmChange').on('click', function () {
 
         var data = getFormData($("#editForm"));
+        //alert(data.__RequestVerificationToken);
 
-       
         $.ajax({
-            url: "/api/articles/edit/" + $('#ArticleId').val(),
+            url: "/articles/" + $('#ArticleId').val()+"/edit",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
             headers: {
                 "Authorization": "Bearer " + $('#token').val()
             },
-            async: false,
-            error: function(response) {
-               
-            }
+            async: true
+            
         });
 
         location.reload();
     });
 
-    
-    
+
+
     function ToggleEdit() {
 
         if (document.getElementById("editPanel").style.display == "none")
@@ -152,9 +140,4 @@
         else
             document.getElementById("editPanel").style.display = "none";
     }
-</script>
-
-</body>
-
-
-</html>
+    </script>

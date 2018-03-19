@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.6.1/win7-x86",
-    "signature": "35413560bbdf957d4a993a3ea1f698705d2b28f1"
+    "signature": "302fb8931e403c3a24958dda9c635c039e94848e"
   },
   "compilationOptions": {
     "defines": [
@@ -32,6 +32,7 @@
           "Hangfire.Autofac": "2.3.1",
           "Hangfire.SqlServer": "1.6.17",
           "Hangfire.AspNetCore": "1.6.17",
+          "ImageResizer": "4.2.0",
           "Microsoft.AspNet.Mvc": "5.2.3",
           "Microsoft.AspNetCore": "2.0.1",
           "Microsoft.AspNetCore.Authentication": "2.0.1",
@@ -860,6 +861,11 @@
         },
         "compile": {
           "lib/net45/Hangfire.SqlServer.dll": {}
+        }
+      },
+      "ImageResizer/4.2.0": {
+        "compile": {
+          "lib/net45/ImageResizer.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -2358,6 +2364,7 @@
           "Hangfire.Autofac": "2.3.1",
           "Hangfire.SqlServer": "1.6.17",
           "Hangfire.AspNetCore": "1.6.17",
+          "ImageResizer": "4.2.0",
           "Microsoft.AspNet.Mvc": "5.2.3",
           "Microsoft.AspNetCore": "2.0.1",
           "Microsoft.AspNetCore.Authentication": "2.0.1",
@@ -2584,6 +2591,11 @@
         },
         "runtime": {
           "lib/net45/Hangfire.SqlServer.dll": {}
+        }
+      },
+      "ImageResizer/4.2.0": {
+        "runtime": {
+          "lib/net45/ImageResizer.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -4139,6 +4151,13 @@
       "sha512": "sha512-zfQsPbBQ3Z9qGKG9NJdyXln0O/9uv0nYoTeMI58E9kJt1olPkEqMkNn8UUKoQERU4Z3NR29J+49IxToydQ/0nA==",
       "path": "hangfire.sqlserver/1.6.17",
       "hashPath": "hangfire.sqlserver.1.6.17.nupkg.sha512"
+    },
+    "ImageResizer/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0Y0h2vaziXeCqqBH1kvjRcPH3M9G4lDhx4KyxfTnHYEWDky7LfJNvlbOoDMYUfk0YGiYwCzldTbKxwV/uMmHSg==",
+      "path": "imageresizer/4.2.0",
+      "hashPath": "imageresizer.4.2.0.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",

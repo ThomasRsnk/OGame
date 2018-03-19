@@ -127,6 +127,15 @@
           "lib/net45/Hangfire.SqlServer.dll": {}
         }
       },
+      "ImageResizer/4.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/ImageResizer.dll": {}
+        },
+        "runtime": {
+          "lib/net45/ImageResizer.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -3034,6 +3043,15 @@
           "lib/net45/Hangfire.SqlServer.dll": {}
         }
       },
+      "ImageResizer/4.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/ImageResizer.dll": {}
+        },
+        "runtime": {
+          "lib/net45/ImageResizer.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -5782,6 +5800,17 @@
         "lib/netstandard1.3/Hangfire.SqlServer.dll",
         "lib/netstandard1.3/Hangfire.SqlServer.xml",
         "tools/install.sql"
+      ]
+    },
+    "ImageResizer/4.2.0": {
+      "sha512": "0Y0h2vaziXeCqqBH1kvjRcPH3M9G4lDhx4KyxfTnHYEWDky7LfJNvlbOoDMYUfk0YGiYwCzldTbKxwV/uMmHSg==",
+      "type": "package",
+      "path": "imageresizer/4.2.0",
+      "files": [
+        "imageresizer.4.2.0.nupkg.sha512",
+        "imageresizer.nuspec",
+        "lib/net45/ImageResizer.XML",
+        "lib/net45/ImageResizer.dll"
       ]
     },
     "Libuv/1.10.0": {
@@ -10521,6 +10550,7 @@
       "HangFire.Autofac >= 2.3.1",
       "HangFire.SqlServer >= 1.6.17",
       "Hangfire.AspNetCore >= 1.6.17",
+      "ImageResizer >= 4.2.0",
       "Microsoft.AspNet.Mvc >= 5.2.3",
       "Microsoft.AspNetCore >= 2.0.1",
       "Microsoft.AspNetCore.Authentication >= 2.0.1",
@@ -10629,6 +10659,10 @@
           "Hangfire.AspNetCore": {
             "target": "Package",
             "version": "[1.6.17, )"
+          },
+          "ImageResizer": {
+            "target": "Package",
+            "version": "[4.2.0, )"
           },
           "Microsoft.AspNet.Mvc": {
             "target": "Package",

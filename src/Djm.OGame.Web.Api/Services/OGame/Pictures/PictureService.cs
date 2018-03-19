@@ -79,14 +79,20 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
             player.ProfilePicturePath = path;
             PlayerRepository.Update(player);
 
+            //resize de l'image et enregistrement dans le fs
 
-            //enregistrer l'image dans le fs et commit
-
-            using (var fileStream = File.Create(path))
+            using (var ms = new MemoryStream())
             {
-                await pic.CopyToAsync(fileStream, cancellation);
-            }
+                pic.CopyTo(ms);
+                ms.Seek(0, SeekOrigin.Begin);
 
+                var i = new ImageResizer.ImageJob(ms, path, new ImageResizer.Instructions(
+                    "width=256;height=256;format=jpg;mode=max"));
+                i.Build();
+            }
+            
+            //commit
+            
             await UnitOfWork.CommitAsync(cancellation);
         }
 

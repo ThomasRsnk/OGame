@@ -14,24 +14,28 @@
             @foreach (var item in Model.Pagination.Items)
             {
 
-                <div class="col-1"></div>
+                <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1">
 
-                <div class="col-7">
-                    <div class="media">
-                        <a href="http://localhost:53388/api/articles/@item.Id"><img class="mr-3 rounded" src=@Html.DisplayFor(modelItem => item.Image) alt="Generic placeholder image" width="300" height="200"></a>
-                        <div class="media-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <a href="http://localhost:53388/articles/@item.Id">
+                                <img class="img-fluid rounded" src="@item.Image" alt="Generic placeholder image">
+                            </a>
 
-                            <a class="h5" href="http://localhost:53388/api/articles/@item.Id">@Html.DisplayFor(modelItem => item.Title) </a><br />
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <a class="h5" href="http://localhost:53388/articles/@item.Id">@Html.DisplayFor(modelItem => item.Title) </a><br />
 
                             <p style="margin-top: 10px;">@Html.DisplayFor(modelItem => item.Preview)</p>
 
-                            <p style="position: absolute; bottom: 0; margin-bottom: 35px; margin-top: 25px;" class="text-muted">Publié par <a href="#">@item.AuthorName</a> le @item.FormatedPublishDate</p>
-
+                            <p style="margin-top: 25px;" class="text-muted">
+                                Publié par <a href="#">@item.AuthorName</a> le @item.FormatedPublishDate
+                            </p>
+                            
                         </div>
                     </div>
                     <hr>
                 </div>
-                <div class="col-4"></div>
             }
         </div>
         <div class="row">
@@ -55,24 +59,23 @@
 
                 }
 
-                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Previous">Précédent</a></li>
+                <li class="page-item @prevDisabled"><a class="page-link" href="http://localhost:53388/articles?page=@Model.Pagination.Previous">Précédent</a></li>
 
-                <li class="page-item @Active(1)"><a class="page-link" href="http://localhost:53388/api/articles?page=1">1</a></li>
+                <li class="page-item @Active(1)"><a class="page-link" href="http://localhost:53388/articles?page=1">1</a></li>
 
 
 
                 @for (var i = @Model.Pagination.Start + 1; i < @Model.Pagination.End + 1; i++)
                 {
-                    <li class="page-item @Active(i)"><a class="page-link" href="http://localhost:53388/api/articles?page=@i">@i</a></li>
+                    <li class="page-item @Active(i)"><a class="page-link" href="http://localhost:53388/articles?page=@i">@i</a></li>
                 }
 
-                <li class="page-item @Active(@Model.Pagination.TotalPages) @endVisible"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.TotalPages">@Model.Pagination.TotalPages</a></li>
+                <li class="page-item @Active(@Model.Pagination.TotalPages) @endVisible"><a class="page-link" href="http://localhost:53388/articles?page=@Model.Pagination.TotalPages">@Model.Pagination.TotalPages</a></li>
 
-                <li class="page-item @nextDisabled"><a class="page-link" href="http://localhost:53388/api/articles?page=@Model.Pagination.Next">Suivant</a></li>
+                <li class="page-item @nextDisabled"><a class="page-link" href="http://localhost:53388/articles?page=@Model.Pagination.Next">Suivant</a></li>
 
             </ul>
 
         </div>
     </div>
 </body>
-</html>

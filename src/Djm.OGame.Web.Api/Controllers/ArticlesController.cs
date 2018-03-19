@@ -9,11 +9,13 @@ using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Services.Articles;
 using Djm.OGame.Web.Api.Services.OGame;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
-    [Route("~/api/articles")]
+    [Route("~/articles")]
     public class ArticlesController : Controller
     {
         public IArticlesService ArticlesService { get; }
@@ -51,13 +53,13 @@ namespace Djm.OGame.Web.Api.Controllers
         [Route("{id:int}")]
         //[ETagFilter(200)]
         //[Throttle(Name = "Throttling", Seconds = 1)]
-        //[ResponseCache(CacheProfileName = "Default")]
+        [ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> GetArticle(int id, CancellationToken cancellation)
         {
             var article = await ArticlesService.GetAsync(id, cancellation);
 
             if (article == null) return NotFound();
-
+            
             var model = new CompoundBindingModel
             {
                 Article = article,
@@ -67,16 +69,24 @@ namespace Djm.OGame.Web.Api.Controllers
             };
 
             return View("~/Views/Pages/Articles/Article.cshtml", model);
-            return Ok(article);
         }
 
         [HttpGet]
+        [ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> GetArticleList(Page page, CancellationToken cancellation)
         {
+            var lastModified = await ArticlesService.GetLastEditionDateAsync(cancellation);
+
+            Response.GetTypedHeaders().LastModified = lastModified;
+            var requestHeaders = Request.GetTypedHeaders();
+            if (requestHeaders.IfModifiedSince.HasValue &&
+                requestHeaders.IfModifiedSince.Value.DateTime <= lastModified.ToUniversalTime())
+            {
+                return StatusCode(StatusCodes.Status304NotModified);
+            }
+
             var articles = await ArticlesService.GetListAsync(page,cancellation);
-
-            if (articles == null) return NotFound();
-
+            
             var model = new CompoundBindingModel
             {
                 Pagination = articles,
@@ -85,8 +95,6 @@ namespace Djm.OGame.Web.Api.Controllers
             };
 
             return View("~/Views/Pages/Articles/Home.cshtml", model);
-            
-            return Ok(articles);
         }
 
         [HttpPut]
@@ -117,7 +125,7 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpPost]
         [Authorize(Policy = "Admin")]
-        [Route("edit/{id:int}")]
+        [Route("{id:int}/edit")]
         public async Task<IActionResult> EditWeb([FromBody] CreateArticleBindingModel bindingModel, int id, CancellationToken cancellation)
         {
             if (bindingModel == null)
@@ -153,12 +161,28 @@ namespace Djm.OGame.Web.Api.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Admin")]
-        [Route("delete/{id:int}")]
+        [Route("{id:int}/delete")]
         public async Task<IActionResult> DeleteArticleWeb(int id, CancellationToken cancellation)
         {
             await ArticlesService.Delete(User, id, cancellation);
 
             return NoContent();
         }
+
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        [Route("new")]     
+        public IActionResult CreateArticle()
+        {
+            var model = new CompoundBindingModel
+            {
+                Registration = new RegisterBindingModel(),
+                Connection = new LoginBindingModel(),
+                CreateArticle = new CreateArticleBindingModel()
+            };
+
+            return View("~/Views/Pages/Articles/CreateArticle.cshtml", model);
+        }
+        
     }
 }

@@ -90,6 +90,11 @@ namespace Djm.OGame.Web.Api.Services.Articles
             await UnitOfWork.CommitAsync(cancellation);
         }
 
+        public Task<DateTime> GetLastEditionDateAsync(CancellationToken cancellation)
+        {
+            return ArticleRepository.GetLastEditionDateAsync(cancellation);
+        }
+
         public async Task Publish(CreateArticleBindingModel bindingModel,CancellationToken cancellation )
         {
             var content = new ArticleContent
