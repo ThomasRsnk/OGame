@@ -8,10 +8,17 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ArticleContent> b)
         {
-            b.HasKey(p => p.Id);
+            b.HasKey(ac => ac.Id);
 
-            b.Property(p => p.HtmlContent)
+            b.Property(ac => ac.HtmlContent)
                 .IsRequired();
+
+            b.HasOne(ac => ac.Article)
+                .WithOne(a => a.Content)
+                .HasForeignKey((Article a) => a.ContentId)
+                .HasPrincipalKey((ArticleContent ac) => ac.ArticleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

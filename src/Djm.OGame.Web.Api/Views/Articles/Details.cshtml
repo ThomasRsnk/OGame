@@ -1,0 +1,51 @@
+﻿@model Djm.OGame.Web.Api.ViewModels.Articles.ArticleDetailsViewModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h1>@Html.DisplayFor(m => m.Title)</h1><br />
+<p>@Html.Raw(@Model.HtmlContent)</p>
+
+<br /><br />
+<div class="jumbotron">
+    <div class="media">
+        <img class="mr-3"
+             style="width: 128px; height: 128px;"
+             src=@Html.DisplayFor(m =>m.AuthorProfilePic)
+             onerror="this.src = 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'" />
+        <div class="media-body">
+            <h5 class="mt-0">Article écrit par : <a href="#">@Html.DisplayFor(m => m.AuthorName)</a></h5>
+            <p class="text-muted">posté le @Html.DisplayFor(m => m.FormatedPublishDate)</p>
+
+            @if (true || Model.AuthorEmail == User.Identity.Name)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Modifier</a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Supprimer</button>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true" style="margin-top: 100px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Voulez vous vraiment supprimer l'article ?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="Post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

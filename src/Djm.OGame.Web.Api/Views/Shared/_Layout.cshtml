@@ -1,0 +1,150 @@
+﻿
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Djm Ogame</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Css/StyleSheet.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required:false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="http://localhost:53388/articles">Djm OGame</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:53388/swagger/">API</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Articles" asp-action="Create" class="nav-link">Créer un article</a>
+                </li>
+            </ul>
+
+            @await Html.PartialAsync("_LoginPartial")
+        </div>
+    </nav>
+
+
+
+
+    @*<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="container-fluid">
+                            <ul class="nav nav-tabs" role="tablist" style="margin-left: 10px;">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#login" role="tab" data-toggle="tab"><h5>&#160 &#160 Se connecter &#160 &#160  </h5></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#register" role="tab" data-toggle="tab"><h5>&#160 &#160 S'enregistrer &#160 &#160 </h5></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tab-content">
+
+                            <div class="tab-pane active" id="login">
+                                <form asp-controller="Account" method="post" asp-action="SignIn" id="loginForm" asp-antiforgery="false">
+                                    <div class="form-group">
+                                        <label asp-for="Connection.Email">Identifiant</label>
+                                        <input asp-for="Connection.Email" class="form-control" name="Email">
+                                        <span asp-validation-for="Connection.Email" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Connection.Password">Mot de passe</label>
+                                        <input asp-for="Connection.Password" class="form-control" name="Password">
+                                        <span asp-validation-for="Connection.Password" class="text-danger" />
+                                    </div>
+                                    <p class="text-danger" id="loginErrorText"></p>
+
+
+                                    <button type="button" id="loginButton" class="btn btn-success btn-block">Se connecter</button>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane" id="register">
+                                <form asp-controller="Account" method="post" asp-action="Register" id="registerForm" asp-antiforgery="false">
+
+                                    <div class="form-group">
+                                        <label asp-for="Registration.Email"></label>
+                                        <input asp-for="Registration.Email" class="form-control" name="Email">
+                                        <span asp-validation-for="Registration.Email" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Registration.Password"></label>
+                                        <input asp-for="Registration.Password" class="form-control" name="Password">
+                                        <span asp-validation-for="Registration.Password" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="PasswordConfirm">Confirmation</label>
+                                        <input type="password" class="form-control" name="PasswordConfirm" id="PasswordConfirm">
+                                    </div>
+
+                                    <div class="form-group" style="display: inline-block;width:47%">
+                                        <label asp-for="Registration.PlayerId" c></label>
+                                        <input asp-for="Registration.PlayerId" class="form-control" name="PlayerId">
+                                    </div>
+
+                                    <div class="form-group" style="display: inline-block; float: right;width:47%">
+                                        <label asp-for="Registration.UniverseId"></label>
+                                        <input asp-for="Registration.UniverseId" class="form-control" name="UniverseId">
+
+                                    </div>
+                                    <p class="text-danger" id="registerErrortext"></p>
+                                    <p class="text-success" id="registerSuccesstext"></p>
+
+                                    <button type="button" id="registerButton" class="btn btn-success btn-block">S'enregistrer</button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+
+
+
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

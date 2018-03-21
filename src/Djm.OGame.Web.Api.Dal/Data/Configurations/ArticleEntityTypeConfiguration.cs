@@ -13,8 +13,15 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
             b.Property(p => p.Title)
                 .IsRequired();
 
-            b.Property(p => p.HtmlContentId)
-                .IsRequired();
+            b.HasOne(a => a.Content)
+                .WithOne(ac => ac.Article)
+                .HasForeignKey((Article a) => a.ContentId)
+                .HasPrincipalKey((ArticleContent ac) => ac.ArticleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+         
+                
         }
     }
 }

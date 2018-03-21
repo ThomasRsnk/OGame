@@ -9,6 +9,7 @@ using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using OGame.Client;
 
+
 namespace Djm.OGame.Web.Api.Services.OGame.Scores
 {
     public class ScoreService : IScoresService

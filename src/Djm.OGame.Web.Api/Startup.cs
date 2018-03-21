@@ -1,48 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Djm.OGame.Web.Api.BindingModels.Articles;
+using Djm.OGame.Web.Api.AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
-using Djm.OGame.Web.Api.BindingModels.Pins;
-using Djm.OGame.Web.Api.BindingModels.Players;
-using Djm.OGame.Web.Api.BindingModels.Scores;
 using Djm.OGame.Web.Api.Dal;
-using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Jobs;
 using Djm.OGame.Web.Api.Mvc.Authorizations;
 using Djm.OGame.Web.Api.Mvc.ModelBinders;
 using Djm.OGame.Web.Api.Mvc.Options;
 using Djm.OGame.Web.Api.Services.Authentication;
 using Djm.OGame.Web.Api.Services.Mails;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using OGame.Client.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using Hangfire;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Player = OGame.Client.Models.Player;
-
-
-
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using Djm.OGame.Web.Api.Dal.Entities;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Djm.OGame.Web.Api
@@ -64,34 +55,52 @@ namespace Djm.OGame.Web.Api
             var connectionString = Configuration.GetConnectionString("OGame");
             services.AddDbContext<OGameContext>(db => db.UseSqlServer(connectionString));
 
+            //identity
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<OGameContext>()
+                .AddDefaultTokenProviders();
+
+            
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+               
+                options.LoginPath = "/Account/Login";
+                
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+
             //hangfire
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("OGame")));
 
             //automapper
             services.AddAutoMapper(cfg =>
             {
-                cfg.CreateMap<Player, PlayerDetailsBindingModel>()
-                    .ForMember(dest => dest.Status, opt => opt.MapFrom(p => p.Status.ToString().Replace("_"," ")));
-                cfg.CreateMap<Position, PositionsBindingModel>()
-                    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.TypeC.ToString().Replace("_"," ")));
-
-                cfg.CreateMap<PinCreateBindingModel, Pin>()
-                    .ForMember(dest => dest.Id, opt => opt.Ignore());
-
-                cfg.CreateMap<Player, PlayerListItemBindingModel>()
-                    .ForMember(dest => dest.ProfilePicUrl, opt => opt.Ignore());
-
-                cfg.CreateMap<Article, ArticleDetailsBindingModel>()
-                    .ForMember(dest => dest.HtmlContent, opt => opt.Ignore())
-                    .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
-                    .ForMember(dest => dest.AuthorName, opt => opt.Ignore())
-                    .ForMember(dest => dest.FormatedPublishDate,opt => opt.MapFrom(src => src.PublishDate.ToLongDateString()));
-
-                cfg.CreateMap<Article, ArticleListItemBindingModel>()
-                    .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
-                    .ForMember(dest => dest.AuthorName, opt => opt.Ignore());
-
-
+                cfg.AddProfile<MappingConfiguration>();
             });
 
             //gzip
@@ -99,10 +108,10 @@ namespace Djm.OGame.Web.Api
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
 
-            //configuration
+            //options
             services.AddOptions();
             services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
-            services.Configure<TokenOptions>(opt =>
+            services.Configure<Mvc.Options.TokenOptions>(opt =>
             {
                 opt.Issuer = Configuration["Jwt:Issuer"];
                 opt.Audience = Configuration["Jwt:Audience"];
@@ -133,7 +142,7 @@ namespace Djm.OGame.Web.Api
 
             //JWT
             
-            services.AddAuthentication(options =>
+            /*services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -152,7 +161,7 @@ namespace Djm.OGame.Web.Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]))                   
                     };
 
-                });
+                });*/
             
             services.AddMvc(mvc =>
             {
@@ -164,22 +173,9 @@ namespace Djm.OGame.Web.Api
                         Duration = 10,
                         Location = ResponseCacheLocation.Any
                     });
-                //mvc.CacheProfiles.Add("Never",
-                //    new CacheProfile()
-                //    {
-                //        Location = ResponseCacheLocation.None,
-                //        NoStore = true
-                //    });
-            });
-
-            services.AddSession(options =>
-            {
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(1800);
-                options.Cookie.HttpOnly = true;
-            });
-
-            services.AddCors();
+              });
+            
+            //log
 
             services.AddLogging();
 
@@ -194,11 +190,9 @@ namespace Djm.OGame.Web.Api
                 options.AddPolicy("Admin", policy => policy.RequireRole(Roles.Admin));
 
                 options.AddPolicy("EditDeleteArticle",policy => policy.Requirements.Add(new SameAuthorRequirement()));
-
-                
-            });
-
-           //autofac
+             });
+            
+            //autofac
 
             var builder = new ContainerBuilder();
 
@@ -231,11 +225,9 @@ namespace Djm.OGame.Web.Api
 
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Djm.Ogame.Api"); });
 
-            app.UseAuthentication();
-
             app.UseStaticFiles();
 
-            app.UseSession();
+            app.UseAuthentication();
 
             app.UseMvc();
 

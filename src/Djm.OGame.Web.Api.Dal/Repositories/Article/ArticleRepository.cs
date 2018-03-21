@@ -12,6 +12,13 @@ namespace Djm.OGame.Web.Api.Dal.Repositories.Article
         public ArticleRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         { }
 
+        public override Task<Entities.Article> FindAsync(int id, CancellationToken cancellation = default(CancellationToken))
+        {
+            return DbSet
+                .Include(a => a.Content)
+                .FirstOrDefaultAsync(a => a.Id == id, cancellationToken: cancellation);
+        }
+
         public Task<DateTime> GetLastEditionDateAsync(CancellationToken cancellation)
         {
             return DbSet.MaxAsync(a => a.LastEdit, cancellationToken: cancellation);

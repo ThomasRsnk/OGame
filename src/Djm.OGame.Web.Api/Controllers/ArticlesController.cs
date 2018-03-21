@@ -1,45 +1,43 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.BindingModels;
-using Djm.OGame.Web.Api.BindingModels.Account;
-using Djm.OGame.Web.Api.BindingModels.Articles;
+using AutoMapper;
 using Djm.OGame.Web.Api.BindingModels.Pagination;
 using Djm.OGame.Web.Api.Services.Articles;
 using Djm.OGame.Web.Api.Services.OGame;
+using Djm.OGame.Web.Api.ViewModels.Articles;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
     [Route("~/articles")]
     public class ArticlesController : Controller
     {
-        public IArticlesService ArticlesService { get; }
-        
-        public ArticlesController(IArticlesService articlesService)
+        public ArticlesController(IArticlesService articlesService, IMapper mapper)
         {
             ArticlesService = articlesService;
+            Mapper = mapper;
         }
+        
+        public IMapper Mapper { get; }
+        public IArticlesService ArticlesService { get; }
 
         [HttpPost]
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Publish([FromBody] CreateArticleBindingModel bindingModel,CancellationToken cancellation)
+        public async Task<IActionResult> Publish(ArticleCreateViewModel viewModel,CancellationToken cancellation)
         {
-            if (bindingModel == null)
+            if (viewModel == null)
                 return BadRequest("Body empty");
 
-            bindingModel.AuthorEmail = User.Claims.First().Value;
+            
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await ArticlesService.Publish(bindingModel, cancellation);
+                await ArticlesService.PublishAsync(viewModel, cancellation);
             }
             catch (OGameException e)
             {
@@ -54,134 +52,108 @@ namespace Djm.OGame.Web.Api.Controllers
         //[ETagFilter(200)]
         //[Throttle(Name = "Throttling", Seconds = 1)]
         [ResponseCache(CacheProfileName = "Default")]
-        public async Task<IActionResult> GetArticle(int id, CancellationToken cancellation)
+        public async Task<IActionResult> Details(int id, CancellationToken cancellation)
         {
             var article = await ArticlesService.GetAsync(id, cancellation);
 
             if (article == null) return NotFound();
-            
-            var model = new CompoundBindingModel
-            {
-                Article = article,
-                Registration = new RegisterBindingModel(),
-                Connection = new LoginBindingModel(),
-                CreateArticle = new CreateArticleBindingModel()
-            };
 
-            return View("~/Views/Pages/Articles/Article.cshtml", model);
+            var viewModel = Mapper.Map<ArticleDetailsViewModel>(article);
+
+            return View(viewModel);
         }
 
         [HttpGet]
         [ResponseCache(CacheProfileName = "Default")]
-        public async Task<IActionResult> GetArticleList(Page page, CancellationToken cancellation)
+        public async Task<IActionResult> Index(Page page, CancellationToken cancellation)
         {
-            var lastModified = await ArticlesService.GetLastEditionDateAsync(cancellation);
-
-            Response.GetTypedHeaders().LastModified = lastModified;
-            var requestHeaders = Request.GetTypedHeaders();
-            if (requestHeaders.IfModifiedSince.HasValue &&
-                requestHeaders.IfModifiedSince.Value.DateTime <= lastModified.ToUniversalTime())
-            {
-                return StatusCode(StatusCodes.Status304NotModified);
-            }
+//            var lastModified = await ArticlesService.GetLastEditionDateAsync(cancellation);
+//
+//            Response.GetTypedHeaders().LastModified = lastModified;
+//            var requestHeaders = Request.GetTypedHeaders();
+//            if (requestHeaders.IfModifiedSince.HasValue &&
+//                requestHeaders.IfModifiedSince.Value.DateTime <= lastModified.ToUniversalTime())
+//            {
+//                return StatusCode(StatusCodes.Status304NotModified);
+//            }
 
             var articles = await ArticlesService.GetListAsync(page,cancellation);
-            
-            var model = new CompoundBindingModel
-            {
-                Pagination = articles,
-                Registration = new RegisterBindingModel(),
-                Connection = new LoginBindingModel()
-            };
 
-            return View("~/Views/Pages/Articles/Home.cshtml", model);
+            
+
+            return View(articles);
         }
 
-        [HttpPut]
-        //[Authorize(Policy = "Administrateurs")]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Edit([FromForm] CreateArticleBindingModel bindingModel,int id, CancellationToken cancellation)
+        [HttpGet]
+        //[Authorize(Policy = "Admin")]
+        [Route("{id:int}/Edit")]
+        public async Task<IActionResult> Edit(int id, CancellationToken cancellation)
         {
-            if (bindingModel == null)
-                return BadRequest("Body empty");
+            var article = await ArticlesService.GetAsync(id, cancellation);
 
-            bindingModel.AuthorEmail = User.Claims.First().Value;
+            if (article == null)
+                return NotFound();
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var viewModel = Mapper.Map<ArticleEditViewModel>(article);
 
-            try
-            {
-                await ArticlesService.Edit(User, id, bindingModel, cancellation);
-
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
-
-            return Ok();
+            return View(viewModel);
         }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
-        [Route("{id:int}/edit")]
-        public async Task<IActionResult> EditWeb([FromBody] CreateArticleBindingModel bindingModel, int id, CancellationToken cancellation)
+        //[Authorize(Policy = "Admin")]
+        [Route("{id:int}/Edit")]
+        public async Task<IActionResult> Edit(ArticleEditViewModel viewModel, int id, CancellationToken cancellation)
         {
-            if (bindingModel == null)
-                return BadRequest("Body empty");
 
-            bindingModel.AuthorEmail = User.Claims.First().Value;
+            var article = await ArticlesService.GetAsync(id, cancellation);
+
+            if (article == null)
+                return NotFound();
 
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
+                return View(viewModel);
+            
             try
             {
-                await ArticlesService.Edit(User, id, bindingModel, cancellation);
-
+                await ArticlesService.EditAsync(User, id, viewModel, cancellation);
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid();
+                ModelState.AddModelError("", "Vous n'êtes pas authorisé à modifier cet article.");
+                return View(viewModel);
             }
 
-            return RedirectToAction("GetArticle", new {id});
+            return RedirectToAction("Details", new {id});
         }
 
-        [HttpDelete]
-        [Authorize(Policy = "Admin")]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteArticle(int id, CancellationToken cancellation)
-        {
-            await ArticlesService.Delete(User,id, cancellation);
-
-            return NoContent();
-        }
-
-        [HttpGet]
-        [Authorize(Policy = "Admin")]
+        [HttpPost]
+        //[Authorize(Policy = "Admin")]
         [Route("{id:int}/delete")]
-        public async Task<IActionResult> DeleteArticleWeb(int id, CancellationToken cancellation)
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellation)
         {
-            await ArticlesService.Delete(User, id, cancellation);
+            await ArticlesService.DeleteAsync(User, id, cancellation);
 
-            return NoContent();
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
-        [Route("new")]     
-        public IActionResult CreateArticle()
+        //[Authorize(Policy = "Admin")]
+        [Route("create")]     
+        public IActionResult Create()
         {
-            var model = new CompoundBindingModel
-            {
-                Registration = new RegisterBindingModel(),
-                Connection = new LoginBindingModel(),
-                CreateArticle = new CreateArticleBindingModel()
-            };
+            return View();
+        }
 
-            return View("~/Views/Pages/Articles/CreateArticle.cshtml", model);
+        [HttpPost]
+        [Route("Create")]
+        public async Task<IActionResult> Create(ArticleCreateViewModel viewModel, CancellationToken cancellation)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            await ArticlesService.PublishAsync(viewModel, cancellation);
+
+            return RedirectToAction("Index");
         }
         
     }

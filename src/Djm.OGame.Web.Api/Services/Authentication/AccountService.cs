@@ -1,16 +1,15 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.BindingModels.Account;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
 using Djm.OGame.Web.Api.Helpers;
 using Djm.OGame.Web.Api.Services.OGame;
+using Djm.OGame.Web.Api.ViewModels.Account;
 using Microsoft.EntityFrameworkCore;
 using OGame.Client;
+using LoginViewModelModel = Djm.OGame.Web.Api.BindingModels.Account.LoginViewModelModel;
 
 
 namespace Djm.OGame.Web.Api.Services.Authentication
@@ -28,7 +27,7 @@ namespace Djm.OGame.Web.Api.Services.Authentication
             UnitOfWork = unitOfWork;
         }
 
-        public async Task<Player> CheckPasswordAsync(LoginBindingModel credentials,CancellationToken cancellation)
+        public async Task<Player> CheckPasswordAsync(LoginViewModelModel credentials,CancellationToken cancellation)
         {
             var player = await PlayerRepository.FirstOrDefaultAsync(credentials.Email, cancellation);
 
@@ -37,7 +36,7 @@ namespace Djm.OGame.Web.Api.Services.Authentication
             return !player.Password.Equals(credentials.Password.ToHash(player.Salt,out var x)) ? null : player;
         }
 
-        public async Task RegisterUser(RegisterBindingModel bindingModel, CancellationToken cancellation = default(CancellationToken))
+        public async Task RegisterUser(RegisterViewModel bindingModel, CancellationToken cancellation = default(CancellationToken))
         {
             var players = OgClient.Universe(bindingModel.UniverseId).GetPlayers();
             if (players == null)

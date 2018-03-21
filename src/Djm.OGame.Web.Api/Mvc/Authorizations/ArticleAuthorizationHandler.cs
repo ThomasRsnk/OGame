@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Microsoft.AspNetCore.Authorization;

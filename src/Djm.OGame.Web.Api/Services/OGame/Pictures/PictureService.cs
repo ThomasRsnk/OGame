@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
-using Djm.OGame.Web.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using OGame.Client;
 

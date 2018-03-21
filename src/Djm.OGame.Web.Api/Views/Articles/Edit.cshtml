@@ -1,0 +1,40 @@
+﻿@model Djm.OGame.Web.Api.ViewModels.Articles.ArticleEditViewModel
+
+@{
+    ViewBag.Title = "Edit " + Model.Title;
+}
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="Post">
+    
+    @Html.HiddenFor(m => m.Id)
+    
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Title">Titre</label>
+        <input asp-for="Title" class="form-control" name="Title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Image">Image</label>
+        <input asp-for="Image" class="form-control" name="Image">
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Preview">Preview</label>
+        <textarea asp-for="Preview" class="form-control" rows="4" name="Preview"></textarea>
+        <span asp-validation-for="Preview" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HtmlContent">Contenu</label>
+        <textarea asp-for="HtmlContent" class="form-control" rows="12" name="HtmlContent"></textarea>
+        <span asp-validation-for="HtmlContent" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Enregistrer les modifications
+    </button>
+</form>
