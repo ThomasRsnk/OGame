@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.6.1/win7-x86",
-    "signature": "cb0fda16239d6b1721423cc2a4a0a2b9ce0eadc7"
+    "signature": "248be6cd3f09f529a5bac494e7fd62e1b1e28e7c"
   },
   "compilationOptions": {
     "defines": [
@@ -36,11 +36,16 @@
           "Microsoft.AspNet.Mvc": "5.2.4",
           "Microsoft.AspNetCore": "2.0.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.0.3",
+          "Microsoft.AspNetCore.Authentication.Twitter": "2.0.3",
           "Microsoft.AspNetCore.Identity": "2.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2",
           "Microsoft.AspNetCore.Mvc": "2.0.3",
           "Microsoft.AspNetCore.Mvc.Formatters.Xml": "2.0.3",
+          "Microsoft.AspNetCore.ResponseCaching": "2.0.2",
           "Microsoft.AspNetCore.ResponseCompression": "2.0.2",
+          "Microsoft.AspNetCore.Rewrite": "2.0.2",
+          "Microsoft.AspNetCore.Server.Kestrel": "2.0.2",
+          "Microsoft.AspNetCore.Server.Kestrel.Https": "2.0.2",
           "Microsoft.AspNetCore.StaticFiles": "2.0.2",
           "Microsoft.EntityFrameworkCore": "2.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.2",
@@ -986,6 +991,23 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Authentication.OAuth/2.0.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication": "2.0.3",
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.OAuth.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Twitter/2.0.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.OAuth": "2.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Twitter.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authorization/2.0.3": {
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "2.0.1",
@@ -1393,6 +1415,18 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Runtime.dll": {}
         }
       },
+      "Microsoft.AspNetCore.ResponseCaching/2.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.0.2",
+          "Microsoft.AspNetCore.Http.Extensions": "2.0.2",
+          "Microsoft.AspNetCore.ResponseCaching.Abstractions": "2.0.2",
+          "Microsoft.Extensions.Caching.Memory": "2.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.ResponseCaching.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.ResponseCaching.Abstractions/2.0.2": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "2.0.0"
@@ -1408,6 +1442,19 @@
         },
         "compile": {
           "lib/net461/Microsoft.AspNetCore.ResponseCompression.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Rewrite/2.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.2",
+          "Microsoft.AspNetCore.Http.Extensions": "2.0.2",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.1",
+          "Microsoft.Extensions.FileProviders.Abstractions": "2.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.1",
+          "Microsoft.Extensions.Options": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Rewrite.dll": {}
         }
       },
       "Microsoft.AspNetCore.Routing/2.0.2": {
@@ -2404,11 +2451,16 @@
           "Microsoft.AspNet.Mvc": "5.2.4",
           "Microsoft.AspNetCore": "2.0.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.0.3",
+          "Microsoft.AspNetCore.Authentication.Twitter": "2.0.3",
           "Microsoft.AspNetCore.Identity": "2.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2",
           "Microsoft.AspNetCore.Mvc": "2.0.3",
           "Microsoft.AspNetCore.Mvc.Formatters.Xml": "2.0.3",
+          "Microsoft.AspNetCore.ResponseCaching": "2.0.2",
           "Microsoft.AspNetCore.ResponseCompression": "2.0.2",
+          "Microsoft.AspNetCore.Rewrite": "2.0.2",
+          "Microsoft.AspNetCore.Server.Kestrel": "2.0.2",
+          "Microsoft.AspNetCore.Server.Kestrel.Https": "2.0.2",
           "Microsoft.AspNetCore.StaticFiles": "2.0.2",
           "Microsoft.EntityFrameworkCore": "2.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.2",
@@ -2753,6 +2805,23 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.OAuth/2.0.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication": "2.0.3",
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.OAuth.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Twitter/2.0.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.OAuth": "2.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Twitter.dll": {}
         }
       },
       "Microsoft.AspNetCore.Authorization/2.0.3": {
@@ -3162,6 +3231,18 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Runtime.dll": {}
         }
       },
+      "Microsoft.AspNetCore.ResponseCaching/2.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.0.2",
+          "Microsoft.AspNetCore.Http.Extensions": "2.0.2",
+          "Microsoft.AspNetCore.ResponseCaching.Abstractions": "2.0.2",
+          "Microsoft.Extensions.Caching.Memory": "2.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.ResponseCaching.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.ResponseCaching.Abstractions/2.0.2": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "2.0.0"
@@ -3177,6 +3258,19 @@
         },
         "runtime": {
           "lib/net461/Microsoft.AspNetCore.ResponseCompression.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Rewrite/2.0.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.2",
+          "Microsoft.AspNetCore.Http.Extensions": "2.0.2",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.1",
+          "Microsoft.Extensions.FileProviders.Abstractions": "2.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.1",
+          "Microsoft.Extensions.Options": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Rewrite.dll": {}
         }
       },
       "Microsoft.AspNetCore.Routing/2.0.2": {
@@ -4315,6 +4409,20 @@
       "path": "microsoft.aspnetcore.authentication.jwtbearer/2.0.3",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.2.0.3.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Authentication.OAuth/2.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cuQYTKA/u5/uY5Wxu8OyLRUAt3U7kGyBmHwHvWz83vseBsnvso+qp+KX9syr/5PfkEvzub1RCvctB2NCRz5vNQ==",
+      "path": "microsoft.aspnetcore.authentication.oauth/2.0.3",
+      "hashPath": "microsoft.aspnetcore.authentication.oauth.2.0.3.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Twitter/2.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CrlYxaEclxWy9jsndqKy21jyQk1QpnxaFZyn9Mw7/05BivAbEpLQ5pljFhqRHpQoaafWm96gKQXEWirftnh8kA==",
+      "path": "microsoft.aspnetcore.authentication.twitter/2.0.3",
+      "hashPath": "microsoft.aspnetcore.authentication.twitter.2.0.3.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authorization/2.0.3": {
       "type": "package",
       "serviceable": true,
@@ -4588,6 +4696,13 @@
       "path": "microsoft.aspnetcore.razor.runtime/2.0.2",
       "hashPath": "microsoft.aspnetcore.razor.runtime.2.0.2.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.ResponseCaching/2.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Inob5PAUyo+DtoXgGpBSDpIG9E98cUZXsFnNrYUUXVmcsLMknTpcALZxOJtDmvUcz9dSdMU9wDGYB2J2U1llng==",
+      "path": "microsoft.aspnetcore.responsecaching/2.0.2",
+      "hashPath": "microsoft.aspnetcore.responsecaching.2.0.2.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.ResponseCaching.Abstractions/2.0.2": {
       "type": "package",
       "serviceable": true,
@@ -4601,6 +4716,13 @@
       "sha512": "sha512-3ik8SSK2dAHrzTSGZrAHD4dM1Pu5tQcLqnM0NWWZnakfbJuAE1EGdfdOAEmktOvvAGrw6+nXDZSzU1bw3xNUdA==",
       "path": "microsoft.aspnetcore.responsecompression/2.0.2",
       "hashPath": "microsoft.aspnetcore.responsecompression.2.0.2.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Rewrite/2.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pd+f2w7MhGmExjWzhzNK+cuE1U5aq6OfQoLHTnU64cwrJB83Ufk6Tu/93OhzcGpUVE9cmghikg2tBr9xcTwf6A==",
+      "path": "microsoft.aspnetcore.rewrite/2.0.2",
+      "hashPath": "microsoft.aspnetcore.rewrite.2.0.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Routing/2.0.2": {
       "type": "package",

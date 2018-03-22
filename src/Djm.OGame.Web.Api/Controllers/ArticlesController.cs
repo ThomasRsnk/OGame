@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Djm.OGame.Web.Api.Controllers
 {
-    [Route("~/articles")]
+    [Route("~/")]
     public class ArticlesController : Controller
     {
         public ArticlesController(IArticlesService articlesService, IMapper mapper)
@@ -24,14 +24,12 @@ namespace Djm.OGame.Web.Api.Controllers
         public IArticlesService ArticlesService { get; }
 
         [HttpPost]
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin,Moderateur")]
         public async Task<IActionResult> Publish(ArticleCreateViewModel viewModel,CancellationToken cancellation)
         {
             if (viewModel == null)
                 return BadRequest("Body empty");
-
             
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -48,8 +46,7 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        //[ETagFilter(200)]
+        [Route("Articles/{id:int}")]
         //[Throttle(Name = "Throttling", Seconds = 1)]
         [ResponseCache(CacheProfileName = "Default")]
         public async Task<IActionResult> Details(int id, CancellationToken cancellation)
@@ -78,15 +75,13 @@ namespace Djm.OGame.Web.Api.Controllers
 //            }
 
             var articles = await ArticlesService.GetListAsync(page,cancellation);
-
             
-
             return View(articles);
         }
 
         [HttpGet]
-        //[Authorize(Policy = "Admin")]
-        [Route("{id:int}/Edit")]
+        [Authorize(Roles = "Admin,Moderateur")]
+        [Route("Articles/{id:int}/Edit")]
         public async Task<IActionResult> Edit(int id, CancellationToken cancellation)
         {
             var article = await ArticlesService.GetAsync(id, cancellation);
@@ -100,16 +95,10 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "Admin")]
-        [Route("{id:int}/Edit")]
+        [Authorize(Roles = "Admin,Moderateur")]
+        [Route("Articles/{id:int}/Edit")]
         public async Task<IActionResult> Edit(ArticleEditViewModel viewModel, int id, CancellationToken cancellation)
         {
-
-            var article = await ArticlesService.GetAsync(id, cancellation);
-
-            if (article == null)
-                return NotFound();
-
             if (!ModelState.IsValid)
                 return View(viewModel);
             
@@ -119,7 +108,7 @@ namespace Djm.OGame.Web.Api.Controllers
             }
             catch (UnauthorizedAccessException)
             {
-                ModelState.AddModelError("", "Vous n'êtes pas authorisé à modifier cet article.");
+                ModelState.AddModelError("", "Vous n'êtes pas autorisé à modifier cet article.");
                 return View(viewModel);
             }
 
@@ -127,8 +116,8 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "Admin")]
-        [Route("{id:int}/delete")]
+        [Authorize(Roles = "Admin,Moderateur")]
+        [Route("Articles/{id:int}/Delete")]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellation)
         {
             await ArticlesService.DeleteAsync(User, id, cancellation);
@@ -137,15 +126,16 @@ namespace Djm.OGame.Web.Api.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Policy = "Admin")]
-        [Route("create")]     
+        [Authorize(Roles = "Admin,Moderateur")]
+        [Route("Articles/Create")]     
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("Create")]
+        [Route("Articles/Create")]
+        [Authorize(Roles = "Admin,Moderateur")]
         public async Task<IActionResult> Create(ArticleCreateViewModel viewModel, CancellationToken cancellation)
         {
             if (!ModelState.IsValid)

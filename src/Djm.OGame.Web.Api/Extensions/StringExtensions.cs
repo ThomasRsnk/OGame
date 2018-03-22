@@ -2,8 +2,7 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-
-namespace Djm.OGame.Web.Api.Helpers
+namespace Djm.OGame.Web.Api.Extensions
 {
     public static class StringExtensions
     {

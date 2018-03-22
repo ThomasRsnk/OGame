@@ -26,12 +26,15 @@ namespace Djm.OGame.Web.Api.AutoMapper
 
             CreateMap<Article, ArticleDetailsViewModel>()
                 .ForMember(bm => bm.HtmlContent, opt => opt.MapFrom(a => a.Content.HtmlContent))
-                .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
+                .ForMember(dest => dest.FormatedPublishDate, opt =>
+                    opt.MapFrom(a => a.PublishDate.ToLongDateString() + " à " + a.PublishDate.ToLongTimeString()))
                 .ForMember(dest => dest.AuthorName, opt => opt.Ignore())
-                .ForMember(dest => dest.FormatedPublishDate, opt => opt.MapFrom(src => src.PublishDate.ToLongDateString()));
-
+                .ForMember(dest => dest.AuthorProfilePic, opt =>
+                    opt.MapFrom(a => $"http://localhost:53388/api/users/{a.AuthorEmail}/profilepic"));
+                
             CreateMap<Article, ArticleViewModel>()
-                .ForMember(dest => dest.FormatedPublishDate, opt => opt.Ignore())
+                .ForMember(dest => dest.FormatedPublishDate, opt => 
+                    opt.MapFrom(a => a.PublishDate.ToLongDateString() + " à " + a.PublishDate.ToLongTimeString()))
                 .ForMember(dest => dest.AuthorName, opt => opt.Ignore());
 
             CreateMap<ArticleEditViewModel, Article>()

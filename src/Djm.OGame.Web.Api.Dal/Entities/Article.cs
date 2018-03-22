@@ -12,7 +12,7 @@ namespace Djm.OGame.Web.Api.Dal.Entities
         public string Preview { get; set; }
 
         public string AuthorEmail { get; set; }
-        //public virtual Player Author { get; set; }
+        //public virtual ApplicationUser Author { get; set; }
 
         public int ContentId { get; set; }
         public virtual ArticleContent Content { get; set; }

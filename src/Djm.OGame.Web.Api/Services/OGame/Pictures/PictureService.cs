@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using OGame.Client;
 
 namespace Djm.OGame.Web.Api.Services.OGame.Pictures
@@ -14,16 +16,17 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
     {
         public IOgClient OGameClient { get; }
         public IUnitOfWork UnitOfWork { get; }
-        public IPlayerRepository PlayerRepository { get; }
+        public UserManager<ApplicationUser> UserManager { get; }
+
         private readonly string _basePath = Path.Combine("wwwroot", "profilePictures");
         private List<string> AllowedFileType {get;}
         
 
-        public PictureService(IOgClient oGameClient,IUnitOfWork unitOfWork,IPlayerRepository playerRepository)
+        public PictureService(IOgClient oGameClient,IUnitOfWork unitOfWork,UserManager<ApplicationUser> userManager)
         {
             OGameClient = oGameClient;
             UnitOfWork = unitOfWork;
-            PlayerRepository = playerRepository;
+            UserManager = userManager;
             AllowedFileType = new List<string>()
             {
                 "image/jpeg","image/png","image/bmp","image/jpg"
@@ -42,41 +45,29 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
             if(!AllowedFileType.Contains(pic.ContentType))
                 throw  new PictureException("Fichier invalide, utilisez .png/.jpeg/.bmp/.jpg");
 
-            //vérifier que le joueur existe
+            //vérifier que l'utilisateur existe
 
-            var player = await PlayerRepository.FirstOrDefaultAsync(email, cancellation);
+            var user = await UserManager.FindByEmailAsync(email);
 
-            if(player == null)
-                throw new PictureException("Le joueur n'existe pas");
+            if(user == null)
+                throw new PictureException("L'utilisateur n'existe pas");
 
-            // créer le nom du fichier & récupération du répertoire de l'univers
+            // créer le nom du fichier 
             
-            var fileName = player.OGameId+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
-
-            var directory = Path.Combine(_basePath, player.UniverseId.ToString());
-
-            var path = Path.GetFullPath(Path.Combine(directory,fileName));
+            var fileName = user.Id+ "." + pic.ContentType.Substring(pic.ContentType.IndexOf("/", StringComparison.Ordinal) + 1);
+            
+            var path = Path.GetFullPath(Path.Combine(_basePath,fileName));
             
             //vérifier si l'image est déjà présente
             
-            if (player.ProfilePicturePath != "")//OUI
+            if (user.ProfilePicturePath != "")//OUI
             {
-                var files = Directory.GetFiles(directory, player.OGameId + ".*");
+                var files = Directory.GetFiles(_basePath, user.Id + ".*");
 
                 foreach(var file in files)
                     File.Delete(file);
             }
-            else//NON
-            {
-                if (!Directory.Exists(directory))
-                    Directory.CreateDirectory(directory);
-            }
-
-            //maj en db
-
-            player.ProfilePicturePath = path;
-            PlayerRepository.Update(player);
-
+            
             //resize de l'image et enregistrement dans le fs
 
             using (var ms = new MemoryStream())
@@ -88,17 +79,19 @@ namespace Djm.OGame.Web.Api.Services.OGame.Pictures
                     "width=256;height=256;format=jpg;mode=max"));
                 i.Build();
             }
-            
-            //commit
-            
-            await UnitOfWork.CommitAsync(cancellation);
+
+            //maj en db et commit
+
+            user.ProfilePicturePath = path;
+
+            await UserManager.UpdateAsync(user);
         }
 
         public async Task<FileStream> GetAsync(string email,CancellationToken cancellation)
         {
-            var player = await PlayerRepository.FirstOrDefaultAsync(email, cancellation);
+            var user = await UserManager.FindByEmailAsync(email);
 
-            return player != null ? File.OpenRead(Path.Combine(player.ProfilePicturePath)) : null;
+            return user != null ? File.OpenRead(user.ProfilePicturePath) : null;
         }
     }
 }

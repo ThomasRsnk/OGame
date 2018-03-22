@@ -33,7 +33,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using Djm.OGame.Web.Api.Dal.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Net.Http.Headers;
 
 
 namespace Djm.OGame.Web.Api
@@ -61,7 +64,13 @@ namespace Djm.OGame.Web.Api
                 .AddEntityFrameworkStores<OGameContext>()
                 .AddDefaultTokenProviders();
 
-            
+
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
+                twitterOptions.ConsumerSecret =Configuration["Authentication:Twitter:ConsumerSecret"];
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -79,6 +88,7 @@ namespace Djm.OGame.Web.Api
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+                
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -95,7 +105,7 @@ namespace Djm.OGame.Web.Api
 
 
             //hangfire
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("OGame")));
+            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("OGame")));
 
             //automapper
             services.AddAutoMapper(cfg =>
@@ -140,31 +150,17 @@ namespace Djm.OGame.Web.Api
                 c.OperationFilter<BearerTokenOperationFilter>();
             });
 
-            //JWT
-            
-            /*services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //Server cache
 
-            })
-            .AddJwtBearer(cfg =>
-                {
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]))                   
-                    };
+            services.AddResponseCaching();
 
-                });*/
-            
+            //MVC
+
             services.AddMvc(mvc =>
             {
+                mvc.SslPort = 44316;
+                mvc.Filters.Add(new RequireHttpsAttribute());
+
                 mvc.ModelBinderProviders.Insert(0, new PageModelBinderProvider());
 
                 mvc.CacheProfiles.Add("Default",
@@ -174,7 +170,18 @@ namespace Djm.OGame.Web.Api
                         Location = ResponseCacheLocation.Any
                     });
               });
-            
+
+            services.AddAntiforgery(
+                options =>
+                {
+                    options.Cookie.Name = "_af";
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.HeaderName = "X-XSRF-TOKEN";
+                }
+            );
+
+
             //log
 
             services.AddLogging();
@@ -208,18 +215,34 @@ namespace Djm.OGame.Web.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,IApplicationLifetime appLifeTime)
         {
+            app.UseResponseCaching();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromSeconds(10)
+                };
+                context.Response.Headers[HeaderNames.Vary] = new string[] { "Accept-Encoding" };
+
+                await next();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+           //app.UseRewriter(new RewriteOptions().AddRedirectToHttps());
+
             app.UseResponseCompression();
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer(new BackgroundJobServerOptions()
-            {
-                Queues = new[] { HangfireQueues.Email }
-            });
+//            app.UseHangfireDashboard();
+//            app.UseHangfireServer(new BackgroundJobServerOptions()
+//            {
+//                Queues = new[] { HangfireQueues.Email }
+//            });
 
             app.UseSwagger();
 
@@ -228,6 +251,8 @@ namespace Djm.OGame.Web.Api
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttps());
 
             app.UseMvc();
 

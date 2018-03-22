@@ -20,7 +20,7 @@
             <h5 class="mt-0">Article écrit par : <a href="#">@Html.DisplayFor(m => m.AuthorName)</a></h5>
             <p class="text-muted">posté le @Html.DisplayFor(m => m.FormatedPublishDate)</p>
 
-            @if (true || Model.AuthorEmail == User.Identity.Name)
+            @if (Model.AuthorEmail == User.Identity.Name)
             {
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Modifier</a>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Supprimer</button>

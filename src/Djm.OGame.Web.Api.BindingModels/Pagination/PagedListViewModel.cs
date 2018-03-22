@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Djm.OGame.Web.Api.BindingModels.Pagination
 {
@@ -21,8 +22,10 @@ namespace Djm.OGame.Web.Api.BindingModels.Pagination
         }
     }
 
-    public class PagedListViewModel<TItem>
+    public class PagedListViewModel<TItem> 
     {
+        
+
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
         public int TotalCount { get; set; }

@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Djm.OGame.Web.Api.Dal.Entities;
 using Djm.OGame.Web.Api.ViewModels.Account;
@@ -72,8 +74,14 @@ namespace Djm.OGame.Web.Api.Controllers
         [HttpGet]
         public IActionResult Register(string returnUrl = null)
         {
-            CreateRolesandUsers();
             ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Lockout()
+        {
             return View();
         }
 
@@ -85,9 +93,11 @@ namespace Djm.OGame.Web.Api.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+            var user = new ApplicationUser {UserName = model.Username, Email = model.Email};
 
             var result = await UserManager.CreateAsync(user, model.Password);
+
+            await UserManager.AddToRoleAsync(user, "Membre");
 
             if (result.Succeeded)
             {
@@ -122,7 +132,7 @@ namespace Djm.OGame.Web.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
-        {/*
+        {
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
@@ -145,16 +155,47 @@ namespace Djm.OGame.Web.Api.Controllers
             {
                 return RedirectToAction(nameof(Lockout));
             }
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
-            }*/
-            return null;
+           
+            // If the user does not have an account, then ask the user to create an account.
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["LoginProvider"] = info.LoginProvider;
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+            
+            
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                // Get the information about the user from the external login provider
+                var info = await SignInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    throw new ApplicationException("Error loading external login information during confirmation.");
+                }
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await UserManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToLocal(returnUrl);
+                    }
+                }
+                AddErrors(result);
+            }
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(nameof(ExternalLogin), model);
+        }
+
 
         [HttpGet]
         public IActionResult AccessDenied()

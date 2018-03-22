@@ -1,5 +1,6 @@
 ﻿
 
+@using Djm.OGame.Web.Api.Extensions
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 
@@ -21,7 +22,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="http://localhost:53388/articles">Djm OGame</a>
+        <a class="navbar-brand" href="https://localhost:44316/">Djm OGame</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,9 +32,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:53388/swagger/">API</a>
                 </li>
-                <li class="nav-item">
-                    <a asp-controller="Articles" asp-action="Create" class="nav-link">Créer un article</a>
-                </li>
+                @if (User.IsInAnyRoles("Admin", "Moderateur"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Articles" asp-action="Create" class="nav-link">Créer un article</a>
+                    </li>
+                }
+               
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Manage" asp-action="Roles" class="nav-link">Gestion des rôles</a>
+                    </li>
+                }
+                
             </ul>
 
             @await Html.PartialAsync("_LoginPartial")

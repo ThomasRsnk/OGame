@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -11,6 +12,7 @@ using Djm.OGame.Web.Api.Dal.Repositories.Player;
 using Djm.OGame.Web.Api.Dal.Services;
 using Djm.OGame.Web.Api.ViewModels.Articles;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Djm.OGame.Web.Api.Services.Articles
@@ -21,18 +23,20 @@ namespace Djm.OGame.Web.Api.Services.Articles
         public IArticleContentRepository ArticleContentRepository { get; }
         public IUnitOfWork UnitOfWork { get; }
         public IMapper Mapper { get; }
-        public IPlayerRepository PlayerRepository { get; }
         public IAuthorizationService AuthorizationService { get; }
+        public UserManager<ApplicationUser> UserManager { get; }
 
         public ArticleService(IArticleRepository articleRepository,IArticleContentRepository articleContentRepository,
-            IUnitOfWork unitOfWork,IMapper mapper,IPlayerRepository playerRepository, IAuthorizationService authorizationService)
+            IUnitOfWork unitOfWork,IMapper mapper,IPlayerRepository playerRepository, IAuthorizationService authorizationService,
+            UserManager<ApplicationUser> userManager)
         {
             ArticleRepository = articleRepository;
             ArticleContentRepository = articleContentRepository;
             UnitOfWork = unitOfWork;
             Mapper = mapper;
-            PlayerRepository = playerRepository;
+
             AuthorizationService = authorizationService;
+            UserManager = userManager;
         }
         
         public async Task<PagedListViewModel<ArticleViewModel>> GetListAsync(Page page,CancellationToken cancellation)
@@ -41,18 +45,8 @@ namespace Djm.OGame.Web.Api.Services.Articles
 
             articles = articles.OrderBy(a => a.PublishDate).ToList();
 
-            var players = await PlayerRepository.ToListAsync("admins", cancellation);
+            var viewModel = Mapper.Map<List<ArticleViewModel>>(articles);
             
-            var viewModel = articles.Join(players, a => a.AuthorEmail, p => p.EmailAddress, (a, p) => new ArticleViewModel()
-            {
-                AuthorName = p.Name,
-                Image = a.Image,
-                Preview = a.Preview,
-                FormatedPublishDate = a.PublishDate.ToLongDateString() + " à " + a.PublishDate.ToLongTimeString(),
-                Title = a.Title,
-                Id = a.Id,
-            }).ToList();
-
             return viewModel.ToPagedListViewModel(page);
         }
         
@@ -64,22 +58,23 @@ namespace Djm.OGame.Web.Api.Services.Articles
                 return null;
 
             var viewModel = Mapper.Map<ArticleDetailsViewModel>(article);
-
-            var player = await PlayerRepository.FirstOrDefaultAsync(article.AuthorEmail, cancellation);
-
-            viewModel.AuthorProfilePic = $"http://localhost:53388/api/users/{player.EmailAddress}/profilepic";
-            viewModel.AuthorName = player.Name;
-            viewModel.FormatedPublishDate =
-                article.PublishDate.ToLongDateString() + " à " + article.PublishDate.ToLongTimeString();
+            
+            viewModel.AuthorName = "aa";
+           
             return viewModel;
         }
 
         public async Task DeleteAsync(ClaimsPrincipal user,int articleId, CancellationToken cancellation = default(CancellationToken))
         {
-//            var authResult = await AuthorizationService.AuthorizeAsync(user, article, "EditDeleteArticle");
-//
-//            if (authResult.Succeeded == false)
-//                throw new UnauthorizedAccessException();
+            var article = await ArticleRepository.FindAsync(articleId, cancellation);
+
+            if (article == null)
+                return;
+
+            var authResult = await AuthorizationService.AuthorizeAsync(user, article, "EditDeleteArticle");
+
+            if (authResult.Succeeded == false)
+                throw new UnauthorizedAccessException();
 
             await ArticleRepository.DeleteAsync(articleId, cancellation);
 
@@ -120,11 +115,13 @@ namespace Djm.OGame.Web.Api.Services.Articles
         public async Task EditAsync<TModel>(ClaimsPrincipal user,int articleId, TModel model, CancellationToken cancellation)
         {
             var article = await ArticleRepository.FindAsync(articleId, cancellation);
+
+            if(article == null) return;
             
-//            var authResult = await AuthorizationService.AuthorizeAsync(user, article, "EditDeleteArticle");
-//
-//            if (authResult.Succeeded == false)
-//                throw new UnauthorizedAccessException();
+            var authResult = await AuthorizationService.AuthorizeAsync(user, article, "EditDeleteArticle");
+
+            if (authResult.Succeeded == false)
+                throw new UnauthorizedAccessException();
 
             Mapper.Map(model, article);
 

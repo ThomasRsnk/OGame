@@ -20,7 +20,7 @@ namespace Djm.OGame.Web.Api.Dal.Data.Configurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-         
+            
                 
         }
     }

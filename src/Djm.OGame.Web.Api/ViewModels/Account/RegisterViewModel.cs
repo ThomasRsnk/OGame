@@ -5,11 +5,8 @@ namespace Djm.OGame.Web.Api.ViewModels.Account
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Joueur")]
-        public int PlayerId { get; set; }
-        [Required]
-        [Display(Name = "Univers")]
-        public int UniverseId { get; set; }
+        [Display(Name = "Nom d'utilisateur")]
+        public string Username { get; set; }
 
         [Required]
         [EmailAddress]

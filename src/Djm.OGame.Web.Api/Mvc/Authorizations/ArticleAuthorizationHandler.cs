@@ -10,7 +10,7 @@ namespace Djm.OGame.Web.Api.Mvc.Authorizations
         protected override  Task HandleRequirementAsync(AuthorizationHandlerContext context, SameAuthorRequirement requirement,
             Article resource)
         {
-            if (context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == resource.AuthorEmail)
+            if (context.User.Identity.Name == resource.AuthorEmail)
                 context.Succeed(requirement);
             else
                 context.Fail();

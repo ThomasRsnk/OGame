@@ -1,8 +1,9 @@
 ﻿using System;
 
+
 namespace Djm.OGame.Web.Api.ViewModels.Articles
 {
-    public class ArticleViewModel
+    public class ArticleViewModel 
     {
         public int Id { get; set; }
         public string AuthorEmail { get; set; }
@@ -13,6 +14,5 @@ namespace Djm.OGame.Web.Api.ViewModels.Articles
         public string Title { get; set; }
         public string Image { get; set; }
         public string Preview { get; set; }
-        
     }
 }

@@ -165,6 +165,7 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Razor.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Razor.Runtime.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.ResponseCaching.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.ResponseCompression.dll
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Routing.dll
@@ -378,3 +379,6 @@ C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.AssemblyInfo.cs
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.exe
 C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\obj\Debug\net461\Djm.OGame.Web.Api.pdb
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Rewrite.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Authentication.OAuth.dll
+C:\Users\thomas.r\source\repos\Djm.OGame\src\Djm.OGame.Web.Api\bin\Debug\net461\Microsoft.AspNetCore.Authentication.Twitter.dll
